@@ -2,7 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1b3d">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tour Finder">
+<link rel="apple-touch-icon" href="data:image/png;base64,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">
 <title>Tour Finder</title>
 <script>try{var t=localStorage.getItem("tf-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D7F'/%3E%3Cstop offset='1' stop-color='%23FF9F1C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Cpath d='M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z' fill='%230F1B3D'/%3E%3Cpath d='M39 22.5v21' stroke='%23FF7A45' stroke-width='2.6' stroke-dasharray='3.2 3'/%3E%3C/svg%3E">
@@ -195,6 +201,7 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(700px,100%);background:var(--bg);z-index:31;overflow-y:auto;box-shadow:-10px 0 30px rgba(0,0,0,.2);padding:20px 20px 60px}
 .dhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .dhead h2{margin:0;font-size:26px;letter-spacing:-.01em}
+.dhead .close{white-space:nowrap;flex:0 0 auto}
 .dlinks{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px;font-size:14px}
 .dlinks a{text-decoration:none;font-weight:600}
 .close{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 10px;cursor:pointer}
@@ -245,6 +252,37 @@ body.playing .toast{bottom:110px}
 .play:hover{filter:brightness(1.1)}
 .listen iframe{width:100%;height:352px;border:0;border-radius:12px;background:#121212}
 
+/* library */
+.b-mineadd{color:var(--sg);background:var(--sg-bg)}
+.lib-actions{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.lib-actions button{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:5px 10px;font-size:12.5px;cursor:pointer}
+.form{display:grid;grid-template-columns:1fr 1fr;gap:10px 12px}
+.form label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+.form label.full{grid-column:1/-1}
+.form input,.form select,.form textarea{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel);font-size:16px;color:var(--ink)}
+.form textarea{min-height:80px;resize:vertical}
+.form .row-btns{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
+.form .hint{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin:-4px 0 0}
+.tab .ti{margin-right:6px}
+.finder{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px}
+.frow{display:flex;align-items:center;gap:10px;min-width:0}
+.frow input[type=search]{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink)}
+.flab{flex:0 0 86px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.fchips{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
+.fchips .chip{white-space:nowrap}
+.chip.plain{background:transparent;color:var(--muted)}
+.advbtn{align-self:flex-start;background:none;border:0;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;padding:2px 0}
+.advbtn.on{color:var(--muted)}
+.adv{display:none}
+.adv.open{display:block}
+.adv .bar{box-shadow:none;background:var(--bg)}
+.adv .bar input[type=number],.adv .bar select{background:var(--panel)}
+.count.sum{font-size:14px;color:var(--ink);margin:12px 2px}
+.count.sum .q{color:var(--muted)}
+.gl .hl{background:var(--accent-soft);border-radius:5px;padding:0 4px;outline:1px solid var(--accent)}
+.srise{display:flex;gap:8px;flex-wrap:wrap;font-size:12.5px;margin-top:3px}
+.ftoggle{display:none}
+
 /* favorites */
 .favbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:-6px 0 14px;box-shadow:var(--shadow)}
 .favbar .lab{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
@@ -285,6 +323,64 @@ body.playing .toast{bottom:110px}
   .hide-sm{display:none}
 }
 @media (max-width:640px){
+  html,body{font-size:15px}
+  body{padding-bottom:calc(66px + env(safe-area-inset-bottom))}
+  .topbar .wrap{padding-top:calc(10px + env(safe-area-inset-top));padding-bottom:10px;flex-wrap:nowrap}
+  .brand svg{width:30px;height:30px}
+  .brand h1{font-size:17px}
+  .brand p{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52vw}
+  .brand > div{min-width:0}
+  .tbtn{padding:7px 9px;font-size:15px}
+  .tbtn .tl{display:none}
+  main.wrap{padding-top:12px}
+  .intro{display:none}
+  .stats{display:flex;overflow-x:auto;gap:8px;margin:0 -16px 12px;padding:0 16px 2px;scrollbar-width:none}
+  .stat{flex:0 0 138px;padding:9px 11px}
+  .stat b{font-size:20px}
+  .favbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;border-radius:0;border-left:0;border-right:0}
+  .favbar .more-link{margin-left:0;white-space:nowrap}
+  .favbar > *{flex:0 0 auto}
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:34;margin:0;background:var(--panel);border-top:1px solid var(--line);border-bottom:0;
+    display:grid;grid-template-columns:repeat(6,1fr);gap:0;padding:4px 2px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(15,27,61,.08)}
+  .tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-bottom:0;margin:0;font-size:10.5px;font-weight:600;position:relative}
+  .tab .ti{font-size:20px;line-height:1;margin:0;filter:grayscale(.6);opacity:.75}
+  .tab.on .ti{filter:none;opacity:1}
+  .tab.on{color:var(--accent)}
+  .tab .n{position:absolute;top:1px;left:calc(50% + 6px);background:var(--hot);color:#fff;border-radius:999px;font-size:9.5px;line-height:1.5;padding:0 5px;margin:0;opacity:1;font-weight:700}
+  .tab .n:empty{display:none}
+  .finder{padding:10px 12px;gap:7px}
+  .flab{flex:0 0 54px;font-size:10px;line-height:1.2;letter-spacing:.03em}
+  .fchips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-12px;padding-right:12px}
+  .fchips::-webkit-scrollbar{display:none}
+  .fchips .chip{flex:0 0 auto}
+  .ftoggle{display:inline-flex;align-items:center;border:1px solid var(--line);background:var(--bg);border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer;white-space:nowrap}
+  .ftoggle.on{border-color:var(--accent);color:var(--accent)}
+  .more-filters{display:none}
+  .more-filters.open{display:block;margin-top:8px}
+  .bar{padding:8px}
+  .bar input[type=search]{flex:1 1 60%;min-width:0}
+  .bar select{flex:1 1 45%;min-width:0}
+  .bar input,.bar select,textarea,input{font-size:16px}
+  .chip{padding:8px 12px;font-size:13.5px}
+  .preset{padding:7px 11px}
+  .arow{padding:11px 12px}
+  .rings .ring{width:42px;height:42px}
+  .rings .ring b{width:34px;height:34px;font-size:13px}
+  .rings .score{min-width:54px}
+  .player{bottom:calc(62px + env(safe-area-inset-bottom));padding:6px 8px}
+  .player iframe{height:80px}
+  .player .appbtn{padding:8px 10px;font-size:12px}
+  body.playing main.wrap{padding-bottom:110px}
+  .toast{bottom:calc(80px + env(safe-area-inset-bottom))}
+  body.playing .toast{bottom:calc(175px + env(safe-area-inset-bottom))}
+  .drawer{width:100%;z-index:41;padding:0 14px calc(40px + env(safe-area-inset-bottom))}
+  .scrim{z-index:40}
+  .dhead{position:sticky;top:0;z-index:2;background:var(--bg);padding:calc(12px + env(safe-area-inset-top)) 0 8px;margin-bottom:4px}
+  .dhead h2{font-size:22px}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .form{grid-template-columns:1fr}
+  .listen iframe{height:300px}
+  .fav-tools .btn{flex:1}
   .presets{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 8px;padding:0 16px 4px;scrollbar-width:none}
   .preset{flex:0 0 auto}
   .stats{grid-template-columns:1fr 1fr}
@@ -292,7 +388,6 @@ body.playing .toast{bottom:110px}
   .show-main .links{grid-column:1/-1;flex-direction:row}
   .links a,.links button{flex:1}
   .date .d{font-size:20px}
-  .drawer{padding:16px 14px 60px}
   .tab{padding:8px 10px}
 }
 </style>
@@ -306,10 +401,10 @@ body.playing .toast{bottom:110px}
       <div><h1>Tour Finder</h1><p id="sub">Spotify demand × U.S. tour dates</p></div>
     </div>
     <div class="tbtns">
-      <button class="tbtn" id="helpBtn" type="button">❓ How it works</button>
+      <button class="tbtn" id="helpBtn" type="button" aria-label="How it works">❓<span class="tl"> How it works</span></button>
       <button class="tbtn theme-btn" type="button" aria-label="Switch light or dark mode"></button>
-      <button class="tbtn app-only" id="reload" type="button" hidden>↻ Reload</button>
-      <button class="tbtn app-only" id="signout" type="button" hidden>Sign out</button>
+      <button class="tbtn app-only" id="reload" type="button" hidden aria-label="Reload">↻<span class="tl"> Reload</span></button>
+      <button class="tbtn app-only" id="signout" type="button" hidden aria-label="Sign out">⎋<span class="tl"> Sign out</span></button>
     </div>
   </div>
 </header>
@@ -336,77 +431,72 @@ body.playing .toast{bottom:110px}
     <div class="stats" id="stats"></div>
     <div class="favbar" id="favbar" hidden></div>
     <nav class="tabs">
-      <button class="tab on" data-tab="discover">Artists</button>
-      <button class="tab" data-tab="shows">U.S. shows</button>
-      <button class="tab" data-tab="calendar">Sale calendar <span class="n" id="calN"></span></button>
-      <button class="tab" data-tab="alerts">🔔 Alerts <span class="n" id="alertN"></span></button>
-      <button class="tab" data-tab="charts">Spotify charts</button>
-      <button class="tab" data-tab="mine">⭐ Favorites <span class="n" id="mineN"></span></button>
+      <button class="tab on" data-tab="discover"><span class="ti">🎤</span><span class="tl">Artists</span></button>
+      <button class="tab" data-tab="shows"><span class="ti">🎟</span><span class="tl">Shows</span></button>
+      <button class="tab" data-tab="calendar"><span class="ti">📅</span><span class="tl">Sales</span><span class="n" id="calN"></span></button>
+      <button class="tab" data-tab="alerts"><span class="ti">🔔</span><span class="tl">Alerts</span><span class="n" id="alertN"></span></button>
+      <button class="tab" data-tab="charts"><span class="ti">📊</span><span class="tl">Charts</span></button>
+      <button class="tab" data-tab="mine"><span class="ti">⭐</span><span class="tl">Library</span><span class="n" id="mineN"></span></button>
     </nav>
 
     <!-- ARTISTS -->
     <div id="t-discover">
-      <p class="intro"><b>Breakout</b> finds low-key artists blowing up (small audience, fast growth, new to the charts). <b>Draw</b> is how big a crowd they pull today. Showing artists with U.S. shows; uncheck “Has U.S. shows” to search all 28K.</p>
-      <div class="presets" id="presets"></div>
-      <div class="bar">
-        <input id="aq" type="search" placeholder="Search any artist…">
-        <span class="lab">Monthly listeners</span>
-        <input id="lmin" type="number" min="0" step="0.5" placeholder="min (M)" aria-label="Minimum monthly listeners in millions">
-        <span class="lab">to</span>
-        <input id="lmax" type="number" min="0" step="0.5" placeholder="max (M)" aria-label="Maximum monthly listeners in millions">
-        <select id="asort" aria-label="Sort artists">
-          <option value="breakout_score">Sort: Breakout score (low-key & blowing up)</option>
-          <option value="mult_30d">Fastest rise, 30 days (×)</option>
-          <option value="mult_60d">Fastest rise, 60 days (×)</option>
-          <option value="mult_90d">Fastest rise, 90 days (×)</option>
-          <option value="first_seen_list">Newest to 500K+ listeners</option>
-          <option value="draw_score">Draw score (biggest draw)</option>
-          <option value="listeners">Most monthly listeners</option>
-          <option value="listeners_daily">Most listeners gained today</option>
-          <option value="daily_pct">Fastest rise today (%)</option>
-          <option value="growth_signal">Fastest growing (est. per month)</option>
-          <option value="pct_7d">Fastest rise, 7 days (%)</option>
-          <option value="growth_30d">Gained most in 30 days</option>
-          <option value="max_heat">Hottest upcoming show</option>
-          <option value="next_show_date">Next U.S. show (soonest)</option>
-          <option value="us_daily_best">Best U.S. chart position</option>
-          <option value="chart_age_days">Newest on the charts</option>
-        </select>
-      </div>
-      <div class="bar sizes" id="sizes">
-        <span class="lab">Size:</span>
-        <button class="chip" data-size="">All sizes</button>
-        <button class="chip" data-size="0-1">Under 1M</button>
-        <button class="chip" data-size="1-3">1–3M</button>
-        <button class="chip" data-size="3-10">3–10M</button>
-        <button class="chip" data-size="10-">10M+</button>
-      </div>
-      <div class="bar sizes" id="risebar">
-        <span class="lab">Fastest rise over:</span>
-        <button class="chip" data-rise="daily_pct">Today</button>
-        <button class="chip" data-rise="pct_7d">7 days</button>
-        <button class="chip" data-rise="mult_30d">30 days</button>
-        <button class="chip" data-rise="mult_60d">60 days</button>
-        <button class="chip" data-rise="mult_90d">90 days</button>
-      </div>
-      <div class="bar">
-        <label><input type="checkbox" id="fTour" checked> <b>Has U.S. shows</b></label>
-        <label><input type="checkbox" id="fPresale"> Presale open now</label>
-        <label><input type="checkbox" id="fCharts"> On a Spotify chart</label>
-        <label><input type="checkbox" id="fRising"> Rising</label>
-        <select id="fWhen" aria-label="Next show within">
-          <option value="">Any show date</option>
-          <option value="7">Next show within 7 days</option>
-          <option value="30">Within 30 days</option>
-          <option value="90">Within 90 days</option>
-        </select>
-        <select id="fNew" aria-label="New to charts">
-          <option value="">Any chart history</option>
-          <option value="7">New to charts (≤ 7 days)</option>
-          <option value="14">New to charts (≤ 2 weeks)</option>
-          <option value="30">New to charts (≤ 30 days)</option>
-        </select>
-        <label title="Crossed 500K monthly listeners in the last 45 days"><input type="checkbox" id="fNewList"> Just crossed 500K</label>
+      <div class="finder">
+        <div class="frow"><input id="aq" type="search" placeholder="Search any artist…" aria-label="Search artists"><button class="chip plain" id="aReset" type="button" title="Back to the default view">↺ Reset</button></div>
+        <div class="frow"><span class="flab">Show me</span><div class="fchips">
+          <button class="chip" data-mode="gems" title="Low-key artists blowing up: small audience, fast growth, new to the charts">💎 Breakouts</button>
+          <button class="chip" data-mode="rise" title="Biggest growth in monthly listeners over the window you pick below">🚀 Rising fastest</button>
+          <button class="chip" data-mode="newc" title="Charted on Spotify for the first time in the last 2 weeks">🎵 New on charts</button>
+          <button class="chip" data-mode="crossed" title="Passed 500K monthly listeners in the last 45 days">🆕 Just crossed 500K</button>
+          <button class="chip" data-mode="draws" title="Biggest crowd pullers right now">🔥 Biggest draws</button>
+          <button class="chip" data-mode="top">👑 Most listeners</button>
+        </div></div>
+        <div class="frow"><span class="flab">Rising over</span><div class="fchips"><button class="chip" data-rise="daily_pct">Today</button><button class="chip" data-rise="pct_7d">7 days</button><button class="chip" data-rise="mult_30d">30 days</button><button class="chip" data-rise="mult_60d">60 days</button><button class="chip" data-rise="mult_90d">90 days</button></div></div>
+        <div class="frow"><span class="flab">Size</span><div class="fchips"><button class="chip" data-size="">Any size</button><button class="chip" data-size="0-1">Under 1M</button><button class="chip" data-size="1-3">1–3M</button><button class="chip" data-size="3-10">3–10M</button><button class="chip" data-size="10-">10M+</button></div></div>
+        <div class="frow"><span class="flab">Shows</span><div class="fchips">
+          <button class="chip" data-tourf="tour">🇺🇸 Has U.S. shows</button>
+          <button class="chip" data-tourf="presale">🎟 Presale open now</button>
+          <button class="chip" data-tourf="7">📅 This week</button>
+          <button class="chip" data-tourf="30">Next 30 days</button>
+          <button class="chip" data-tourf="any">Any (incl. no shows)</button>
+        </div></div>
+        <button class="advbtn" type="button" data-ft="mf-discover">More filters ▾</button>
+        <div class="adv" id="mf-discover"><div class="bar">
+          <span class="lab">Monthly listeners</span>
+          <input id="lmin" type="number" min="0" step="0.5" placeholder="min (M)" aria-label="Minimum monthly listeners in millions">
+          <span class="lab">to</span>
+          <input id="lmax" type="number" min="0" step="0.5" placeholder="max (M)" aria-label="Maximum monthly listeners in millions">
+          <select id="asort" aria-label="Sort artists">
+            <option value="breakout_score">Sort: Breakout score (low-key & blowing up)</option>
+            <option value="daily_pct">Fastest rise today (%)</option>
+            <option value="pct_7d">Fastest rise, 7 days (%)</option>
+            <option value="mult_30d">Fastest rise, 30 days (×)</option>
+            <option value="mult_60d">Fastest rise, 60 days (×)</option>
+            <option value="mult_90d">Fastest rise, 90 days (×)</option>
+            <option value="listeners_daily">Most listeners gained today</option>
+            <option value="growth_30d">Most listeners gained in 30 days</option>
+            <option value="growth_signal">Fastest growing (est. per month)</option>
+            <option value="first_seen_list">Newest to 500K+ listeners</option>
+            <option value="draw_score">Draw score (biggest draw)</option>
+            <option value="listeners">Most monthly listeners</option>
+            <option value="max_heat">Hottest upcoming show</option>
+            <option value="next_show_date">Next U.S. show (soonest)</option>
+            <option value="us_daily_best">Best U.S. chart position</option>
+            <option value="chart_age_days">Newest on the charts</option>
+          </select>
+          <label><input type="checkbox" id="fCharts"> On a Spotify chart now</label>
+          <label><input type="checkbox" id="fRising"> Rising flag</label>
+          <select id="fNew" aria-label="New to charts">
+            <option value="">Any chart history</option>
+            <option value="7">New to charts (≤ 7 days)</option>
+            <option value="14">New to charts (≤ 2 weeks)</option>
+            <option value="30">New to charts (≤ 30 days)</option>
+          </select>
+          <select id="fWhen" aria-label="Next show within">
+            <option value="">Any show date</option><option value="7">Next show within 7 days</option><option value="30">Within 30 days</option><option value="90">Within 90 days</option>
+          </select>
+          <input type="checkbox" id="fTour" hidden><input type="checkbox" id="fPresale" hidden><input type="checkbox" id="fNewList" hidden>
+        </div></div>
       </div>
       <div class="count" id="acount"></div>
       <div class="ahead"><span></span><span>Artist</span><span>Spotify monthly listeners</span><span>U.S. tour</span><span style="text-align:right">Breakout · Draw</span></div>
@@ -415,32 +505,46 @@ body.playing .toast{bottom:110px}
 
     <!-- SHOWS -->
     <div id="t-shows" hidden>
-      <p class="intro">Upcoming U.S. shows from Ticketmaster and SeatGeek for the top-scoring artists. <b>Heat</b> estimates how likely a show is to sell out.</p>
-      <div class="bar">
-        <input id="q" type="search" placeholder="Search artist, city, venue…">
-        <button class="chip on" data-st="all">All</button>
-        <button class="chip" data-st="now">Presale open</button>
-        <button class="chip" data-st="soon">Sale coming up</button>
-        <button class="chip" data-st="onsale">On sale</button>
-        <button class="chip" data-st="new">Just announced</button>
-      </div>
-      <div class="bar">
-        <select id="state" aria-label="State"><option value="">All states</option></select>
-        <select id="when" aria-label="Show date">
-          <option value="">Any show date</option><option value="7">Next 7 days</option><option value="30">Next 30 days</option><option value="90">Next 90 days</option>
-        </select>
-        <select id="minHeat" aria-label="Minimum heat">
-          <option value="0">Any heat</option><option value="50">Heat 50+</option><option value="65">Heat 65+</option><option value="80">Heat 80+</option>
-        </select>
-        <select id="sort" aria-label="Sort shows">
-          <option value="heat">Sort: Heat (likely sellout)</option>
-          <option value="sale">Next sale (soonest)</option>
-          <option value="date">Show date</option>
-          <option value="draw">Artist draw score</option>
-          <option value="new">Newest announced</option>
-        </select>
-        <label><input type="checkbox" id="hideSkip" checked> Hide skipped</label>
-        <button class="btn ghost" id="copy">Copy links</button>
+      <div class="finder">
+        <div class="frow"><input id="q" type="search" placeholder="Search artist, city, venue…" aria-label="Search shows"></div>
+        <div class="frow"><span class="flab">Sort by</span><div class="fchips">
+          <button class="chip" data-ss="heat" title="Heat 0–100: how likely the show is to sell out">🔥 Likely sellout</button>
+          <button class="chip" data-ss="rise" title="Artists whose monthly listeners are growing fastest (pick the window below)">🚀 Artist rising fastest</button>
+          <button class="chip" data-ss="breakout" title="Low-key artists blowing up">💎 Breakout artist</button>
+          <button class="chip" data-ss="sale">⏰ Next sale</button>
+          <button class="chip" data-ss="date">📅 Show date</button>
+          <button class="chip" data-ss="new">🆕 Newest announced</button>
+        </div></div>
+        <div class="frow"><span class="flab">Rising over</span><div class="fchips"><button class="chip" data-srise="daily_pct">Today</button><button class="chip" data-srise="pct_7d">7 days</button><button class="chip" data-srise="mult_30d">30 days</button><button class="chip" data-srise="mult_60d">60 days</button><button class="chip" data-srise="mult_90d">90 days</button></div></div>
+        <div class="frow"><span class="flab">Artist size</span><div class="fchips"><button class="chip" data-ssize="">Any size</button><button class="chip" data-ssize="0-1">Under 1M</button><button class="chip" data-ssize="1-3">1–3M</button><button class="chip" data-ssize="3-10">3–10M</button><button class="chip" data-ssize="10-">10M+</button></div></div>
+        <div class="frow"><span class="flab">Tickets</span><div class="fchips">
+          <button class="chip on" data-st="all">All</button>
+          <button class="chip" data-st="now">Presale open now</button>
+          <button class="chip" data-st="soon">Sale coming up</button>
+          <button class="chip" data-st="onsale">On sale</button>
+          <button class="chip" data-st="new">Just announced</button>
+        </div></div>
+        <button class="advbtn" type="button" data-ft="mf-shows">More filters ▾</button>
+        <div class="adv" id="mf-shows"><div class="bar">
+          <select id="state" aria-label="State"><option value="">All states</option></select>
+          <select id="when" aria-label="Show date">
+            <option value="">Any show date</option><option value="7">Next 7 days</option><option value="30">Next 30 days</option><option value="90">Next 90 days</option>
+          </select>
+          <select id="minHeat" aria-label="Minimum heat">
+            <option value="0">Any heat</option><option value="50">Heat 50+</option><option value="65">Heat 65+</option><option value="80">Heat 80+</option>
+          </select>
+          <select id="sort" aria-label="Sort shows">
+            <option value="heat">Sort: Heat (likely sellout)</option>
+            <option value="rise">Artist rising fastest</option>
+            <option value="breakout">Breakout artist</option>
+            <option value="sale">Next sale (soonest)</option>
+            <option value="date">Show date</option>
+            <option value="draw">Artist draw score</option>
+            <option value="new">Newest announced</option>
+          </select>
+          <label><input type="checkbox" id="hideSkip" checked> Hide skipped</label>
+          <button class="btn ghost" id="copy">Copy links</button>
+        </div></div>
       </div>
       <div class="count" id="count"></div>
       <div class="list" id="list"></div>
@@ -510,7 +614,14 @@ body.playing .toast{bottom:110px}
 
     <!-- MINE -->
     <div id="t-mine" hidden>
-      <p class="intro">Your starred shows and artists. Click a ticket button to open it, or drag it into a browser tab or window.</p>
+      <p class="intro">Your library: starred shows, shows you add yourself, and artists you follow. Tap a ticket button to open it, or drag it into a browser tab.</p>
+      <div class="bar">
+        <button class="btn" type="button" data-add-show>＋ Add a show</button>
+        <button class="chip on" data-lib="up">Upcoming</button>
+        <button class="chip" data-lib="past">Past</button>
+        <button class="chip" data-lib="all">All</button>
+        <input id="libq" type="search" placeholder="Search your library…">
+      </div>
       <div id="mineList"></div>
     </div>
   </section>
@@ -628,7 +739,7 @@ async function load(){
     const cur = $(id).value;
     $(id).innerHTML = `<option value="">All states</option>` + states.map(x => `<option${x===cur?" selected":""}>${esc(x)}</option>`).join("");
   }
-  await loadFavArtists();
+  await Promise.all([loadFavArtists(), loadLibrary(), loadShowArtists()]);
   renderHeader(); renderFavBar(); renderShows(); renderCalendar(); renderAlerts(); updateMineCount(); loadChartList();
   if(!$("#t-mine").hidden) renderMine();
   if(!load.done){ load.done = true; applyPreset(preset || "draws"); } else queryArtists(true);
@@ -641,7 +752,7 @@ async function headCount(build){
 }
 async function renderHeader(){
   $("#sub").textContent = lastRun
-    ? `Updated ${ago(lastRun.ran_at)} · ${fullN(lastRun.artists_tracked)} artists · ${lastRun.charts} Spotify charts · refreshes ~7am & 7pm`
+    ? `Updated ${ago(lastRun.ran_at)} · ${fullN(lastRun.artists_tracked)} artists · ${lastRun.charts} Spotify charts · refreshes ~9am, 1pm & 7pm`
     : "No data yet. If the refresh job already ran, check that your login email is in allowed_users.";
   const T = q => tourOnly() ? q.eq("on_tour", true) : q;
   const [gems, crossed, newc, week] = await Promise.all([
@@ -678,9 +789,60 @@ const PRESETS = {
 };
 let preset = "gems", aPage = 0, aRows = [], aToken = 0;
 const PAGE = 50;
+const RISE = ["daily_pct","pct_7d","mult_30d","mult_60d","mult_90d"];
+const RISE_WORDS = { daily_pct:"today", pct_7d:"the last 7 days", mult_30d:"the last 30 days", mult_60d:"the last 60 days", mult_90d:"the last 90 days" };
+let lastRise = "mult_30d";
+function currentMode(){
+  if($("#fNew").value) return "newc";
+  if($("#fNewList").checked) return "crossed";
+  const s = $("#asort").value;
+  return RISE.includes(s) ? "rise" : ({ breakout_score:"gems", draw_score:"draws", listeners:"top" })[s] || "";
+}
+function currentShowsF(){
+  if($("#fPresale").checked) return "presale";
+  const w = $("#fWhen").value; if(w === "7" || w === "30") return w;
+  if(w) return "";
+  return $("#fTour").checked ? "tour" : "any";
+}
+// paints every chip from the real filter values, so chips, presets and "More filters" always agree
 function renderPresets(){
-  $("#presets").innerHTML = Object.entries(PRESETS).map(([k,p]) =>
-    `<button class="preset${k===preset?" on":""}" data-preset="${k}">${p.label}<small>${p.hint}</small></button>`).join("");
+  const m = currentMode(), s = $("#asort").value, t = currentShowsF();
+  $$("[data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === m));
+  $$("[data-rise]").forEach(b => b.classList.toggle("on", b.dataset.rise === s));
+  $$("[data-tourf]").forEach(b => b.classList.toggle("on", b.dataset.tourf === t));
+}
+function setMode(m){
+  const s = $("#asort").value;
+  $("#fNew").value = m === "newc" ? "14" : "";
+  $("#fNewList").checked = m === "crossed";
+  if(m === "rise") $("#asort").value = RISE.includes(s) ? s : lastRise;
+  else if(m === "newc" || m === "crossed") $("#asort").value = RISE.includes(s) ? s : "breakout_score";
+  else $("#asort").value = { gems:"breakout_score", draws:"draw_score", top:"listeners" }[m];
+  customized();
+}
+function setShowsF(v){
+  $("#fTour").checked = v !== "any";
+  $("#fPresale").checked = v === "presale";
+  $("#fWhen").value = (v === "7" || v === "30") ? v : "";
+  try{ localStorage.setItem("tf-tour", v === "any" ? "0" : "1"); }catch(e){}
+  customized(); renderHeader();
+}
+function sizeWords(lmin, lmax){
+  const f = v => v >= 1 ? v + "M" : Math.round(v*1000) + "K";
+  if(!isNaN(lmin) && lmin > 0 && !isNaN(lmax)) return `${lmin >= 1 ? lmin : f(lmin)}–${f(lmax)} listeners`;
+  if(!isNaN(lmax)) return `under ${f(lmax)} listeners`;
+  if(!isNaN(lmin) && lmin > 0) return `over ${f(lmin)} listeners`;
+  return "";
+}
+function artistSummary(n){
+  const m = currentMode(), s = $("#asort").value, t = currentShowsF();
+  const noun = { gems:"breakout artists", newc:"artists new on the charts", crossed:"artists who just crossed 500K" }[m] || "artists";
+  const bits = [sizeWords(parseFloat($("#lmin").value), parseFloat($("#lmax").value)),
+    { tour:"with U.S. shows", presale:"with a presale open now", "7":"playing the U.S. this week", "30":"playing the U.S. in the next 30 days" }[t] || ($("#fWhen").value ? `next U.S. show within ${$("#fWhen").value} days` : ""),
+    $("#fCharts").checked ? "on a Spotify chart now" : "", $("#aq").value.trim() ? `matching “${esc($("#aq").value.trim())}”` : ""].filter(Boolean);
+  const opt = $("#asort").selectedOptions[0];
+  const rank = RISE.includes(s) ? `fastest rise over ${RISE_WORDS[s]} first` : "by " + (opt ? opt.textContent.replace(/^Sort: /, "").replace(/\s*\(.*\)$/, "").toLowerCase() : s);
+  return `<b>${(n ?? 0).toLocaleString()}</b> ${n === 1 ? noun.replace(/s(\b|$)/, "$1") : noun}${bits.length ? " · " + bits.join(" · ") : ""} <span class="q">· ${esc(rank)}</span>`;
 }
 function applyPreset(k){
   preset = k; const p = PRESETS[k], f = p.f;
@@ -703,7 +865,7 @@ async function queryArtists(reset){
   if(reset){ aPage = 0; aRows = []; $("#alist").innerHTML = `<div class="loading">Loading artists…</div>`; }
   const token = ++aToken;
   const sort = $("#asort").value;
-  $$("[data-rise]").forEach(b => b.classList.toggle("on", b.dataset.rise === sort));
+  renderPresets();
   let q = sb.from("artists").select("*", { count: "exact" });
   const text = $("#aq").value.trim().replace(/[%,()*]/g, " ");
   if(text) q = q.ilike("name", `%${text}%`);
@@ -734,9 +896,11 @@ async function queryArtists(reset){
   }
   aRows = aRows.concat(data);
   const need = { pct_7d: 7, mult_30d: 30, growth_30d: 30, mult_60d: 60, mult_90d: 90 }[sort];
-  const waiting = (need && !count) ? ` · ${need}-day growth needs ${need} days of history. Run “Backfill history” in GitHub Actions to fill it in from archived copies, or it fills in on its own as daily tracking continues`
+  const plain = !$("#aq").value.trim() && !$("#lmin").value && !$("#lmax").value && !$("#fNew").value && !$("#fNewList").checked;
+  const waiting = (need && !count && plain) ? ` · ${need}-day growth needs ${need} days of history. Run “Backfill history” in GitHub Actions to fill it in from archived copies, or it fills in on its own as daily tracking continues`
                 : (sort === "first_seen_list" && !count) ? " · artists show up here as they cross 500K after tracking started" : "";
-  $("#acount").textContent = `${(count ?? aRows.length).toLocaleString()} artist${count===1?"":"s"}${waiting}`;
+  $("#acount").className = "count sum";
+  $("#acount").innerHTML = artistSummary(count ?? aRows.length) + (waiting ? `<span class="q">${esc(waiting)}</span>` : "");
   if(!aRows.length){ $("#alist").innerHTML = `<div class="empty">No artists match these filters.</div>`; return; }
   $("#alist").innerHTML = aRows.map((a,i) => artistRow(a, i+1)).join("") +
     ((count ?? 0) > aRows.length ? `<button class="btn plain more" id="amore">Show 50 more</button>` : "");
@@ -768,13 +932,14 @@ function tourText(a){
   return `<span class="small" title="Each refresh checks tours for the ~850 highest-scoring and rising artists">Tour not checked (outside top ~850)</span>`;
 }
 // "7d +8% · 30d +65% · 60d 2.9× · 90d 4.1×": big multiples shown as ×, small ones as %
-function riseBits(a){
+function riseBits(a, hl){
+  const hw = { pct_7d:"7d", mult_30d:"30d", mult_60d:"60d", mult_90d:"90d" }[hl];
   const fmt = m => m == null ? null : (m >= 1.5 ? `<b>${(+m).toFixed(1)}×</b>` : pct(m - 1));
   const parts = [
     ["7d", a.pct_7d != null ? 1 + +a.pct_7d : null],
     ["30d", a.mult_30d], ["60d", a.mult_60d], ["90d", a.mult_90d],
   ].filter(([,m]) => m != null);
-  return parts.map(([w,m]) => `<span class="${cls(m - 1)}" title="Change in monthly listeners over ${w.replace("d"," days")}">${w} ${fmt(m)}</span>`).join("");
+  return parts.map(([w,m]) => `<span class="${cls(m - 1)}${w===hw ? " hl" : ""}" title="Change in monthly listeners over ${w.replace("d"," days")}">${w} ${fmt(m)}</span>`).join("");
 }
 const justCrossed = a => a.first_seen_list && a.first_seen_list > "2001" && (Date.now() - new Date(a.first_seen_list+"T12:00:00")) < 45*DAY;
 function journey(a){
@@ -796,8 +961,8 @@ function artistRow(a, i){
     </span>
     <span class="c-l">
       <span class="big num">${fmtN(a.listeners)}</span>
-      <span class="gl">${a.listeners_daily != null ? `<span class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)} today${dp != null ? ` (${pct(dp)})` : ""}</span>` : ""}</span>
-      <span class="gl">${riseBits(a)}</span>
+      <span class="gl">${a.listeners_daily != null ? `<span class="${cls(a.listeners_daily)}${$("#asort").value === "daily_pct" ? " hl" : ""}">${signed(a.listeners_daily)} today${dp != null ? ` (${pct(dp)})` : ""}</span>` : ""}</span>
+      <span class="gl">${riseBits(a, $("#asort").value)}</span>
       ${journey(a)}
     </span>
     <span class="c-t tourline">${tourText(a)}</span>
@@ -828,7 +993,7 @@ async function openArtist(key){
       <div><h2>${favStar("artist", key)} ${esc(a.name)}</h2><div style="margin-top:6px">${artistBadges(a)}</div></div>
       <button class="close" data-close>Close ✕</button>
     </div>
-    <div class="dlinks">${isSpotifyId(key) ? `<a href="spotify:artist:${esc(key)}">Open in Spotify app</a><a href="${esc(a.spotify_url)}" target="_blank" rel="noopener">Open on Spotify web ↗</a>` : ""}</div>
+    <div class="dlinks"><a href="#" data-add-show data-artist-key="${esc(key)}" data-artist-name="${esc(a.name)}">＋ Add a show to my library</a>${isSpotifyId(key) ? `<a href="spotify:artist:${esc(key)}">Open in Spotify app</a><a href="${esc(a.spotify_url)}" target="_blank" rel="noopener">Open on Spotify web ↗</a>` : ""}</div>
     <div class="sgrid">
       <div class="sbox"><b>${fmtN(a.listeners)}</b><span>Spotify monthly listeners${a.listeners_rank?` · #${a.listeners_rank.toLocaleString()} worldwide`:""}</span></div>
       <div class="sbox"><b class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)}</b><span>gained today ${dp != null ? `(${pct(dp)})` : ""}</span></div>
@@ -901,7 +1066,7 @@ function openHelp(){
     <div class="card"><h3>Where the data comes from</h3><ul>
       <li><b>Spotify monthly listeners</b> for ~28,000 artists (everyone above 500K) and <b>every Spotify daily & weekly Top 200</b> chart (Global, U.S., ~75 countries), collected from kworb.net, which records Spotify's own numbers daily.</li>
       <li><b>U.S. shows</b> from Ticketmaster and SeatGeek, for the ~600 highest-scoring artists plus up to 250 rising artists each refresh.</li>
-      <li>Refreshes automatically around <b>7am and 7pm</b> Eastern. A daily listener snapshot builds 7-day and 30-day growth over time.</li>
+      <li>Refreshes automatically around <b>9am, 1pm and 7pm</b> Eastern. A daily listener snapshot builds 7-day and 30-day growth over time.</li>
     </ul></div>
     <div class="card"><h3>Breakout score (0–100, per artist)</h3>
       <p>Finds low-key artists blowing up. The smaller and faster-growing, the higher.</p><ul>
@@ -923,6 +1088,9 @@ function openHelp(){
       <li><b>SeatGeek demand score</b></li>
       <li><b>Verified Fan</b> sales or several presales (Ticketmaster uses these for in-demand tours)</li>
       <li>Shows Ticketmaster has stopped selling after the on-sale get at least 80 (“may be sold out”).</li></ul></div>
+    <div class="card"><h3>Your library</h3>
+      <p>⭐ Library keeps everything you're watching: shows you star, <b>shows you add yourself</b> (any venue, AXS, DICE or presale link the app missed), and artists you follow. Past shows stay in the library under “Past”. Upcoming ones also appear as ticket buttons in the bar at the top.</p>
+      <p><b>On your phone:</b> open the site in Safari (iPhone) or Chrome (Android) and choose <b>Add to Home Screen</b>. It opens full-screen like an app.</p></div>
     <div class="card"><h3>Playing music</h3>
       <p>Press <span class="play" style="cursor:default">▶</span> next to a song or artist to play it in the player at the bottom while you keep browsing. It's Spotify's official player: log in to Spotify in this browser for full songs, otherwise you hear 30-second previews. Use <b>Open in Spotify app</b> (in the player and each artist's panel) to jump straight into your Spotify app instead. Each artist's panel also has a Listen section with their top songs.</p></div>
     <div class="card"><h3>Selling-fast alerts</h3>
@@ -931,7 +1099,7 @@ function openHelp(){
       <li>⛔ <b>Likely sold out</b>: Ticketmaster stopped selling after the on-sale</li>
       <li>📈 <b>Resale price jump</b> of 25%+ (and at least $20) between refreshes</li>
       <li>📉 <b>Resale tickets disappearing</b>: SeatGeek listings down 30%+</li></ul>
-      <p>Shows with a recent signal get a <span class="badge b-hot">🔥 Selling fast</span> badge and +8 Heat. Optional phone notifications go out after each refresh.</p></div>
+      <p>Shows with a recent signal get a <span class="badge b-hot">🔥 Selling fast</span> badge and +8 Heat. Optional phone notifications go out after each refresh (9am, 1pm, 7pm).</p></div>
     <div class="card"><h3>Labels</h3><ul>
       <li><span class="badge b-now">📈 Rising</span> 2–9M monthly listeners and growing at least 8% a month.</li>
       <li><span class="badge b-new">New on charts</span> every charting song entered a Spotify chart in the last 7 days.</li>
@@ -1013,6 +1181,7 @@ function card(s){
       <div class="date"><div class="m">${d.m}</div><div class="d">${d.d}</div><div class="w">${d.w}</div></div>
       <div style="min-width:0">
         <div class="who">${isSpotifyId(s.artist_key) ? `<span class="play" role="button" tabindex="0" data-play-artist="${esc(s.artist_key)}" title="Play ${esc(s.artist)} on Spotify">▶</span> ` : ""}<button data-artist="${esc(s.artist_key)}">${esc(s.artist)}</button><span class="rk">${s.listeners ? fmtN(s.listeners)+" monthly listeners" : ""}${s.draw_score ? ` · Draw ${Math.round(s.draw_score)}` : ""}</span></div>
+        ${showRiseLine(s)}
         <div class="where">${esc(s.venue)} · ${esc(s.city)}${s.state?", "+esc(s.state):""}${s.time?" · "+fmtTime(s.time):""}</div>
         <div class="meta">
           <span class="badge ${S[1]}">${esc(S[3])}</span>
@@ -1038,12 +1207,16 @@ function filteredShows(){
   if(state) rows = rows.filter(s => s.state === state);
   if(w) rows = rows.filter(s => s.date && s.date <= plusDays(+w));
   if(mh) rows = rows.filter(s => (s.heat_score||0) >= mh);
+  if(showSize){ const [lo, hi] = showSize.split("-"); rows = rows.filter(s => s.listeners && s.listeners >= (+lo||0)*1e6 && (!hi || s.listeners <= +hi*1e6)); }
+  if(sort === "breakout") rows = rows.filter(s => showArtists[s.artist_key] && showArtists[s.artist_key].breakout_score != null);
   if($("#hideSkip").checked) rows = rows.filter(s => (notes["show:"+s.id]||{}).status !== "Skip");
   if(q) rows = rows.filter(s => [s.artist,s.city,s.venue,s.event,s.state,(notes["show:"+s.id]||{}).note].join(" ").toLowerCase().includes(q));
   const byDate = (a,b) => (a.date||"9999").localeCompare(b.date||"9999");
   const saleT = s => s._next ? (s._next.kind === "open" ? 0 : new Date(s._next.time).getTime()) : Infinity;
   rows.sort(sort==="date" ? byDate
     : sort==="draw" ? (a,b) => (b.draw_score||0)-(a.draw_score||0) || byDate(a,b)
+    : sort==="rise" ? (a,b) => (riseVal(b) ?? -Infinity) - (riseVal(a) ?? -Infinity) || byDate(a,b)
+    : sort==="breakout" ? (a,b) => (showArtists[b.artist_key].breakout_score||0)-(showArtists[a.artist_key].breakout_score||0) || byDate(a,b)
     : sort==="new" ? (a,b) => (b.first_seen||"").localeCompare(a.first_seen||"") || byDate(a,b)
     : sort==="sale" ? (a,b) => saleT(a)-saleT(b) || (b.heat_score||0)-(a.heat_score||0)
     : (a,b) => (b.heat_score||0)-(a.heat_score||0) || byDate(a,b));
@@ -1052,13 +1225,53 @@ function filteredShows(){
 function renderShows(){
   const rows = filteredShows();
   visibleLinks = rows.map(s => s.ticket_url || s.seatgeek_url).filter(Boolean);
-  $("#count").textContent = `${rows.length.toLocaleString()} show${rows.length===1?"":"s"}`;
+  paintShowChips();
+  const so = $("#sort").value, sOpt = $("#sort").selectedOptions[0];
+  const sRank = so === "rise" ? `artists rising fastest over ${RISE_WORDS[showRise]} first` : so === "heat" ? "most likely to sell out first" : "by " + (sOpt ? sOpt.textContent.replace(/^Sort: /, "").replace(/\s*\(.*\)$/, "").toLowerCase() : so);
+  const sz = showSize ? (() => { const [lo, hi] = showSize.split("-"); return sizeWords(+lo, hi ? +hi : NaN); })() : "";
+  const stw = { now:"presale open now", soon:"sale coming up", onsale:"on sale", new:"just announced" }[filt] || "";
+  $("#count").className = "count sum";
+  $("#count").innerHTML = `<b>${rows.length.toLocaleString()}</b> U.S. show${rows.length===1?"":"s"}${[stw, sz ? "artists " + sz : ""].filter(Boolean).map(x => " · " + x).join("")} <span class="q">· ${esc(sRank)}</span>`;
   if(!rows.length){ $("#list").innerHTML = `<div class="empty">${shows.length ? "No shows match these filters." : "No shows yet. They appear after a refresh with a Ticketmaster or SeatGeek key."}</div>`; return; }
   $("#list").innerHTML = rows.slice(0, limit).map(card).join("") +
     (rows.length > limit ? `<button class="btn plain more" id="more">Show more (${(rows.length-limit).toLocaleString()} left)</button>` : "");
   const more = $("#more"); if(more) more.onclick = () => { limit += 150; renderShows(); };
 }
 function setFilt(v){ filt = v; limit = 150; $$("[data-st]").forEach(x => x.classList.toggle("on", x.dataset.st===v)); renderShows(); }
+
+/* growth numbers for every touring artist, so shows can be sorted by how fast the artist is rising */
+let showArtists = {};
+async function loadShowArtists(){
+  const out = {};
+  for(let from = 0; from < 5000; from += 1000){
+    const { data, error } = await sb.from("artists")
+      .select("key,listeners,listeners_daily,daily_pct,pct_7d,mult_30d,mult_60d,mult_90d,breakout_score,first_seen_list,first_seen_listeners")
+      .eq("on_tour", true).range(from, from + 999);
+    if(error || !data) break;
+    data.forEach(a => out[a.key] = a);
+    if(data.length < 1000) break;
+  }
+  showArtists = out;
+}
+let showRise = "mult_30d", showSize = "";
+function riseVal(s){
+  const a = showArtists[s.artist_key]; if(!a) return null;
+  const v = showRise === "daily_pct" ? dailyPct(a) : a[showRise];
+  return v == null ? null : +v;
+}
+function paintShowChips(){
+  const so = $("#sort").value;
+  $$("[data-ss]").forEach(b => b.classList.toggle("on", b.dataset.ss === so));
+  $$("[data-srise]").forEach(b => b.classList.toggle("on", so === "rise" && b.dataset.srise === showRise));
+  $$("[data-ssize]").forEach(b => b.classList.toggle("on", b.dataset.ssize === showSize));
+}
+function showRiseLine(s){
+  const a = showArtists[s.artist_key]; if(!a) return "";
+  const dp = dailyPct(a), hl = $("#sort").value === "rise" ? showRise : null;
+  const today = dp != null && Math.abs(dp) >= 0.001 ? `<span class="${cls(dp)}${hl === "daily_pct" ? " hl" : ""}">${pct(dp)} today</span>` : "";
+  const bits = today + riseBits(a, hl);
+  return bits ? `<div class="srise gl">${bits}</div>` : "";
+}
 
 /* ---------- sale calendar ---------- */
 function calendarItems(days, includeOpen){
@@ -1216,33 +1429,63 @@ async function toggleFav(type, id){
     if(el.classList.contains("favbtn")){ el.classList.toggle("on", on); el.textContent = on ? "★ Favorited" : "☆ Favorite"; }
     else { el.classList.toggle("on", on); el.textContent = on ? "★" : "☆"; el.title = on ? "Remove from favorites" : "Add to favorites"; }
   });
+  if(type === "show") await loadLibrary();
   renderFavBar(); updateMineCount();
   if(!$("#t-mine").hidden) renderMine();
 }
-function tktLabel(s){ return `${esc(s.artist)} <small>${esc(fmtDate(s.date).m)} ${fmtDate(s.date).d} · ${esc(s.city || "")}</small>`; }
-function renderFavBar(){
-  const fs = favShowIds().map(id => shows.find(s => s.id === id)).filter(Boolean).sort((a,b) => (a.date||"").localeCompare(b.date||""));
-  const fa = favArtistKeys().map(k => favArtists[k]).filter(Boolean).sort((a,b) => (b.draw_score||0)-(a.draw_score||0));
-  if(!fs.length && !fa.length){ $("#favbar").hidden = true; return; }
-  const max = 10;
+function tktLabel(s){ return `${esc(s.artist || s.venue || "Show")} <small>${s.date ? `${esc(fmtDate(s.date).m)} ${fmtDate(s.date).d} · ` : ""}${esc(s.city || "")}</small>`; }
+
+/* ---------- library: starred shows + your own shows ---------- */
+let myShows = [], favExtra = [], libView = "up", myShowsReady = true;
+const favTracked = () => favShowIds().map(id => shows.find(s => s.id === id) || favExtra.find(s => s.id === id)).filter(Boolean);
+const isPast = d => d && d < TODAY();
+async function loadLibrary(){
+  const r = await sb.from("my_shows").select("*").order("date", { ascending: true, nullsFirst: false });
+  myShowsReady = !r.error; myShows = r.error ? [] : (r.data || []);
+  // starred shows that dropped out of the upcoming list (past or removed): fetch them so they stay in the library
+  const missing = favShowIds().filter(id => !shows.find(s => s.id === id));
+  favExtra = [];
+  for(let i = 0; i < missing.length; i += 100){
+    const { data } = await sb.from("shows").select("*").in("id", missing.slice(i, i+100));
+    (data || []).forEach(x => { const o = { ...x, _st: liveStatus(x) }; o.heat_score = heatOf(o); o._next = nextSale(o); favExtra.push(o); });
+  }
+}
+function libraryItems(view = "all", q = ""){
   const items = [
-    ...fs.slice(0, max).map(s => { const u = s.ticket_url || s.seatgeek_url;
-      return u ? `<a class="tkt${s.ticket_url ? "" : " sg"}" href="${esc(u)}" target="_blank" rel="noopener" draggable="true" title="${esc(s.artist)} · ${esc(s.venue)} · ${esc(shortDate(s.date))} · opens ${esc(seller(u))}">🎟 ${tktLabel(s)}</a>` : ""; }),
+    ...favTracked().map(s => ({ type:"tracked", date: s.date, s })),
+    ...myShows.map(m => ({ type:"mine", date: m.date, m })),
+  ];
+  let out = items.filter(i => view === "all" || (view === "past" ? isPast(i.date) : !isPast(i.date)));
+  if(q){ q = q.toLowerCase(); out = out.filter(i => { const x = i.s || i.m; return [x.artist,x.venue,x.city,x.state,x.event,x.notes,(notes["show:"+(x.id)]||{}).note].join(" ").toLowerCase().includes(q); }); }
+  const key = i => i.date || "9999";
+  out.sort((a,b) => view === "past" ? key(b).localeCompare(key(a)) : key(a).localeCompare(key(b)));
+  return out;
+}
+const itemLinks = i => i.s ? [i.s.ticket_url || i.s.seatgeek_url].filter(Boolean) : [i.m.url, i.m.url2].filter(Boolean);
+function renderFavBar(){
+  const lib = libraryItems("up").filter(i => itemLinks(i).length);
+  const fa = favArtistKeys().map(k => favArtists[k]).filter(Boolean).sort((a,b) => (b.draw_score||0)-(a.draw_score||0));
+  if(!lib.length && !fa.length){ $("#favbar").hidden = true; return; }
+  const max = 12;
+  const items = [
+    ...lib.slice(0, max).map(i => { const x = i.s || i.m, u = itemLinks(i)[0];
+      return `<a class="tkt${i.s && !i.s.ticket_url ? " sg" : ""}" href="${esc(u)}" target="_blank" rel="noopener" draggable="true" title="${esc(x.artist || "")} · ${esc(x.venue || "")} · ${esc(shortDate(x.date))} · opens ${esc(seller(u))}">🎟 ${tktLabel(x)}</a>`; }),
     ...fa.slice(0, max).map(a => `<button class="achip" data-artist="${esc(a.key)}">★ ${esc(a.name)}</button>`),
   ].join("");
-  $("#favbar").innerHTML = `<span class="lab">⭐ Favorites</span>${items}<button class="more-link" data-goto-fav>See all →</button>`;
+  $("#favbar").innerHTML = `<span class="lab">⭐ Library</span>${items}<button class="more-link" data-goto-fav>See all →</button>`;
   $("#favbar").hidden = false;
 }
 function favRow(s){
-  const d = fmtDate(s.date), S = st(s._st), n = s._next;
-  const sale = n ? (n.kind === "open" ? `🟢 ${esc(n.name)} open now · ends ${esc(when(n.time))}` : `⏰ ${esc(n.name)} ${esc(when(n.time))} (${rel(n.time)})`) : "";
+  const d = fmtDate(s.date), S = st(s._st), n = s._next, past = isPast(s.date);
+  const sale = !past && n ? (n.kind === "open" ? `🟢 ${esc(n.name)} open now · ends ${esc(when(n.time))}` : `⏰ ${esc(n.name)} ${esc(when(n.time))} (${rel(n.time)})`) : "";
   return `<div class="fav-row">
     <div class="date"><div class="m">${d.m}</div><div class="d">${d.d}</div><div class="w">${d.w}</div></div>
     <div style="min-width:0">
       <div class="who">${favStar("show", s.id)}<button data-artist="${esc(s.artist_key)}">${esc(s.artist)}</button></div>
       <div class="where">${esc(s.venue)} · ${esc(s.city)}${s.state?", "+esc(s.state):""}${s.time?" · "+fmtTime(s.time):""}</div>
-      <div class="meta"><span class="badge ${S[1]}">${esc(S[3])}</span>${sellingFast(s) ? `<span class="badge b-hot">🔥 Selling fast</span>` : ""}</div>
+      <div class="meta">${past ? `<span class="badge b-off">Past show</span>` : `<span class="badge ${S[1]}">${esc(S[3])}</span>`}${!past && sellingFast(s) ? `<span class="badge b-hot">🔥 Selling fast</span>` : ""}${(notes["show:"+s.id]||{}).status ? `<span class="badge b-mine">${esc(notes["show:"+s.id].status)}</span>` : ""}</div>
       ${sale ? `<div class="line2">${sale}</div>` : ""}
+      ${(notes["show:"+s.id]||{}).note ? `<div class="notepeek">${esc(notes["show:"+s.id].note)}</div>` : ""}
     </div>
     ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
     <div class="tix2">
@@ -1251,27 +1494,125 @@ function favRow(s){
     </div>
   </div>`;
 }
+function myRow(m){
+  const d = fmtDate(m.date), past = isPast(m.date);
+  return `<div class="fav-row">
+    <div class="date"><div class="m">${d.m}</div><div class="d">${d.d}</div><div class="w">${d.w}</div></div>
+    <div style="min-width:0">
+      <div class="who">${m.artist_key ? `<button data-artist="${esc(m.artist_key)}">${esc(m.artist || "Show")}</button>` : esc(m.artist || "Show")}${m.event ? `<span class="rk">${esc(m.event)}</span>` : ""}</div>
+      <div class="where">${esc(m.venue || "")}${m.city ? " · "+esc(m.city) : ""}${m.state ? ", "+esc(m.state) : ""}${m.time ? " · "+esc(fmtTime(m.time)) : ""}</div>
+      <div class="meta"><span class="badge b-mineadd">Added by you</span>${past ? `<span class="badge b-off">Past show</span>` : ""}${m.status ? `<span class="badge b-mine">${esc(m.status)}</span>` : ""}</div>
+      ${m.notes ? `<div class="notepeek">${esc(m.notes)}</div>` : ""}
+      <div class="lib-actions"><button type="button" data-edit-mine="${esc(m.id)}">✎ Edit</button><button type="button" data-del-mine="${esc(m.id)}">🗑 Remove</button></div>
+    </div>
+    <span></span>
+    <div class="tix2">
+      ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener" draggable="true" title="${esc(m.url)}">🎟 ${esc(seller(m.url))}</a>` : ""}
+      ${m.url2 ? `<a class="sg" href="${esc(m.url2)}" target="_blank" rel="noopener" draggable="true" title="${esc(m.url2)}">${esc(seller(m.url2))}</a>` : ""}
+    </div>
+  </div>`;
+}
 async function renderMine(){
   await loadFavArtists();
-  const fs = favShowIds().map(id => shows.find(s => s.id === id)).filter(Boolean).sort((a,b) => (a.date||"").localeCompare(b.date||""));
-  const gone = favShowIds().length - fs.length;
+  const q = ($("#libq").value || "").trim();
+  const items = libraryItems(libView, q);
   const fa = favArtistKeys().map(k => favArtists[k]).filter(Boolean).sort((a,b) => (b.draw_score||0)-(a.draw_score||0));
-  const marked = shows.filter(s => { const n = notes["show:"+s.id]; return n && (n.status || n.note); });
+  const marked = shows.filter(s => { const n = notes["show:"+s.id]; return n && (n.status || n.note) && !isFavShow(s.id); });
+  $$("[data-lib]").forEach(b => b.classList.toggle("on", b.dataset.lib === libView));
   updateMineCount();
   let html = "";
-  html += `<div class="group-h">Favorite shows · ${fs.length}</div>`;
-  if(fs.length){
+  if(!myShowsReady) html += `<div class="empty">To add your own shows, run the latest <b>database_update.sql</b> in Supabase once.</div>`;
+  const label = libView === "past" ? "Past shows" : libView === "all" ? "All saved shows" : "Upcoming saved shows";
+  html += `<div class="group-h">${label} · ${items.length}</div>`;
+  if(items.length){
     html += `<div class="fav-tools"><button class="btn ghost" data-fav-copy>Copy all ticket links</button><button class="btn plain" data-fav-open>Open all in new tabs</button></div>`;
-    html += `<div class="list">${fs.map(favRow).join("")}</div>`;
-  } else html += `<div class="empty">Tap ☆ Favorite on any show to keep its ticket link here.</div>`;
-  if(gone > 0) html += `<p class="help">${gone} favorited show${gone>1?"s have":" has"} already happened or been removed.</p>`;
-  html += `<div class="group-h">Favorite artists · ${fa.length}</div>`;
-  html += fa.length ? `<div class="list">${fa.map((a,i) => artistRow(a, i+1)).join("")}</div>` : `<div class="empty">Tap ☆ next to any artist's name to follow them here.</div>`;
-  const order = ["Watching","Bought","Listed","Sold","","Skip"], groups = {};
-  marked.forEach(s => { const k = notes["show:"+s.id].status || ""; (groups[k] ||= []).push(s); });
-  html += order.filter(k => groups[k]).map(k =>
-    `<div class="group-h">${k ? k+" shows" : "Shows with notes"} · ${groups[k].length}</div><div class="list">${groups[k].sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(card).join("")}</div>`).join("");
+    html += `<div class="list">${items.map(i => i.s ? favRow(i.s) : myRow(i.m)).join("")}</div>`;
+  } else html += `<div class="empty">${q ? "Nothing in your library matches that search." : libView === "past" ? "No past shows yet." : "Tap ☆ Favorite on any show, or <b>＋ Add a show</b> for one the app missed."}</div>`;
+  if(!q){
+    html += `<div class="group-h">Followed artists · ${fa.length}</div>`;
+    html += fa.length ? `<div class="list">${fa.map((a,i) => artistRow(a, i+1)).join("")}</div>` : `<div class="empty">Tap ☆ next to any artist's name to follow them here.</div>`;
+    const order = ["Watching","Bought","Listed","Sold","","Skip"], groups = {};
+    marked.forEach(s => { const k = notes["show:"+s.id].status || ""; (groups[k] ||= []).push(s); });
+    html += order.filter(k => groups[k]).map(k =>
+      `<div class="group-h">${k ? k+" shows" : "Shows with notes"} · ${groups[k].length}</div><div class="list">${groups[k].sort((a,b)=>(a.date||"").localeCompare(b.date||"")).map(card).join("")}</div>`).join("");
+  }
   $("#mineList").innerHTML = html;
+}
+
+/* ---------- add / edit your own show ---------- */
+let artistLookup = {};
+function openShowForm(m = {}){
+  const f = (k, v = "") => esc(m[k] ?? v);
+  openDrawer(`
+    <div class="dhead"><h2>${m.id ? "Edit show" : "Add a show"}</h2><button class="close" data-close>Close ✕</button></div>
+    <p class="small" style="margin:0 0 12px">For a show the app missed, or anything you want to keep an eye on: a venue page, a presale link, an AXS or DICE listing.</p>
+    <form class="form" id="showForm" autocomplete="off">
+      <input type="hidden" id="fId" value="${f("id")}">
+      <input type="hidden" id="fKey" value="${f("artist_key")}">
+      <label class="full">Artist
+        <input id="fArtist" list="artistOpts" value="${f("artist")}" placeholder="Start typing an artist…" required>
+        <datalist id="artistOpts"></datalist></label>
+      <label class="full">Ticket or venue link
+        <input id="fUrl" type="text" inputmode="url" autocapitalize="off" spellcheck="false" value="${f("url")}" placeholder="https://…"></label>
+      <label>Show date <input id="fDate" type="date" value="${f("date")}"></label>
+      <label>Time <input id="fTime" type="time" value="${f("time")}"></label>
+      <label class="full">Venue <input id="fVenue" value="${f("venue")}" placeholder="e.g. The Fillmore"></label>
+      <label>City <input id="fCity" value="${f("city")}"></label>
+      <label>State <input id="fState" value="${f("state")}" maxlength="2" placeholder="NY" style="text-transform:uppercase"></label>
+      <label class="full">Event name (optional) <input id="fEvent" value="${f("event")}" placeholder="e.g. Fall Tour 2026"></label>
+      <label class="full">Second link (optional) <input id="fUrl2" type="text" inputmode="url" autocapitalize="off" spellcheck="false" value="${f("url2")}" placeholder="Resale, AXS, presale signup…"></label>
+      <label>Status
+        <select id="fStatus">${["","Watching","Bought","Listed","Sold"].map(x => `<option value="${x}"${(m.status||"")===x?" selected":""}>${x || "—"}</option>`).join("")}</select></label>
+      <span></span>
+      <label class="full">Notes <textarea id="fNotes" placeholder="Presale code, section, price, who it's for…">${f("notes")}</textarea></label>
+      <p class="hint">Saved to your library and shown in the favorites bar while upcoming.</p>
+      <div class="row-btns"><button type="button" class="btn plain" data-close>Cancel</button><button type="submit" class="btn">${m.id ? "Save changes" : "Add to library"}</button></div>
+    </form>`);
+  if(m.artist && m.artist_key) artistLookup[m.artist] = m.artist_key;
+  let deb;
+  $("#fArtist").addEventListener("input", e => {
+    $("#fKey").value = artistLookup[e.target.value] || "";
+    clearTimeout(deb);
+    const t = e.target.value.trim().replace(/[%,()*]/g, " ");
+    if(t.length < 2) return;
+    deb = setTimeout(async () => {
+      const { data } = await sb.from("artists").select("key,name,listeners").ilike("name", `%${t}%`).order("listeners", { ascending: false, nullsFirst: false }).limit(8);
+      (data || []).forEach(a => artistLookup[a.name] = a.key);
+      $("#artistOpts").innerHTML = (data || []).map(a => `<option value="${esc(a.name)}">${fmtN(a.listeners)} listeners</option>`).join("");
+      $("#fKey").value = artistLookup[$("#fArtist").value] || "";
+    }, 250);
+  });
+  $("#showForm").onsubmit = saveShowForm;
+  setTimeout(() => $(m.artist ? "#fUrl" : "#fArtist").focus(), 50);
+}
+const fixUrl = u => { u = (u || "").trim(); if(!u) return null; return /^https?:\/\//i.test(u) ? u : "https://" + u; };
+async function saveShowForm(e){
+  e.preventDefault();
+  const artist = $("#fArtist").value.trim();
+  const row = {
+    artist, artist_key: $("#fKey").value || artistLookup[artist] || null,
+    url: fixUrl($("#fUrl").value), url2: fixUrl($("#fUrl2").value),
+    date: $("#fDate").value || null, time: $("#fTime").value || null,
+    venue: $("#fVenue").value.trim() || null, city: $("#fCity").value.trim() || null,
+    state: ($("#fState").value.trim().toUpperCase() || null), event: $("#fEvent").value.trim() || null,
+    status: $("#fStatus").value || null, notes: $("#fNotes").value.trim() || null,
+  };
+  if(!artist && !row.venue){ toast("Add an artist or a venue"); return; }
+  const id = $("#fId").value;
+  const res = id ? await sb.from("my_shows").update(row).eq("id", id) : await sb.from("my_shows").insert(row);
+  if(res.error){ toast("Couldn't save: " + res.error.message); return; }
+  await loadLibrary();
+  closeDrawer(); renderFavBar(); updateMineCount();
+  if($("#t-mine").hidden) setTab("mine"); else renderMine();
+  toast(id ? "Show updated" : "Added to your library ⭐");
+}
+async function deleteMine(id){
+  const m = myShows.find(x => x.id === id);
+  if(!confirm(`Remove ${m && m.artist ? m.artist : "this show"} from your library?`)) return;
+  const { error } = await sb.from("my_shows").delete().eq("id", id);
+  if(error){ toast("Couldn't remove: " + error.message); return; }
+  myShows = myShows.filter(x => x.id !== id);
+  renderMine(); renderFavBar(); updateMineCount(); toast("Removed");
 }
 
 /* ---------- charts ---------- */
@@ -1358,7 +1699,7 @@ function rerenderCard(id){
   const s = shows.find(x => x.id === id); if(!s) return;
   $$(`[data-card="${CSS.escape(id)}"]`).forEach(el => { el.outerHTML = card(s); });
 }
-function updateMineCount(){ $("#mineN").textContent = (favShowIds().length + favArtistKeys().length) || ""; }
+function updateMineCount(){ $("#mineN").textContent = (libraryItems("up").length + favArtistKeys().length) || ""; }
 
 /* ---------- tabs ---------- */
 function setTab(t){
@@ -1393,8 +1734,13 @@ document.addEventListener("click", async e => {
   if(e.target.closest("#playerClose")){ closePlayer(); return; }
   const fsb = e.target.closest("[data-fav-show]"); if(fsb){ e.preventDefault(); e.stopPropagation(); toggleFav("show", fsb.dataset.favShow); return; }
   const fab = e.target.closest("[data-fav-artist]"); if(fab){ e.preventDefault(); e.stopPropagation(); toggleFav("artist", fab.dataset.favArtist); return; }
+  if(e.target.closest("[data-add-show]")){ e.preventDefault(); const b = e.target.closest("[data-add-show]"); openShowForm(b.dataset.artistKey ? { artist: b.dataset.artistName, artist_key: b.dataset.artistKey } : {}); return; }
+  const em = e.target.closest("[data-edit-mine]"); if(em){ const m = myShows.find(x => x.id === em.dataset.editMine); if(m) openShowForm(m); return; }
+  const dm = e.target.closest("[data-del-mine]"); if(dm){ deleteMine(dm.dataset.delMine); return; }
+  const lb = e.target.closest("[data-lib]"); if(lb){ libView = lb.dataset.lib; renderMine(); return; }
+  const ft = e.target.closest("[data-ft]"); if(ft){ const box = document.getElementById(ft.dataset.ft); box.classList.toggle("open"); const o = box.classList.contains("open"); ft.classList.toggle("on", o); if(ft.classList.contains("advbtn")) ft.textContent = o ? "Fewer filters ▴" : "More filters ▾"; return; }
   if(e.target.closest("[data-goto-fav]")){ setTab("mine"); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
-  const favLinks = () => favShowIds().map(id => shows.find(s => s.id === id)).filter(Boolean).map(s => s.ticket_url || s.seatgeek_url).filter(Boolean);
+  const favLinks = () => libraryItems(libView, ($("#libq").value || "").trim()).flatMap(i => itemLinks(i).slice(0, 1));
   if(e.target.closest("[data-fav-copy]")){
     const txt = favLinks().join("\n");
     try{ await navigator.clipboard.writeText(txt); } catch(err){ const ta=document.createElement("textarea"); ta.value=txt; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); }
@@ -1429,18 +1775,25 @@ let aDeb;
 $("#aq").addEventListener("input", () => { clearTimeout(aDeb); aDeb = setTimeout(customized, 300); });
 ["#lmin","#lmax"].forEach(id => $(id).addEventListener("input", () => { clearTimeout(aDeb); aDeb = setTimeout(customized, 400); }));
 ["#asort","#fCharts","#fRising","#fPresale","#fWhen","#fNew","#fNewList"].forEach(id => $(id).addEventListener("change", customized));
-$$("[data-rise]").forEach(b => b.onclick = () => { $("#asort").value = b.dataset.rise; preset = "rise"; renderPresets(); paintSizes(); queryArtists(true); });
+$$("[data-rise]").forEach(b => b.onclick = () => { lastRise = b.dataset.rise; $("#asort").value = b.dataset.rise; customized(); });
+$$("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+$$("[data-tourf]").forEach(b => b.onclick = () => setShowsF(b.dataset.tourf));
+$("#aReset").onclick = () => { setShowsF("tour"); applyPreset("gems"); $("#lmin").value = ""; $("#lmax").value = ""; };
 $$("[data-size]").forEach(b => b.onclick = () => {
   const [lo, hi] = (b.dataset.size || "0-").split("-");
   $("#lmin").value = lo && +lo ? lo : ""; $("#lmax").value = hi || "";
   customized();
 });
-$("#fTour").addEventListener("change", () => { try{ localStorage.setItem("tf-tour", $("#fTour").checked ? "1" : "0"); }catch(e){} queryArtists(true); renderHeader(); });
+
 $$("[data-st]").forEach(b => b.onclick = () => setFilt(b.dataset.st));
+$$("[data-ss]").forEach(b => b.onclick = () => { $("#sort").value = b.dataset.ss; limit = 150; renderShows(); });
+$$("[data-srise]").forEach(b => b.onclick = () => { showRise = b.dataset.srise; $("#sort").value = "rise"; limit = 150; renderShows(); });
+$$("[data-ssize]").forEach(b => b.onclick = () => { showSize = b.dataset.ssize; limit = 150; renderShows(); });
 $$(".tab").forEach(b => b.onclick = () => setTab(b.dataset.tab));
 ["#q","#state","#sort","#hideSkip","#when","#minHeat"].forEach(id => $(id).addEventListener("input", () => { limit = 150; renderShows(); }));
 ["#calq","#calDays","#calState","#calHeat","#calOpen"].forEach(id => $(id).addEventListener("input", renderCalendar));
 $("#qc").addEventListener("input", renderChart);
+$("#libq").addEventListener("input", () => { clearTimeout(window.__lq); window.__lq = setTimeout(renderMine, 200); });
 $("#alertHeat").addEventListener("change", renderAlerts);
 $("#csort").addEventListener("change", renderChart);
 $("#chartSel").addEventListener("change", loadChart);
@@ -1474,7 +1827,7 @@ function currentTheme(){
   if(t) return t;
   return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
-function paintThemeButtons(){ const dark = currentTheme() === "dark"; $$(".theme-btn").forEach(b => b.textContent = dark ? "☀️ Light" : "🌙 Dark"); }
+function paintThemeButtons(){ const dark = currentTheme() === "dark"; $$(".theme-btn").forEach(b => b.innerHTML = dark ? `☀️<span class="tl"> Light</span>` : `🌙<span class="tl"> Dark</span>`); }
 $$(".theme-btn").forEach(b => b.onclick = () => {
   const next = currentTheme() === "dark" ? "light" : "dark";
   document.documentElement.setAttribute("data-theme", next);
