@@ -35,8 +35,8 @@ U.S. shows are likely to sell out, built from Spotify data and ticketing sites.
 | `TICKETMASTER_KEY` | developer.ticketmaster.com → My Apps → Consumer Key |
 | `SEATGEEK_KEY` | seatgeek.com/account/develop → Client ID |
 
-Optional variables (same page → Variables): `ARTISTS_TO_CHECK` (default 400),
-`SONGS_PER_CHART` (default 200), `HISTORY_MIN` (default 1000000 — smallest artist
+Optional variables (same page → Variables): `ARTISTS_TO_CHECK` (default 500), `BREAKOUTS_TO_CHECK` (default 350),
+`SONGS_PER_CHART` (default 200), `HISTORY_MIN` (default 0 — smallest artist
 whose daily listener history is kept).
 
 `chart_tour_checker.py` also works on its own and writes an Excel file:
