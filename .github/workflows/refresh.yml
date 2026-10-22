@@ -4,7 +4,7 @@ on:
   schedule:
     # Twice a day (UTC 11:07 and 23:07 = about 7am and 7pm New York time).
     # Keeps Ticketmaster use under its free 5,000 calls/day.
-    - cron: "7 11,23 * * *"
+    - cron: "7 0,14,18 * * *"
   workflow_dispatch: {}
 
 permissions:
