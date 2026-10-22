@@ -35,6 +35,9 @@ jobs:
           SONGS_PER_CHART: ${{ vars.SONGS_PER_CHART }}
           ARTISTS_TO_CHECK: ${{ vars.ARTISTS_TO_CHECK }}
           HISTORY_MIN: ${{ vars.HISTORY_MIN }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          ALERT_MIN_HEAT: ${{ vars.ALERT_MIN_HEAT }}
+          SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
       # GitHub pauses scheduled jobs in repos with no commits for 60 days.
       # This makes an empty commit once a month so the refresh never stops.
       - name: Keep schedule alive
