@@ -475,7 +475,7 @@ def search_links(name):
 
 SALE_ORDER = {"PRESALE NOW": 0, "On sale now": 1, "On sale (SeatGeek)": 1, "Presale coming": 2,
               "Public on-sale coming": 3, "Rescheduled": 4, "Unknown": 5,
-              "Off sale / sold out": 6, "Cancelled": 7}
+              "Not on sale (may be sold out)": 6, "Cancelled": 7}
 
 
 def parse_event(e, artist, now):
@@ -497,18 +497,20 @@ def parse_event(e, artist, now):
         elif s and s > now:
             coming.append(label)
 
+    # Ticketmaster says "offsale" whenever tickets aren't on sale right now, which
+    # includes shows whose on-sale hasn't started yet, so sale dates win over it.
     if status in ("cancelled", "canceled"):
         sale = "Cancelled"
-    elif status == "offsale":
-        sale = "Off sale / sold out"
     elif active:
         sale = "PRESALE NOW"
-    elif pub_start and pub_start <= now and status in ("onsale", ""):
-        sale = "On sale now"
     elif coming:
         sale = "Presale coming"
     elif pub_start and pub_start > now:
         sale = "Public on-sale coming"
+    elif status == "offsale":
+        sale = "Not on sale (may be sold out)"
+    elif pub_start and pub_start <= now:
+        sale = "On sale now"
     elif status == "rescheduled":
         sale = "Rescheduled"
     else:

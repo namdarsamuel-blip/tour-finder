@@ -138,8 +138,9 @@ def heat_score(show, draw):
     parts["presale"] = round(vf * 100)
     total, wsum = total + 0.1 * vf, wsum + 0.1
     heat = 100 * total / wsum
-    if show.get("_status_code") == "offsale":
-        heat, parts["sold_out"] = max(heat, 90), True
+    # no sale coming up and Ticketmaster has stopped selling: often a sell-out
+    if show.get("Sale Status") == "Not on sale (may be sold out)":
+        heat, parts["off_sale"] = max(heat, 80), True
     return round(heat, 1), parts
 
 
@@ -168,7 +169,7 @@ def run():
         if not name or c.norm(name) in SKIP:
             return
         k = aid or c.norm(name)
-        a = agg.setdefault(k, {"name": name, "codes": set(), "entries": [], "new": 0,
+        a = agg.setdefault(k, {"name": name, "codes": set(), "entries": [], "new": 0, "age": None,
                                "us_daily_best": None, "us_weekly_best": None,
                                "global_daily_best": None, "global_weekly_best": None})
         a["codes"].add(e["Chart Code"])
@@ -179,6 +180,11 @@ def run():
             a[field] = e["Pos"]
         if e["Change"] in ("NEW",) or (e["Days on Chart"] or 99) <= 7 or (e["Weeks on Chart"] or 99) <= 1:
             a["new"] += 1
+        # how long this artist has been on the charts: longest-running entry, in days
+        d = e["Days on Chart"] if e["Days on Chart"] is not None else (
+            e["Weeks on Chart"] * 7 if e["Weeks on Chart"] is not None else None)
+        if d is not None and (a["age"] is None or d > a["age"]):
+            a["age"] = d
         a["entries"].append({"chart": e["Chart"], "code": e["Chart Code"], "period": e["Period"],
                              "pos": e["Pos"], "title": e["Title"], "change": e["Change"],
                              "featured": featured})
@@ -224,6 +230,8 @@ def run():
             "key": k, "name": name,
             "spotify_url": f"https://open.spotify.com/artist/{k}" if len(k) == 22 else None,
             "listeners": lis, "listeners_daily": (L or {}).get("daily"),
+            "daily_pct": round((L or {}).get("daily") / (lis - (L or {}).get("daily")), 5)
+                         if lis and (L or {}).get("daily") is not None and lis - (L or {}).get("daily") > 0 else None,
             "listeners_peak": (L or {}).get("peak"), "listeners_rank": (L or {}).get("rank"),
             "growth_7d": (lis - l7[k]) if lis and k in l7 else None,
             "growth_30d": (lis - l30[k]) if lis and k in l30 else None,
@@ -233,6 +241,7 @@ def run():
             "us_daily_best": ch and ch["us_daily_best"], "us_weekly_best": ch and ch["us_weekly_best"],
             "global_daily_best": ch and ch["global_daily_best"], "global_weekly_best": ch and ch["global_weekly_best"],
             "new_entries": ch["new"] if ch else 0,
+            "chart_age_days": ch["age"] if ch else None,
             "chart_songs": top_entries(ch["entries"]) if ch else [],
             "top_song": (top_entries(ch["entries"])[0]["title"] if ch else None),
             "chart_seen_at": started if ch else None,
@@ -248,7 +257,7 @@ def run():
         rows.append(a)
     print(f"Saving {len(rows)} artists...")
     upsert("artists", rows)
-    api("PATCH", "artists", {"in_charts": False, "n_charts": 0, "chart_songs": [], "new_entries": 0,
+    api("PATCH", "artists", {"in_charts": False, "n_charts": 0, "chart_songs": [], "new_entries": 0, "chart_age_days": None,
                              "us_daily_best": None, "us_weekly_best": None,
                              "global_daily_best": None, "global_weekly_best": None},
         params={"in_charts": "eq.true", "chart_seen_at": f"lt.{started}"}, prefer="return=minimal")
