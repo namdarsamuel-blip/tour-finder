@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tour Finder</title>
+<script>try{var t=localStorage.getItem("tf-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f5eff'/%3E%3Cpath d='M9 11h14v3a2 2 0 0 0 0 4v3H9v-3a2 2 0 0 0 0-4z' fill='white'/%3E%3C/svg%3E">
 <style>
 :root{
@@ -215,6 +216,7 @@ td.num,th.num{text-align:right}
       <label for="pw">Password</label>
       <input id="pw" type="password" autocomplete="current-password" required>
       <button class="btn" type="submit">Sign in</button>
+      <button class="btn plain theme-btn" type="button" style="width:100%;margin-top:8px" aria-label="Switch light or dark mode"></button>
       <div class="err" id="loginErr"></div>
     </form>
   </section>
@@ -226,6 +228,7 @@ td.num,th.num{text-align:right}
         <p id="sub">Loading…</p>
       </div>
       <div class="actions">
+        <button class="btn plain theme-btn" type="button" aria-label="Switch light or dark mode"></button>
         <button class="btn plain" id="reload">Reload</button>
         <button class="btn plain" id="signout">Sign out</button>
       </div>
@@ -873,6 +876,24 @@ setInterval(() => {
   shows.forEach(x => { const v = liveStatus(x); if(v !== x._st){ x._st = v; changed = true; } });
   if(changed && !openEditor) renderShows();
 }, 60000);
+
+/* ---------- light / dark mode ---------- */
+function currentTheme(){
+  const t = document.documentElement.getAttribute("data-theme");
+  if(t) return t;
+  return window.matchMedia && matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+}
+function paintThemeButtons(){
+  const dark = currentTheme() === "dark";
+  $$(".theme-btn").forEach(b => b.textContent = dark ? "☀️ Light mode" : "🌙 Dark mode");
+}
+$$(".theme-btn").forEach(b => b.onclick = () => {
+  const next = currentTheme() === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  try{ localStorage.setItem("tf-theme", next); }catch(e){}
+  paintThemeButtons();
+});
+paintThemeButtons();
 
 (function start(){
   if(!CFG.SUPABASE_URL || CFG.SUPABASE_URL.includes("PASTE") || !window.supabase){ show("setup"); return; }
