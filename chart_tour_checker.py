@@ -225,34 +225,48 @@ def parse_chart_html(html, chart, top=None):
     return chart_date, rows
 
 
+def listeners_page_url(page):
+    return f"{KWORB}listeners.html" if page == 1 else f"{KWORB}listeners{page}.html"
+
+
+def parse_listeners_html(html):
+    """Rows of a kworb 'top artists by monthly listeners' page."""
+    soup = BeautifulSoup(html, "html.parser")
+    table = soup.find("table")
+    if table is None:
+        return []
+    heads = [th.get_text(" ", strip=True) for th in (table.find("thead") or table.find("tr")).find_all(["th", "td"])]
+    idx = {h: i for i, h in enumerate(heads)}
+    if "Listeners" not in idx:
+        return []
+    out = []
+    for tr in table.find_all("tr"):
+        tds = tr.find_all("td")
+        if len(tds) != len(heads):
+            continue
+        a = tds[idx.get("Artist", 1)].find("a", href=True)
+        m = re.search(r"artist/([A-Za-z0-9]+)", a["href"]) if a else None
+        if not m:
+            continue
+        g = lambda h: to_int(tds[idx[h]].get_text(strip=True)) if h in idx else None
+        out.append({"key": m.group(1), "name": a.get_text(strip=True), "rank": g("#"),
+                    "listeners": g("Listeners"), "daily": g("Daily +/-"), "peak": g("PkListeners")})
+    return out
+
+
 def fetch_listeners(max_pages=20, delay=0.6):
     """Monthly listeners for every artist kworb tracks (about 25k artists above 500k listeners)."""
     out, seen = [], set()
     for page in range(1, max_pages + 1):
-        url = f"{KWORB}listeners.html" if page == 1 else f"{KWORB}listeners{page}.html"
-        r = http_get(url)
+        r = http_get(listeners_page_url(page))
         if r.status_code != 200:
             break
         r.encoding = "utf-8"
-        soup = BeautifulSoup(r.text, "html.parser")
-        table = soup.find("table")
-        if table is None:
-            break
-        heads = [th.get_text(" ", strip=True) for th in (table.find("thead") or table.find("tr")).find_all(["th", "td"])]
-        idx = {h: i for i, h in enumerate(heads)}
         n_before = len(out)
-        for tr in table.find_all("tr"):
-            tds = tr.find_all("td")
-            if len(tds) != len(heads):
-                continue
-            a = tds[idx.get("Artist", 1)].find("a", href=True)
-            m = re.search(r"artist/([A-Za-z0-9]+)", a["href"]) if a else None
-            if not m or m.group(1) in seen:
-                continue
-            seen.add(m.group(1))
-            g = lambda h: to_int(tds[idx[h]].get_text(strip=True)) if h in idx else None
-            out.append({"key": m.group(1), "name": a.get_text(strip=True), "rank": g("#"),
-                        "listeners": g("Listeners"), "daily": g("Daily +/-"), "peak": g("PkListeners")})
+        for row in parse_listeners_html(r.text):
+            if row["key"] not in seen:
+                seen.add(row["key"])
+                out.append(row)
         print(f"  listeners page {page}: {len(out) - n_before} artists", flush=True)
         if len(out) == n_before:
             break
