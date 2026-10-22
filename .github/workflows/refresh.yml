@@ -1,0 +1,49 @@
+name: Refresh tour data
+
+on:
+  schedule:
+    # Twice a day (UTC 11:07 and 23:07 = about 7am and 7pm New York time).
+    # Keeps Ticketmaster use under its free 5,000 calls/day.
+    - cron: "7 11,23 * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Refresh charts, tours and presales
+        run: python sync.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+          TICKETMASTER_KEY: ${{ secrets.TICKETMASTER_KEY }}
+          SEATGEEK_KEY: ${{ secrets.SEATGEEK_KEY }}
+          SONGS_PER_CHART: ${{ vars.SONGS_PER_CHART }}
+          ARTISTS_TO_CHECK: ${{ vars.ARTISTS_TO_CHECK }}
+          HISTORY_MIN: ${{ vars.HISTORY_MIN }}
+      # GitHub pauses scheduled jobs in repos with no commits for 60 days.
+      # This makes an empty commit once a month so the refresh never stops.
+      - name: Keep schedule alive
+        if: github.event_name == 'schedule'
+        run: |
+          last=$(git log -1 --format=%ct)
+          if [ $(( $(date +%s) - last )) -gt 2592000 ]; then
+            git config user.name "tour-finder-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git commit --allow-empty -m "keepalive"
+            git push
+          fi
