@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Tour Finder</title>
 <script>try{var t=localStorage.getItem("tf-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%231DB954'/%3E%3Cpath d='M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z' fill='%230F1B3D'/%3E%3Cpath d='M39 22.5v21' stroke='%231DB954' stroke-width='2.6' stroke-dasharray='3.2 3'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D7F'/%3E%3Cstop offset='1' stop-color='%23FF9F1C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Cpath d='M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z' fill='%230F1B3D'/%3E%3Cpath d='M39 22.5v21' stroke='%23FF7A45' stroke-width='2.6' stroke-dasharray='3.2 3'/%3E%3C/svg%3E">
 <style>
 :root{
   --bg:#f3f5f4; --panel:#ffffff; --ink:#0f1b3d; --muted:#5b6580; --line:#dfe4ec; --soft:#eef1f5;
@@ -302,7 +302,7 @@ body.playing .toast{bottom:110px}
 <header class="topbar">
   <div class="wrap">
     <div class="brand">
-      <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="32" fill="#1DB954"/><path d="M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z" fill="#0F1B3D"/><path d="M39 22.5v21" stroke="#1DB954" stroke-width="2.6" stroke-dasharray="3.2 3"/></svg>
+      <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="tfg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FF3D7F"/><stop offset="1" stop-color="#FF9F1C"/></linearGradient></defs><circle cx="32" cy="32" r="32" fill="url(#tfg)"/><path d="M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z" fill="#0F1B3D"/><path d="M39 22.5v21" stroke="#FF7A45" stroke-width="2.6" stroke-dasharray="3.2 3"/></svg>
       <div><h1>Tour Finder</h1><p id="sub">Spotify demand × U.S. tour dates</p></div>
     </div>
     <div class="tbtns">
@@ -356,15 +356,16 @@ body.playing .toast{bottom:110px}
         <input id="lmax" type="number" min="0" step="0.5" placeholder="max (M)" aria-label="Maximum monthly listeners in millions">
         <select id="asort" aria-label="Sort artists">
           <option value="breakout_score">Sort: Breakout score (low-key & blowing up)</option>
-          <option value="mult_30d">Biggest multiplier, 30 days (×)</option>
-          <option value="mult_60d">Biggest multiplier, ~60 days (×)</option>
+          <option value="mult_30d">Fastest rise, 30 days (×)</option>
+          <option value="mult_60d">Fastest rise, 60 days (×)</option>
+          <option value="mult_90d">Fastest rise, 90 days (×)</option>
           <option value="first_seen_list">Newest to 500K+ listeners</option>
           <option value="draw_score">Draw score (biggest draw)</option>
           <option value="listeners">Most monthly listeners</option>
           <option value="listeners_daily">Most listeners gained today</option>
-          <option value="daily_pct">Fastest growing today (%)</option>
+          <option value="daily_pct">Fastest rise today (%)</option>
           <option value="growth_signal">Fastest growing (est. per month)</option>
-          <option value="pct_7d">Grew most in 7 days (%)</option>
+          <option value="pct_7d">Fastest rise, 7 days (%)</option>
           <option value="growth_30d">Gained most in 30 days</option>
           <option value="max_heat">Hottest upcoming show</option>
           <option value="next_show_date">Next U.S. show (soonest)</option>
@@ -379,6 +380,14 @@ body.playing .toast{bottom:110px}
         <button class="chip" data-size="1-3">1–3M</button>
         <button class="chip" data-size="3-10">3–10M</button>
         <button class="chip" data-size="10-">10M+</button>
+      </div>
+      <div class="bar sizes" id="risebar">
+        <span class="lab">Fastest rise over:</span>
+        <button class="chip" data-rise="daily_pct">Today</button>
+        <button class="chip" data-rise="pct_7d">7 days</button>
+        <button class="chip" data-rise="mult_30d">30 days</button>
+        <button class="chip" data-rise="mult_60d">60 days</button>
+        <button class="chip" data-rise="mult_90d">90 days</button>
       </div>
       <div class="bar">
         <label><input type="checkbox" id="fTour" checked> <b>Has U.S. shows</b></label>
@@ -659,8 +668,7 @@ const PRESETS = {
   gems:     { label:"💎 Breakouts", hint:"Low-key & blowing up", f:{}, sort:"breakout_score" },
   radar:    { label:"🌱 Under the radar", hint:"Under 3M, growing fastest", f:{ lmax:3 }, sort:"breakout_score" },
   crossed:  { label:"🆕 Just crossed 500K", hint:"New to the 500K+ club", f:{ newList:true }, sort:"breakout_score" },
-  mult:     { label:"🚀 Biggest multipliers", hint:"Most × growth, ~60 days", f:{ lmax:15 }, sort:"mult_60d" },
-  today:    { label:"⚡ Fastest today", hint:"Biggest % gain today", f:{ lmax:15 }, sort:"daily_pct" },
+  rise:     { label:"🚀 Fastest rise", hint:"Pick: today · 7 · 30 · 60 · 90 days", f:{ lmax:15 }, sort:"mult_30d" },
   newcomers:{ label:"🎵 Chart newcomers", hint:"On Spotify charts ≤ 2 weeks", f:{ newDays:"14", lmax:15 }, sort:"breakout_score" },
   rising:   { label:"📈 Rising 2–9M", hint:"Mid-size, growing fast", f:{ lmin:2, lmax:9 }, sort:"growth_signal" },
   draws:    { label:"🔥 Biggest draws", hint:"Best draw score", f:{}, sort:"draw_score" },
@@ -695,6 +703,7 @@ async function queryArtists(reset){
   if(reset){ aPage = 0; aRows = []; $("#alist").innerHTML = `<div class="loading">Loading artists…</div>`; }
   const token = ++aToken;
   const sort = $("#asort").value;
+  $$("[data-rise]").forEach(b => b.classList.toggle("on", b.dataset.rise === sort));
   let q = sb.from("artists").select("*", { count: "exact" });
   const text = $("#aq").value.trim().replace(/[%,()*]/g, " ");
   if(text) q = q.ilike("name", `%${text}%`);
@@ -714,7 +723,7 @@ async function queryArtists(reset){
   if(sort === "next_show_date") q = q.gte("next_show_date", TODAY());
   if(sort === "us_daily_best") q = q.not("us_daily_best", "is", null);
   if(sort === "chart_age_days") q = q.eq("in_charts", true).not("chart_age_days", "is", null);
-  if(["growth_30d","pct_7d","daily_pct","max_heat","mult_30d","mult_60d","breakout_score"].includes(sort)) q = q.not(sort, "is", null);
+  if(["growth_30d","pct_7d","daily_pct","max_heat","mult_30d","mult_60d","mult_90d","breakout_score"].includes(sort)) q = q.not(sort, "is", null);
   const asc = ["next_show_date","us_daily_best","chart_age_days"].includes(sort);
   q = q.order(sort, { ascending: asc, nullsFirst: false }).order("listeners", { ascending: false, nullsFirst: false });
   const { data, error, count } = await q.range(aPage*PAGE, aPage*PAGE + PAGE - 1);
@@ -724,9 +733,8 @@ async function queryArtists(reset){
     $("#alist").innerHTML = `<div class="empty">${esc(error.message)}${hint}</div>`; return;
   }
   aRows = aRows.concat(data);
-  const waiting = (["growth_30d","mult_30d"].includes(sort) && !count) ? " · 30-day numbers appear after a month of daily snapshots"
-                : (sort === "mult_60d" && !count) ? " · 60-day numbers appear after two months of snapshots. Try 💎 Breakouts meanwhile"
-                : (sort === "pct_7d" && !count) ? " · 7-day growth appears after a week of daily snapshots"
+  const need = { pct_7d: 7, mult_30d: 30, growth_30d: 30, mult_60d: 60, mult_90d: 90 }[sort];
+  const waiting = (need && !count) ? ` · ${need}-day growth needs ${need} days of history. Run “Backfill history” in GitHub Actions to fill it in from archived copies, or it fills in on its own as daily tracking continues`
                 : (sort === "first_seen_list" && !count) ? " · artists show up here as they cross 500K after tracking started" : "";
   $("#acount").textContent = `${(count ?? aRows.length).toLocaleString()} artist${count===1?"":"s"}${waiting}`;
   if(!aRows.length){ $("#alist").innerHTML = `<div class="empty">No artists match these filters.</div>`; return; }
@@ -759,6 +767,15 @@ function tourText(a){
   if(a.tour_checked_at) return `<span class="small">No U.S. shows found</span>`;
   return `<span class="small" title="Each refresh checks tours for the ~850 highest-scoring and rising artists">Tour not checked (outside top ~850)</span>`;
 }
+// "7d +8% · 30d +65% · 60d 2.9× · 90d 4.1×": big multiples shown as ×, small ones as %
+function riseBits(a){
+  const fmt = m => m == null ? null : (m >= 1.5 ? `<b>${(+m).toFixed(1)}×</b>` : pct(m - 1));
+  const parts = [
+    ["7d", a.pct_7d != null ? 1 + +a.pct_7d : null],
+    ["30d", a.mult_30d], ["60d", a.mult_60d], ["90d", a.mult_90d],
+  ].filter(([,m]) => m != null);
+  return parts.map(([w,m]) => `<span class="${cls(m - 1)}" title="Change in monthly listeners over ${w.replace("d"," days")}">${w} ${fmt(m)}</span>`).join("");
+}
 const justCrossed = a => a.first_seen_list && a.first_seen_list > "2001" && (Date.now() - new Date(a.first_seen_list+"T12:00:00")) < 45*DAY;
 function journey(a){
   // "640K → 2.1M in 12 days (since crossing 500K on Oct 22)"
@@ -779,10 +796,8 @@ function artistRow(a, i){
     </span>
     <span class="c-l">
       <span class="big num">${fmtN(a.listeners)}</span>
-      <span class="gl">${a.listeners_daily != null ? `<span class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)} today${dp != null ? ` (${pct(dp)})` : ""}</span>` : ""}
-        ${a.pct_7d != null ? `<span class="${cls(a.pct_7d)}">${pct(a.pct_7d)} in 7d</span>` : ""}
-        ${a.pct_30d != null ? `<span class="${cls(a.pct_30d)}">${pct(a.pct_30d)} in 30d</span>` : ""}
-        ${a.mult_60d >= 1.2 ? `<span class="up"><b>${(+a.mult_60d).toFixed(1)}×</b> in ~60d</span>` : a.mult_30d >= 1.15 ? `<span class="up"><b>${(+a.mult_30d).toFixed(1)}×</b> in 30d</span>` : ""}</span>
+      <span class="gl">${a.listeners_daily != null ? `<span class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)} today${dp != null ? ` (${pct(dp)})` : ""}</span>` : ""}</span>
+      <span class="gl">${riseBits(a)}</span>
       ${journey(a)}
     </span>
     <span class="c-t tourline">${tourText(a)}</span>
@@ -819,7 +834,8 @@ async function openArtist(key){
       <div class="sbox"><b class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)}</b><span>gained today ${dp != null ? `(${pct(dp)})` : ""}</span></div>
       <div class="sbox"><b class="${cls(a.growth_7d)}">${a.growth_7d != null ? signed(a.growth_7d) : "…"}</b><span>${a.growth_7d != null ? `7 days (${pct(a.pct_7d)})` : "7-day change (needs a week of history)"}</span></div>
       <div class="sbox"><b class="${cls(a.growth_30d)}">${a.growth_30d != null ? signed(a.growth_30d) : "…"}</b><span>${a.growth_30d != null ? `30 days (${pct(a.pct_30d)})` : "30-day change (needs a month)"}</span></div>
-      <div class="sbox"><b>${a.mult_60d ? (+a.mult_60d).toFixed(2)+"×" : a.mult_30d ? (+a.mult_30d).toFixed(2)+"×" : "…"}</b><span>${a.mult_60d ? "growth multiple, ~60 days" : a.mult_30d ? "growth multiple, 30 days" : "growth multiple (needs a month)"}</span></div>
+      <div class="sbox"><b class="${cls(a.mult_60d ? a.mult_60d - 1 : null)}">${a.mult_60d ? (+a.mult_60d).toFixed(2)+"×" : "…"}</b><span>${a.mult_60d ? "60-day growth" : "60-day growth (needs history)"}</span></div>
+      <div class="sbox"><b class="${cls(a.mult_90d ? a.mult_90d - 1 : null)}">${a.mult_90d ? (+a.mult_90d).toFixed(2)+"×" : "…"}</b><span>${a.mult_90d ? "90-day growth" : "90-day growth (needs history)"}</span></div>
       <div class="sbox"><b>${fmtN(a.listeners_peak)}</b><span>all-time peak${a.at_peak ? " · at peak now 🏔" : ""}</span></div>
       <div class="sbox"><b class="up">${Math.round(a.breakout_score||0)}<span class="small"> / 100</span></b><span>breakout score</span></div>
       <div class="sbox"><b>${Math.round(a.draw_score||0)}<span class="small"> / 100</span></b><span>draw score</span></div>
@@ -889,7 +905,7 @@ function openHelp(){
     </ul></div>
     <div class="card"><h3>Breakout score (0–100, per artist)</h3>
       <p>Finds low-key artists blowing up. The smaller and faster-growing, the higher.</p><ul>
-      <li><b>45% Growth</b>: how many times bigger they're getting per month (3× = 100). Uses real 30/60-day history once collected; until then, today's pace.</li>
+      <li><b>45% Growth</b>: how many times bigger they're getting per month (3× = 100). Uses real 30/60-day history when available (including archived history from the Backfill job); otherwise today's pace.</li>
       <li><b>20% Low-key</b>: smaller audience scores higher (500K = 100, 25M+ = 0)</li>
       <li><b>20% Fresh</b>: brand new to the Spotify charts, just crossed 500K listeners, or at an all-time high</li>
       <li><b>15% Today</b>: today's jump in listeners (+3% in one day = 100)</li></ul>
@@ -983,7 +999,7 @@ function card(s){
   const isNew = s.first_seen && (Date.now() - new Date(s.first_seen)) < NEW_MS;
   const links = [
     `<button class="favbtn${isFavShow(s.id) ? " on" : ""}" data-fav-show="${esc(s.id)}">${isFavShow(s.id) ? "★ Favorited" : "☆ Favorite"}</button>`,
-    s.ticket_url ? `<a class="tm" href="${esc(s.ticket_url)}" target="_blank" rel="noopener">Ticketmaster</a>` : "",
+    s.ticket_url ? `<a class="tm" href="${esc(s.ticket_url)}" target="_blank" rel="noopener" title="${esc(s.ticket_url)}">${esc(seller(s.ticket_url))}</a>` : "",
     s.seatgeek_url ? `<a class="sg" href="${esc(s.seatgeek_url)}" target="_blank" rel="noopener">SeatGeek</a>` : "",
     `<button class="${n && (n.status||n.note) ? "has" : ""}" data-edit="${esc(s.id)}">${n && n.status ? esc(n.status) : (n && n.note ? "Note ✎" : "+ Note")}</button>`,
   ].join("");
@@ -1085,7 +1101,7 @@ function renderCalendar(){
       <span class="cal-show" style="min-width:0"><span style="display:block;font-size:14px">${esc(shortDate(s.date))} · ${esc(s.city)}${s.state?", "+esc(s.state):""}</span>
         <span class="small" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s.venue)}${s.listeners ? ` · ${fmtN(s.listeners)} listeners` : ""}</span></span>
       ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
-      ${url ? `<a class="tix" href="${esc(url)}" target="_blank" rel="noopener">Tickets</a>` : `<span></span>`}
+      ${url ? `<a class="tix" href="${esc(url)}" target="_blank" rel="noopener" draggable="true" title="${esc(url)}">${esc(seller(url))}</a>` : `<span></span>`}
     </div>`;
   };
   let html = "";
@@ -1127,11 +1143,29 @@ function renderAlerts(){
       <span class="cal-show" style="min-width:0"><span style="display:block;font-size:14px">${esc(shortDate(a.show_date))} · ${esc(a.city || "")}${a.state ? ", "+esc(a.state) : ""}</span>
         <span class="small" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(a.venue || "")}</span></span>
       ${scoreRing(a.heat, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
-      ${a.url ? `<a class="tix" href="${esc(a.url)}" target="_blank" rel="noopener">Tickets</a>` : `<span></span>`}
+      ${a.url ? `<a class="tix" href="${esc(a.url)}" target="_blank" rel="noopener" draggable="true" title="${esc(a.url)}">${esc(seller(a.url))}</a>` : `<span></span>`}
     </div>`);
   }
   flush();
   $("#alertlist").innerHTML = html;
+}
+
+/* ---------- ticket seller names ---------- */
+const SELLERS = [
+  ["ticketmaster.", "Ticketmaster"], ["livenation.", "Live Nation"], ["ticketweb.", "TicketWeb"],
+  ["universe.com", "Universe"], ["frontgatetickets.", "Front Gate"], ["seatgeek.", "SeatGeek"],
+  ["axs.com", "AXS"], ["etix.", "Etix"], ["eventbrite.", "Eventbrite"], ["dice.fm", "DICE"],
+  ["seetickets.", "See Tickets"], ["tixr.", "Tixr"], ["ticketswest.", "TicketsWest"],
+  ["evenue.net", "Paciolan"], ["ticketfly.", "Ticketfly"], ["vividseats.", "Vivid Seats"],
+  ["stubhub.", "StubHub"], ["prekindle.", "Prekindle"], ["showclix.", "ShowClix"], ["etix.com", "Etix"],
+];
+function seller(url){
+  let host = "";
+  try{ host = new URL(url).hostname.toLowerCase(); }catch(e){ return "Tickets"; }
+  const hit = SELLERS.find(([d]) => host.includes(d));
+  if(hit) return hit[1];
+  // unknown site: show its domain, e.g. "venuename.com"
+  return host.replace(/^www\./, "");
 }
 
 /* ---------- spotify player ---------- */
@@ -1193,7 +1227,7 @@ function renderFavBar(){
   const max = 10;
   const items = [
     ...fs.slice(0, max).map(s => { const u = s.ticket_url || s.seatgeek_url;
-      return u ? `<a class="tkt${s.ticket_url ? "" : " sg"}" href="${esc(u)}" target="_blank" rel="noopener" draggable="true" title="${esc(s.artist)} · ${esc(s.venue)} · ${esc(shortDate(s.date))}">🎟 ${tktLabel(s)}</a>` : ""; }),
+      return u ? `<a class="tkt${s.ticket_url ? "" : " sg"}" href="${esc(u)}" target="_blank" rel="noopener" draggable="true" title="${esc(s.artist)} · ${esc(s.venue)} · ${esc(shortDate(s.date))} · opens ${esc(seller(u))}">🎟 ${tktLabel(s)}</a>` : ""; }),
     ...fa.slice(0, max).map(a => `<button class="achip" data-artist="${esc(a.key)}">★ ${esc(a.name)}</button>`),
   ].join("");
   $("#favbar").innerHTML = `<span class="lab">⭐ Favorites</span>${items}<button class="more-link" data-goto-fav>See all →</button>`;
@@ -1212,7 +1246,7 @@ function favRow(s){
     </div>
     ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
     <div class="tix2">
-      ${s.ticket_url ? `<a href="${esc(s.ticket_url)}" target="_blank" rel="noopener" draggable="true">🎟 Ticketmaster</a>` : ""}
+      ${s.ticket_url ? `<a href="${esc(s.ticket_url)}" target="_blank" rel="noopener" draggable="true" title="${esc(s.ticket_url)}">🎟 ${esc(seller(s.ticket_url))}</a>` : ""}
       ${s.seatgeek_url ? `<a class="sg" href="${esc(s.seatgeek_url)}" target="_blank" rel="noopener" draggable="true">SeatGeek</a>` : ""}
     </div>
   </div>`;
@@ -1395,6 +1429,7 @@ let aDeb;
 $("#aq").addEventListener("input", () => { clearTimeout(aDeb); aDeb = setTimeout(customized, 300); });
 ["#lmin","#lmax"].forEach(id => $(id).addEventListener("input", () => { clearTimeout(aDeb); aDeb = setTimeout(customized, 400); }));
 ["#asort","#fCharts","#fRising","#fPresale","#fWhen","#fNew","#fNewList"].forEach(id => $(id).addEventListener("change", customized));
+$$("[data-rise]").forEach(b => b.onclick = () => { $("#asort").value = b.dataset.rise; preset = "rise"; renderPresets(); paintSizes(); queryArtists(true); });
 $$("[data-size]").forEach(b => b.onclick = () => {
   const [lo, hi] = (b.dataset.size || "0-").split("-");
   $("#lmin").value = lo && +lo ? lo : ""; $("#lmax").value = hi || "";
