@@ -25,6 +25,7 @@ import sys
 import pandas as pd
 import requests
 
+import audience
 import chart_tour_checker as c
 
 URL = os.environ.get("SUPABASE_URL", "").strip().rstrip("/")
@@ -391,6 +392,7 @@ def run():
             "global_daily_best": ch and ch["global_daily_best"], "global_weekly_best": ch and ch["global_weekly_best"],
             "new_entries": ch["new"] if ch else 0,
             "chart_age_days": ch["age"] if ch else None,
+            "chart_countries": sorted(ch["codes"] - {"us", "global"}) if ch else [],
             "chart_songs": top_entries(ch["entries"]) if ch else [],
             "top_song": (top_entries(ch["entries"])[0]["title"] if ch else None),
             "chart_seen_at": started if ch else None,
@@ -493,13 +495,34 @@ def run():
                 "source": clean(s.get("Source")), "active": s["Sale Status"] != "Cancelled",
                 "presale_windows": s.get("_presales") or [], "onsale_at": s.get("_onsale_at"),
                 "status_code": clean(s.get("_status_code")), "last_seen": started,
+                "lat": clean(s.get("_lat")), "lng": clean(s.get("_lng")),
+                "genre": ", ".join(dict.fromkeys(g for g in (s.get("_genres") or []) if g)) or None,
             })
+
+        # ---- audience fit: venue-area demographics vs the artist's fan base ----
+        artist_info = {}
+        for name, art in by_name.items():
+            genres = [g for s in shows if s["Artist"] == name for g in (s.get("_genres") or [])]
+            artist_info[art["key"]] = audience.audience_tag(genres, art.get("chart_countries") or [])
+        try:
+            audience.enrich(show_rows, {s.get("Show ID"): s for s in shows}, artist_info, api, fetch_all)
+        except Exception as ex:  # never let the extra stats break the refresh
+            print(f"  audience fit skipped this run: {ex}", flush=True)
+            for r in show_rows:
+                for k in ("area_name", "area_pop", "area_hisp", "area_asian", "area_young", "area_income",
+                          "fit_score", "fit_parts", "audience_tag"):
+                    r.setdefault(k, None)
+        for r in show_rows:  # a strong local fan base nudges Heat up, a weak one down (at most +/-5)
+            if r.get("fit_score") is not None:
+                r["heat_score"] = round(max(0, min(100, r["heat_score"] + (r["fit_score"] - 50) / 10)), 1)
+                r["heat_parts"]["fit"] = r["fit_score"]
 
         # ---- selling-fast signals: compare with what we saw last refresh ----
         old = {r["id"]: r for r in fetch_all("shows", {
             "select": "id,artist_key,city,venue,date,status_code,sale_status,resale_low,resale_listings"})}
         alerts = make_alerts(old, show_rows, started[:10])
         hot_ids = {a["show_id"] for a in alerts if a["kind"] in ("show_added", "resale_jump", "listings_drop")}
+        heat_by_artist = {}
         for r in show_rows:  # selling fast -> a little more heat
             if r["id"] in hot_ids:
                 r["heat_score"] = min(100, round(r["heat_score"] + 8, 1))
@@ -522,6 +545,9 @@ def run():
                 "axs_url": t.get("AXS Search"), "bandsintown_url": t.get("Bandsintown Search"),
                 "songkick_url": t.get("Songkick Search"), "google_url": t.get("Google Tour Search"),
                 "max_heat": heat_by_artist.get(art["key"]),
+                "genre": ", ".join(dict.fromkeys(g for s in shows if s["Artist"] == name for g in (s.get("_genres") or []) if g)) or None,
+                "audience_tag": artist_info.get(art["key"], (None, ""))[0],
+                "audience_why": artist_info.get(art["key"], (None, ""))[1] or None,
             })
         print(f"Saving tour info for {len(tour_rows)} artists, {len(show_rows)} shows...")
         upsert("artists", tour_rows)
