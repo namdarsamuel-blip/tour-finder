@@ -309,6 +309,7 @@ body.playing .toast{bottom:110px}
 .form .row-btns{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
 .form .hint{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin:-4px 0 0}
 .tab .ti{margin-right:6px}
+.alsob{border:0;background:none;padding:0;color:var(--ink);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}
 .rfind{border:1px dashed var(--line)!important;background:transparent!important;color:var(--muted)!important;font-weight:600;font-size:12.5px!important;cursor:pointer;border-radius:8px;padding:7px 10px}
 .rfind:hover{border-color:var(--ink)!important;color:var(--ink)!important}
 .rfind.sm{font-weight:500;font-size:12px!important}
@@ -1163,7 +1164,7 @@ async function openArtist(key){
   ]);
   if(drawerKey !== key) return;
   if(!a){ $("#drawer").innerHTML = `<button class="close" data-close>Close</button><p>Artist not found.</p>`; return; }
-  const myShows = shows.filter(s => s.artist_key === key).sort((x,y) => (x.date||"").localeCompare(y.date||""));
+  const myShows = shows.filter(s => s.artist_key === key || (s.also_keys || []).includes(key)).sort((x,y) => (x.date||"").localeCompare(y.date||""));
   const n = notes["artist:"+key] || {}, parts = a.score_parts || {}, dp = dailyPct(a);
   const partRow = (k,label,tip) => `<span title="${esc(tip)}">${label}</span><span class="meter"><i style="width:${parts[k]||0}%"></i></span><span class="num">${parts[k]||0}</span>`;
   const songs = (a.chart_songs || []).map(c =>
@@ -1380,7 +1381,7 @@ function card(s){
     <div class="show-main">
       <div class="date"><div class="m">${d.m}</div><div class="d">${d.d}</div><div class="w">${d.w}</div></div>
       <div style="min-width:0">
-        <div class="who">${isSpotifyId(s.artist_key) ? `<span class="play" role="button" tabindex="0" data-play-artist="${esc(s.artist_key)}" title="Play ${esc(s.artist)} on Spotify">▶</span> ` : ""}<button data-artist="${esc(s.artist_key)}">${esc(s.artist)}</button><span class="rk">${s.listeners ? fmtN(s.listeners)+" monthly listeners" : ""}${s.draw_score ? ` · Draw ${Math.round(s.draw_score)}` : ""}</span></div>
+        <div class="who">${isSpotifyId(s.artist_key) ? `<span class="play" role="button" tabindex="0" data-play-artist="${esc(s.artist_key)}" title="Play ${esc(s.artist)} on Spotify">▶</span> ` : ""}<button data-artist="${esc(s.artist_key)}">${esc(s.artist)}</button>${(s.also_names || []).length ? `<span class="rk">with ${(s.also_keys || []).map((k,i) => `<button class="alsob" data-artist="${esc(k)}">${esc(s.also_names[i])}</button>`).join(", ")}</span>` : ""}<span class="rk">${s.listeners ? fmtN(s.listeners)+" monthly listeners" : ""}${s.draw_score ? ` · Draw ${Math.round(s.draw_score)}` : ""}</span></div>
         ${showRiseLine(s)}
         <div class="where">${esc(s.venue)} · ${esc(s.city)}${s.state?", "+esc(s.state):""}${s.time?" · "+fmtTime(s.time):""}</div>
         <div class="meta">
@@ -2125,7 +2126,7 @@ async function palShow(q){
   const tok = ++palTok; q = q.trim(); palIdx = 0;
   if(!q){ palRender([["Jump to", PAL_ACTIONS]]); return; }
   const ql = q.toLowerCase();
-  const showItems = shows.filter(s => [s.artist, s.city, s.venue, s.state, s.event].join(" ").toLowerCase().includes(ql))
+  const showItems = shows.filter(s => [s.artist, s.city, s.venue, s.state, s.event, ...(s.also_names || [])].join(" ").toLowerCase().includes(ql))
     .sort((a,b) => (a.date||"9999").localeCompare(b.date||"9999")).slice(0, 8)
     .map(s => ({ ic:"🎟", t:`${s.artist}`, sub:`${shortDate(s.date)} · ${s.venue || ""}${s.city ? ", " + s.city : ""}${s.state ? ", " + s.state : ""}`, side: esc(st(s._st)[3]), go: () => openArtist(s.artist_key) }));
   const libItems = myShows.filter(m => [m.artist, m.city, m.venue, m.state, m.event, m.notes].join(" ").toLowerCase().includes(ql)).slice(0, 5)
