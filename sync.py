@@ -468,14 +468,19 @@ def run():
         shows, summary = c.check_tours(df, TM_KEY or None, len(df), SG_KEY or None)
         checked = len(summary)
 
-        seen = set()
+        by_id = {}
         heat_by_artist = {}
         for s in shows:
             sid = s.get("Show ID")
-            if not sid or sid in seen:
+            if not sid:
                 continue
-            seen.add(sid)
             art = by_name[s["Artist"]]
+            if sid in by_id:  # same event found for another artist on the bill (festival, NYE show, support act)
+                first = by_id[sid]
+                if art["key"] != first["artist_key"] and art["key"] not in first["also_keys"]:
+                    first["also_keys"].append(art["key"])
+                    first["also_names"].append(s["Artist"])
+                continue
             heat, hparts = heat_score(s, art["draw_score"])
             if s["Sale Status"] != "Cancelled":
                 heat_by_artist[art["key"]] = max(heat_by_artist.get(art["key"], 0), heat)
@@ -497,7 +502,9 @@ def run():
                 "status_code": clean(s.get("_status_code")), "last_seen": started,
                 "lat": clean(s.get("_lat")), "lng": clean(s.get("_lng")),
                 "genre": ", ".join(dict.fromkeys(g for g in (s.get("_genres") or []) if g)) or None,
+                "also_keys": [], "also_names": [],
             })
+            by_id[sid] = show_rows[-1]
 
         # ---- audience fit: venue-area demographics vs the artist's fan base ----
         artist_info = {}
