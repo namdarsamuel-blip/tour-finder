@@ -2,7 +2,7 @@ name: Refresh tour data
 
 on:
   schedule:
-    # Twice a day (UTC 11:07 and 23:07 = about 7am and 7pm New York time).
+    # Three times a day: 00:07, 14:07, 18:07 UTC = about 8pm, 10am, 2pm New York (7pm, 9am, 1pm in winter).
     # Keeps Ticketmaster use under its free 5,000 calls/day.
     - cron: "7 0,14,18 * * *"
   workflow_dispatch: {}
@@ -17,7 +17,7 @@ concurrency:
 jobs:
   refresh:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,6 +37,7 @@ jobs:
           HISTORY_MIN: ${{ vars.HISTORY_MIN }}
           NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
           ALERT_MIN_HEAT: ${{ vars.ALERT_MIN_HEAT }}
+          CENSUS_KEY: ${{ secrets.CENSUS_KEY }}
           SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
       # GitHub pauses scheduled jobs in repos with no commits for 60 days.
       # This makes an empty commit once a month so the refresh never stops.
