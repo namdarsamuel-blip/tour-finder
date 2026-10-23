@@ -12,11 +12,14 @@
 <title>Tour Finder</title>
 <script>try{var t=localStorage.getItem("tf-theme");if(t)document.documentElement.setAttribute("data-theme",t);}catch(e){}</script>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23FF3D7F'/%3E%3Cstop offset='1' stop-color='%23FF9F1C'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='32' cy='32' r='32' fill='url(%23g)'/%3E%3Cpath d='M13 21h38v8a4 4 0 0 0 0 8v8H13v-8a4 4 0 0 0 0-8z' fill='%230F1B3D'/%3E%3Cpath d='M39 22.5v21' stroke='%23FF7A45' stroke-width='2.6' stroke-dasharray='3.2 3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Geist:wght@400..700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f3f5f4; --panel:#ffffff; --ink:#0f1b3d; --muted:#5b6580; --line:#dfe4ec; --soft:#eef1f5;
+  --bg:#f4f5f9; --panel:#ffffff; --ink:#111735; --muted:#5d6584; --line:#e2e5ee; --soft:#eef0f6;
+  --display:"Bricolage Grotesque","Geist",system-ui,sans-serif; --spotify:#1db954;
   --navy:#0f1b3d; --navy-2:#18285a; --navy-ink:#ffffff; --navy-muted:#aab6d6;
-  --accent:#0b8a43; --accent-ink:#ffffff; --accent-soft:#e1f4e8; --brand:#1db954;
+  --accent:#151c40; --accent-ink:#ffffff; --accent-soft:#e8eaf5; --brand:#e6366f;
   --now:#0b7d3e; --now-bg:#dff3e6; --soon:#8f5c00; --soon-bg:#fdf0d5;
   --sg:#2b5fa8; --sg-bg:#e4eefb; --off:#7c8496; --off-bg:#eceff4;
   --new:#b4237a; --new-bg:#fbe4f1; --mine:#6b3fd1; --mine-bg:#eee7fd;
@@ -27,7 +30,7 @@
   :root:not([data-theme="light"]){
     --bg:#0a1022; --panel:#111a33; --ink:#e8ecf6; --muted:#97a2bf; --line:#22304f; --soft:#17223f;
     --navy:#060b18; --navy-2:#111a33; --navy-ink:#e8ecf6; --navy-muted:#8c98b8;
-    --accent:#22c55e; --accent-ink:#04210f; --accent-soft:#11321f; --brand:#1db954;
+    --accent:#eef1fa; --accent-ink:#0b1124; --accent-soft:#1d2848; --brand:#ff6b9a;
     --now:#4ade80; --now-bg:#12301f; --soon:#fbbf4a; --soon-bg:#3a2b0f;
     --sg:#8db4ef; --sg-bg:#16294a; --off:#8a93aa; --off-bg:#1c2745;
     --new:#f28ac6; --new-bg:#3b1630; --mine:#b9a1ff; --mine-bg:#2a2149;
@@ -38,7 +41,7 @@
 :root[data-theme="dark"]{
   --bg:#0a1022; --panel:#111a33; --ink:#e8ecf6; --muted:#97a2bf; --line:#22304f; --soft:#17223f;
   --navy:#060b18; --navy-2:#111a33; --navy-ink:#e8ecf6; --navy-muted:#8c98b8;
-  --accent:#22c55e; --accent-ink:#04210f; --accent-soft:#11321f; --brand:#1db954;
+  --accent:#eef1fa; --accent-ink:#0b1124; --accent-soft:#1d2848; --brand:#ff6b9a;
   --now:#4ade80; --now-bg:#12301f; --soon:#fbbf4a; --soon-bg:#3a2b0f;
   --sg:#8db4ef; --sg-bg:#16294a; --off:#8a93aa; --off-bg:#1c2745;
   --new:#f28ac6; --new-bg:#3b1630; --mine:#b9a1ff; --mine-bg:#2a2149;
@@ -46,7 +49,7 @@
   --shadow:none;
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 "Geist",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--accent)}
 [hidden]{display:none!important}
@@ -58,7 +61,7 @@ a{color:var(--accent)}
 .topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px}
 .brand svg{width:34px;height:34px;flex:none}
-.brand h1{margin:0;font-size:20px;letter-spacing:-.01em}
+.brand h1{margin:0;font-family:var(--display);font-size:22px;font-weight:800;letter-spacing:-.02em}
 .brand p{margin:0;font-size:12.5px;color:var(--navy-muted)}
 .tbtns{display:flex;gap:6px;flex-wrap:wrap}
 .tbtn{background:transparent;color:var(--navy-ink);border:1px solid rgba(255,255,255,.22);border-radius:8px;padding:6px 11px;font-size:13px;cursor:pointer}
@@ -76,12 +79,13 @@ a{color:var(--accent)}
 
 /* ---------- common ---------- */
 main.wrap{padding-top:18px;padding-bottom:80px}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-bottom:16px}
-.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 14px;cursor:pointer;text-align:left;box-shadow:var(--shadow)}
+.stats{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer;text-align:left;display:inline-flex;align-items:baseline;gap:7px}
+.stat:hover{border-color:var(--ink)}
 .stat:hover{border-color:var(--accent)}
-.stat b{display:block;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.15}
+.stat b{font-family:var(--display);font-size:17px;font-variant-numeric:tabular-nums;line-height:1.15}
 .stat span{font-size:12.5px;color:var(--muted)}
-.tabs{display:flex;gap:4px;margin:0 0 12px;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.tabs{display:flex;gap:4px;margin:0 0 14px;flex-wrap:wrap;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .tab{border:0;background:transparent;padding:9px 14px;cursor:pointer;color:var(--muted);border-bottom:2.5px solid transparent;margin-bottom:-1px;font-weight:600}
 .tab.on{color:var(--ink);border-bottom-color:var(--accent)}
 .tab .n{opacity:.7;margin-left:4px;font-size:12px;font-weight:500}
@@ -104,7 +108,7 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .btn.plain{background:var(--panel);color:var(--ink);border:1px solid var(--line);font-weight:500}
 .count{font-size:13px;color:var(--muted);margin:10px 2px}
 .list{display:flex;flex-direction:column;gap:8px}
-.group-h{font-size:12.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin:18px 2px 6px}
+.group-h{font-family:var(--display);font-size:17px;font-weight:700;color:var(--ink);letter-spacing:-.01em;margin:22px 2px 8px}
 .empty{padding:30px;text-align:center;color:var(--muted);background:var(--panel);border:1px dashed var(--line);border-radius:12px}
 .loading{padding:30px;text-align:center;color:var(--muted)}
 .more{margin:10px auto;display:block}
@@ -123,13 +127,13 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 
 /* score ring */
 .score{display:flex;flex-direction:column;align-items:center;gap:2px;justify-self:end}
-.score small{font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted)}
+.score small{font-size:11px;font-weight:600;color:var(--muted)}
 .ring{--v:0;width:50px;height:50px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--accent) calc(var(--v)*1%), var(--line) 0)}
 .ring b{width:40px;height:40px;border-radius:50%;background:var(--panel);display:grid;place-items:center;font-size:15px;font-variant-numeric:tabular-nums}
 .ring.hot{background:conic-gradient(var(--hot) calc(var(--v)*1%), var(--line) 0)}
 
 /* ---------- artist rows ---------- */
-.ahead,.arow{display:grid;grid-template-columns:34px minmax(0,1.7fr) minmax(0,1.2fr) minmax(0,1.2fr) 140px;gap:14px;align-items:center}
+.ahead,.arow{display:grid;grid-template-columns:28px minmax(0,1.5fr) minmax(250px,300px) minmax(0,1fr) 128px;gap:18px;align-items:center}
 .rings{display:flex;flex-wrap:nowrap;gap:6px;justify-content:flex-end}
 .rings .score{min-width:64px}
 .rings .score small{font-size:9.5px}
@@ -140,16 +144,50 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .b-gem{color:#0b6b5a;background:#d9f6ee}
 :root[data-theme="dark"] .b-gem{color:#5eead4;background:#0f2f2a}
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .b-gem{color:#5eead4;background:#0f2f2a} }
-.journey{display:block;font-size:12.5px;color:var(--muted);margin-top:2px}
-.journey b{color:var(--up)}
-.ahead{padding:0 14px 4px;font-size:11.5px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.journey{display:block;font-size:12px;color:var(--muted);margin-top:5px}
+.journey b{color:var(--ink)}
+.ahead{padding:0 14px 4px;font-size:12.5px;font-weight:600;color:var(--muted)}
 .ahead span:last-child{text-align:center}
 .arow{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;text-align:left;width:100%;box-shadow:var(--shadow)}
 .arow:hover{border-color:var(--accent)}
 .arow > span:not(.score):not(.rings){display:block;min-width:0}
 .arow .idx{color:var(--muted);font-size:13px;text-align:right}
-.aname{display:block;font-weight:700;font-size:16px}
-.aname .badge{margin-left:4px;vertical-align:2px}
+.aname{display:flex;align-items:center;gap:7px;font-family:var(--display);font-weight:700;font-size:18px;letter-spacing:-.015em;min-width:0}
+.aname .nm{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.abadges{display:flex;flex-wrap:wrap;gap:4px;margin-top:5px}
+.abadges:empty{display:none}
+.abadges .badge{font-size:11px;padding:1px 7px;border-radius:999px}
+/* listeners + growth strip */
+.lhead{display:flex;align-items:baseline;gap:8px}
+.lnum{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ltoday{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.ltoday b{color:var(--ink);font-weight:600}
+.gstrip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-top:6px}
+.gc{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 2px 5px;border-radius:7px;background:var(--soft);line-height:1.2;min-width:0}
+.gc i{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted)}
+.gc b{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.gc.t-1 b{color:var(--muted);font-weight:500;opacity:.6}
+.gc.t1{background:color-mix(in srgb,var(--up) 13%,var(--panel))}
+.gc.t2{background:color-mix(in srgb,var(--up) 26%,var(--panel))}
+.gc.t3{background:color-mix(in srgb,var(--up) 48%,var(--panel))}
+.gc.t3 i{color:var(--ink);opacity:.75}
+.gc.t4{background:var(--up)}
+.gc.t4 b,.gc.t4 i{color:var(--panel)}
+.gc.neg{background:color-mix(in srgb,var(--down) 12%,var(--panel))}
+.gc.neg b{color:var(--down)}
+.gc.on{box-shadow:inset 0 0 0 2px var(--ink)}
+.gstrip.sm{max-width:290px;margin-top:4px}
+.gstrip.sm .gc{padding:2px 2px 3px}
+.gstrip.sm .gc b{font-size:12px}
+.gstrip.sm .gc i{font-size:9px}
+.glegend{font-size:11px;color:var(--muted);margin:-4px 2px 8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.glegend .sw{display:inline-flex;gap:2px}
+.glegend .sw span{width:14px;height:10px;border-radius:3px;display:inline-block;padding:0}
+/* tour column */
+.tcount{display:flex;align-items:center;gap:6px;font-weight:700;font-size:14px}
+.tnext{display:block;font-size:13px;margin-top:3px}
+.tnext .when{font-weight:600}
+.tnext .where{display:block;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .asub{display:block;font-size:13px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .big{font-size:18px;font-weight:700}
 .gl{font-size:12.5px;display:flex;gap:10px;flex-wrap:wrap}
@@ -162,7 +200,7 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .show-main{display:grid;grid-template-columns:76px minmax(0,1fr) auto auto;gap:14px;align-items:center;padding:12px 14px}
 .date{text-align:center;border-right:1px solid var(--line);padding-right:12px}
 .date .m{font-size:12px;text-transform:uppercase;color:var(--muted);letter-spacing:.05em}
-.date .d{font-size:24px;font-weight:700;line-height:1.1}
+.date .d{font-family:var(--display);font-size:26px;font-weight:700;line-height:1.1}
 .date .w{font-size:12px;color:var(--muted)}
 .who{font-weight:700;font-size:16px}
 .who button{all:unset;cursor:pointer}
@@ -200,17 +238,19 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .scrim{position:fixed;inset:0;background:rgba(6,11,24,.45);z-index:30}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(700px,100%);background:var(--bg);z-index:31;overflow-y:auto;box-shadow:-10px 0 30px rgba(0,0,0,.2);padding:20px 20px 60px}
 .dhead{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
-.dhead h2{margin:0;font-size:26px;letter-spacing:-.01em}
+.dhead h2{margin:0;font-family:var(--display);font-size:30px;font-weight:800;letter-spacing:-.025em;line-height:1.1}
 .dhead .close{white-space:nowrap;flex:0 0 auto}
 .dlinks{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 14px;font-size:14px}
-.dlinks a{text-decoration:none;font-weight:600}
+.dlinks a{text-decoration:none;font-weight:600;font-size:13.5px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:7px 13px}
+.dlinks a:hover{border-color:var(--ink)}
+.dlinks a.spot{background:var(--spotify);border-color:var(--spotify);color:#fff}
 .close{border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 10px;cursor:pointer}
 .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;margin-bottom:14px}
 .sbox{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:9px 12px}
 .sbox b{display:block;font-size:18px;font-variant-numeric:tabular-nums}
 .sbox span{font-size:12px;color:var(--muted)}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:12px}
-.card h3{margin:0 0 10px;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.card h3{margin:0 0 10px;font-family:var(--display);font-size:17px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
 .card p{margin:0 0 8px;font-size:14px}
 .card ul{margin:0;padding-left:18px;font-size:14px}
 .card li{margin:4px 0}
@@ -248,7 +288,7 @@ tr.touring td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
 .player button{background:transparent;color:var(--navy-ink);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;cursor:pointer}
 body.playing main.wrap{padding-bottom:130px}
 body.playing .toast{bottom:110px}
-.play{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;border:0;background:var(--brand);color:#fff;font-size:11px;cursor:pointer;vertical-align:-3px;flex:none;padding:0 0 0 2px}
+.play{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;border:0;background:var(--spotify);color:#fff;font-size:11px;cursor:pointer;vertical-align:-3px;flex:none;padding:0 0 0 2px}
 .play:hover{filter:brightness(1.1)}
 .listen iframe{width:100%;height:352px;border:0;border-radius:12px;background:#121212}
 
@@ -264,15 +304,78 @@ body.playing .toast{bottom:110px}
 .form .row-btns{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
 .form .hint{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin:-4px 0 0}
 .tab .ti{margin-right:6px}
+.rfind{border:1px dashed var(--line)!important;background:transparent!important;color:var(--muted)!important;font-weight:600;font-size:12.5px!important;cursor:pointer;border-radius:8px;padding:7px 10px}
+.rfind:hover{border-color:var(--ink)!important;color:var(--ink)!important}
+.rfind.sm{font-weight:500;font-size:12px!important}
+.fav-row .tix2 .rfind{padding:10px 14px}
+.fitline{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin-top:7px;font-size:12.5px;color:var(--muted)}
+.fitline b{color:var(--ink)}
+.fitline .q{color:var(--muted)}
+.fitb{font-weight:700;font-size:12px;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--ink);white-space:nowrap}
+.f-strong{background:color-mix(in srgb,var(--up) 26%,var(--panel))}
+.f-good{background:color-mix(in srgb,var(--up) 13%,var(--panel))}
+.f-weak{background:var(--off-bg);color:var(--muted)}
+.mkts{display:flex;flex-direction:column;gap:8px}
+.mkt{display:grid;grid-template-columns:40px 1fr;gap:10px;align-items:start;font-size:13.5px}
+.mkt .fitb{text-align:center}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+/* search button + palette */
+.searchbtn:not([hidden]){display:inline-flex!important}
+.searchbtn{align-items:center;gap:8px;min-width:280px;background:rgba(255,255,255,.08)!important;color:var(--navy-muted)!important}
+.searchbtn svg{width:16px;height:16px;flex:none}
+.searchbtn kbd{margin-left:auto;font:inherit;font-size:11.5px;border:1px solid rgba(255,255,255,.22);border-radius:5px;padding:0 5px}
+.pal{position:fixed;inset:0;z-index:60;background:rgba(6,11,24,.5);display:flex;justify-content:center;align-items:flex-start;padding:9vh 16px 16px}
+.pal-box{width:min(640px,100%);max-height:78vh;display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:0 24px 60px rgba(6,11,24,.35);overflow:hidden}
+.pal-in{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line)}
+.pal-in svg{width:20px;height:20px;color:var(--muted);flex:none}
+.pal-in input{flex:1;min-width:0;border:0;outline:0;background:transparent;font-size:18px;padding:4px 0;color:var(--ink)}
+.pal-res{overflow-y:auto;padding:6px}
+.pal-h{font-size:12.5px;font-weight:600;color:var(--muted);padding:10px 10px 4px}
+.pal-it{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:0;background:transparent;padding:9px 10px;border-radius:10px;cursor:pointer;color:var(--ink)}
+.pal-it.on{background:var(--soft)}
+.pal-ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:var(--soft);font-size:16px;flex:none}
+.pal-it.on .pal-ic{background:var(--panel)}
+.pal-main{flex:1;min-width:0}
+.pal-main b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal-main small{display:block;color:var(--muted);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pal-side{font-size:12.5px;color:var(--muted);white-space:nowrap;text-align:right}
+.pal-side .up{font-weight:700}
+.pal-empty{padding:26px 12px;text-align:center;color:var(--muted)}
+.pal-foot{border-top:1px solid var(--line);padding:8px 14px;font-size:12px;color:var(--muted);display:flex;gap:14px}
+/* loading skeleton */
+.skel{height:92px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(90deg,var(--panel) 30%,var(--soft) 50%,var(--panel) 70%);background-size:300% 100%;animation:sk 1.3s ease-in-out infinite}
+@keyframes sk{from{background-position:100% 0}to{background-position:0 0}}
+@media (prefers-reduced-motion: reduce){.skel{animation:none}}
+/* artist page hero */
+.hero{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px 16px 10px;margin-bottom:12px}
+.hero-top{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.hero-num{display:block;font-family:var(--display);font-size:44px;font-weight:800;letter-spacing:-.035em;line-height:1}
+.hero-lab{display:block;color:var(--muted);font-size:13.5px;margin-top:4px}
+.hero-side{text-align:right;font-size:13.5px;color:var(--muted);line-height:1.6}
+.hero-side b{color:var(--ink);font-variant-numeric:tabular-nums}
+.hs{display:block}
+@media (min-width:641px){.topbar .wrap{flex-wrap:nowrap}.brand{min-width:0;flex:1 1 auto}.brand > div{min-width:0}.brand p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.tbtns{flex-wrap:nowrap;flex:0 0 auto}}
+.hero .gstrip{margin-top:14px}
+.hero .gc{padding:7px 2px 8px}
+.hero .gc b{font-size:15px}
+.hero-chart{margin-top:10px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.two .card{margin-bottom:12px}
+.scorehead{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
+.scorehead h3{margin:0!important}
+.scorehead b{font-family:var(--display);font-size:26px;font-weight:800;letter-spacing:-.02em}
+.scorehead b small{font-size:13px;color:var(--muted);font-weight:500}
 .finder{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:9px}
 .frow{display:flex;align-items:center;gap:10px;min-width:0}
 .frow input[type=search]{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:9px 12px;color:var(--ink)}
-.flab{flex:0 0 86px;font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+.flab{flex:0 0 86px;font-size:13px;font-weight:600;color:var(--muted)}
 .fchips{display:flex;gap:6px;flex-wrap:wrap;min-width:0}
 .fchips .chip{white-space:nowrap}
 .chip.plain{background:transparent;color:var(--muted)}
 .advbtn{align-self:flex-start;background:none;border:0;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;padding:2px 0}
 .advbtn.on{color:var(--muted)}
+.advrow{display:flex;justify-content:space-between;align-items:center}
+.helpsm{display:none;color:var(--muted)!important;font-weight:500!important}
 .adv{display:none}
 .adv.open{display:block}
 .adv .bar{box-shadow:none;background:var(--bg)}
@@ -285,7 +388,7 @@ body.playing .toast{bottom:110px}
 
 /* favorites */
 .favbar{display:flex;align-items:center;gap:6px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:8px 10px;margin:-6px 0 14px;box-shadow:var(--shadow)}
-.favbar .lab{font-size:12px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-right:4px}
+.favbar .lab{font-size:13px;font-weight:600;color:var(--muted);margin-right:4px}
 .tkt{display:inline-flex;align-items:center;gap:6px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;font-size:13px;padding:6px 11px;border-radius:999px;cursor:grab;white-space:nowrap;max-width:280px;overflow:hidden;text-overflow:ellipsis}
 .tkt.sg{background:var(--panel);color:var(--ink);border:1px solid var(--line)}
 .tkt:hover{filter:brightness(1.08)}
@@ -315,7 +418,9 @@ body.playing .toast{bottom:110px}
   .ahead{display:none}
   .arow{grid-template-columns:minmax(0,1fr) 136px;gap:8px 12px}
   .arow > .idx{display:none!important}
-  .arow .c-l,.arow .c-t{grid-column:1/2}
+  .arow .c-l,.arow .c-t{grid-column:1/-1}
+  .arow .c-l{margin-top:2px}
+  .arow .tnext .where{display:inline;margin-left:4px}
   .arow .rings{grid-row:1/2;grid-column:2/3}
   .cal-row{grid-template-columns:80px minmax(0,1fr) 48px}
   .cal-row .cal-show{grid-column:2/3}
@@ -340,7 +445,7 @@ body.playing .toast{bottom:110px}
   .favbar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:0 -16px 12px;border-radius:0;border-left:0;border-right:0}
   .favbar .more-link{margin-left:0;white-space:nowrap}
   .favbar > *{flex:0 0 auto}
-  nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:34;margin:0;background:var(--panel);border-top:1px solid var(--line);border-bottom:0;
+  nav.tabs{position:fixed;left:0;right:0;bottom:0;top:auto;backdrop-filter:none;z-index:34;margin:0;background:var(--panel);border-top:1px solid var(--line);border-bottom:0;
     display:grid;grid-template-columns:repeat(6,1fr);gap:0;padding:4px 2px calc(4px + env(safe-area-inset-bottom));box-shadow:0 -4px 16px rgba(15,27,61,.08)}
   .tab{display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 2px;border-bottom:0;margin:0;font-size:10.5px;font-weight:600;position:relative}
   .tab .ti{font-size:20px;line-height:1;margin:0;filter:grayscale(.6);opacity:.75}
@@ -348,7 +453,35 @@ body.playing .toast{bottom:110px}
   .tab.on{color:var(--accent)}
   .tab .n{position:absolute;top:1px;left:calc(50% + 6px);background:var(--hot);color:#fff;border-radius:999px;font-size:9.5px;line-height:1.5;padding:0 5px;margin:0;opacity:1;font-weight:700}
   .tab .n:empty{display:none}
-  .finder{padding:10px 12px;gap:7px}
+  .finder{padding:9px 10px;gap:6px;border-radius:12px}
+  .finder:not(.open) .mopt{display:none}
+  .searchbtn{min-width:0}
+  .pal{padding:0}
+  .pal-box{max-height:none;height:100%;border-radius:0;border:0}
+  .pal-foot{display:none}
+  .hero-num{font-size:36px}
+  .hero-side{text-align:left}
+  .hs{display:inline;margin-right:14px}
+  .dlinks a{font-size:13px;padding:6px 11px}
+  .two{grid-template-columns:1fr;gap:0}
+  .stats{flex-wrap:nowrap}
+  .frow .tl{display:none}
+  .frow input[type=search]{padding:8px 11px}
+  .fchips .chip{padding:6px 11px;font-size:13.5px}
+  .flab{flex:0 0 48px}
+  .advbtn{font-size:12.5px}
+  .count.sum{font-size:13.5px;margin:10px 2px 6px}
+  .glegend{display:none}
+  .tbtns{display:flex;flex-wrap:nowrap;gap:4px;flex:0 0 auto}
+  .brand{min-width:0;flex:1 1 auto}
+  .topbar .wrap{gap:8px}
+  #helpBtn{display:none}
+  .helpsm{display:inline}
+  .tbtn{padding:5px 8px!important;font-size:14px!important;line-height:1.2}
+  .stat{flex:0 0 auto!important;display:flex;align-items:baseline;gap:6px;padding:7px 12px!important;border-radius:999px}
+  .stat b{display:inline;font-size:16px!important}
+  .stat span{white-space:nowrap;font-size:12.5px}
+  .stats{margin-bottom:10px!important}
   .flab{flex:0 0 54px;font-size:10px;line-height:1.2;letter-spacing:.03em}
   .fchips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-12px;padding-right:12px}
   .fchips::-webkit-scrollbar{display:none}
@@ -384,7 +517,15 @@ body.playing .toast{bottom:110px}
   .presets{flex-wrap:nowrap;overflow-x:auto;margin:0 -16px 8px;padding:0 16px 4px;scrollbar-width:none}
   .preset{flex:0 0 auto}
   .stats{grid-template-columns:1fr 1fr}
-  .show-main{grid-template-columns:58px minmax(0,1fr) auto}
+  .show-main{grid-template-columns:50px minmax(0,1fr);position:relative}
+  .show-main > .score{position:absolute;top:10px;right:10px}
+  .show-main > .score .ring{width:42px;height:42px}
+  .show-main > .score .ring b{width:34px;height:34px;font-size:13px}
+  .show-main .who{padding-right:58px}
+  .show-main .gstrip.sm{margin-bottom:5px}
+  .show-main > .score small{display:none}
+  .show-main .who .rk{display:block;margin:2px 0 0}
+  .gstrip.sm{max-width:none}
   .show-main .links{grid-column:1/-1;flex-direction:row}
   .links a,.links button{flex:1}
   .date .d{font-size:20px}
@@ -401,6 +542,7 @@ body.playing .toast{bottom:110px}
       <div><h1>Tour Finder</h1><p id="sub">Spotify demand × U.S. tour dates</p></div>
     </div>
     <div class="tbtns">
+      <button class="tbtn searchbtn app-only" id="searchBtn" type="button" hidden aria-label="Search"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4" stroke-linecap="round"/></svg><span class="tl">Search artists, shows, cities</span><kbd class="tl">Ctrl K</kbd></button>
       <button class="tbtn" id="helpBtn" type="button" aria-label="How it works">❓<span class="tl"> How it works</span></button>
       <button class="tbtn theme-btn" type="button" aria-label="Switch light or dark mode"></button>
       <button class="tbtn app-only" id="reload" type="button" hidden aria-label="Reload">↻<span class="tl"> Reload</span></button>
@@ -442,7 +584,7 @@ body.playing .toast{bottom:110px}
     <!-- ARTISTS -->
     <div id="t-discover">
       <div class="finder">
-        <div class="frow"><input id="aq" type="search" placeholder="Search any artist…" aria-label="Search artists"><button class="chip plain" id="aReset" type="button" title="Back to the default view">↺ Reset</button></div>
+        <div class="frow"><input id="aq" type="search" placeholder="Search any artist…" aria-label="Search artists"><button class="chip plain" id="aReset" type="button" title="Back to the default view">↺<span class="tl"> Reset</span></button></div>
         <div class="frow"><span class="flab">Show me</span><div class="fchips">
           <button class="chip" data-mode="gems" title="Low-key artists blowing up: small audience, fast growth, new to the charts">💎 Breakouts</button>
           <button class="chip" data-mode="rise" title="Biggest growth in monthly listeners over the window you pick below">🚀 Rising fastest</button>
@@ -452,15 +594,15 @@ body.playing .toast{bottom:110px}
           <button class="chip" data-mode="top">👑 Most listeners</button>
         </div></div>
         <div class="frow"><span class="flab">Rising over</span><div class="fchips"><button class="chip" data-rise="daily_pct">Today</button><button class="chip" data-rise="pct_7d">7 days</button><button class="chip" data-rise="mult_30d">30 days</button><button class="chip" data-rise="mult_60d">60 days</button><button class="chip" data-rise="mult_90d">90 days</button></div></div>
-        <div class="frow"><span class="flab">Size</span><div class="fchips"><button class="chip" data-size="">Any size</button><button class="chip" data-size="0-1">Under 1M</button><button class="chip" data-size="1-3">1–3M</button><button class="chip" data-size="3-10">3–10M</button><button class="chip" data-size="10-">10M+</button></div></div>
-        <div class="frow"><span class="flab">Shows</span><div class="fchips">
-          <button class="chip" data-tourf="tour">🇺🇸 Has U.S. shows</button>
+        <div class="frow mopt"><span class="flab">Size</span><div class="fchips"><button class="chip" data-size="">Any size</button><button class="chip" data-size="0-1">Under 1M</button><button class="chip" data-size="1-3">1–3M</button><button class="chip" data-size="3-10">3–10M</button><button class="chip" data-size="10-">10M+</button></div></div>
+        <div class="frow mopt"><span class="flab">Shows</span><div class="fchips">
+          <button class="chip" data-tourf="tour">📍 Has U.S. shows</button>
           <button class="chip" data-tourf="presale">🎟 Presale open now</button>
           <button class="chip" data-tourf="7">📅 This week</button>
           <button class="chip" data-tourf="30">Next 30 days</button>
           <button class="chip" data-tourf="any">Any (incl. no shows)</button>
         </div></div>
-        <button class="advbtn" type="button" data-ft="mf-discover">More filters ▾</button>
+        <div class="advrow"><button class="advbtn" type="button" data-ft="mf-discover">More filters ▾</button><button class="advbtn helpsm" type="button" data-help>How it works</button></div>
         <div class="adv" id="mf-discover"><div class="bar">
           <span class="lab">Monthly listeners</span>
           <input id="lmin" type="number" min="0" step="0.5" placeholder="min (M)" aria-label="Minimum monthly listeners in millions">
@@ -499,7 +641,8 @@ body.playing .toast{bottom:110px}
         </div></div>
       </div>
       <div class="count" id="acount"></div>
-      <div class="ahead"><span></span><span>Artist</span><span>Spotify monthly listeners</span><span>U.S. tour</span><span style="text-align:right">Breakout · Draw</span></div>
+      <div class="glegend">Listener growth <span class="sw"><span class="gc t1"></span><span class="gc t2"></span><span class="gc t3"></span><span class="gc t4"></span></span> darker = faster · outlined = your sort · — = no history yet</div>
+      <div class="ahead"><span></span><span>Artist</span><span>Monthly listeners · growth</span><span>U.S. tour</span><span style="text-align:right">Breakout · Draw</span></div>
       <div class="list" id="alist"></div>
     </div>
 
@@ -513,10 +656,11 @@ body.playing .toast{bottom:110px}
           <button class="chip" data-ss="breakout" title="Low-key artists blowing up">💎 Breakout artist</button>
           <button class="chip" data-ss="sale">⏰ Next sale</button>
           <button class="chip" data-ss="date">📅 Show date</button>
+          <button class="chip" data-ss="fit" title="Does the area around the venue match the artist's fan base? Census data + genre">🎯 Audience fit</button>
           <button class="chip" data-ss="new">🆕 Newest announced</button>
         </div></div>
         <div class="frow"><span class="flab">Rising over</span><div class="fchips"><button class="chip" data-srise="daily_pct">Today</button><button class="chip" data-srise="pct_7d">7 days</button><button class="chip" data-srise="mult_30d">30 days</button><button class="chip" data-srise="mult_60d">60 days</button><button class="chip" data-srise="mult_90d">90 days</button></div></div>
-        <div class="frow"><span class="flab">Artist size</span><div class="fchips"><button class="chip" data-ssize="">Any size</button><button class="chip" data-ssize="0-1">Under 1M</button><button class="chip" data-ssize="1-3">1–3M</button><button class="chip" data-ssize="3-10">3–10M</button><button class="chip" data-ssize="10-">10M+</button></div></div>
+        <div class="frow mopt"><span class="flab">Artist size</span><div class="fchips"><button class="chip" data-ssize="">Any size</button><button class="chip" data-ssize="0-1">Under 1M</button><button class="chip" data-ssize="1-3">1–3M</button><button class="chip" data-ssize="3-10">3–10M</button><button class="chip" data-ssize="10-">10M+</button></div></div>
         <div class="frow"><span class="flab">Tickets</span><div class="fchips">
           <button class="chip on" data-st="all">All</button>
           <button class="chip" data-st="now">Presale open now</button>
@@ -540,6 +684,7 @@ body.playing .toast{bottom:110px}
             <option value="sale">Next sale (soonest)</option>
             <option value="date">Show date</option>
             <option value="draw">Artist draw score</option>
+            <option value="fit">Audience fit</option>
             <option value="new">Newest announced</option>
           </select>
           <label><input type="checkbox" id="hideSkip" checked> Hide skipped</label>
@@ -633,6 +778,13 @@ body.playing .toast{bottom:110px}
   <button type="button" id="playerClose" aria-label="Close player">✕</button>
 </div></div>
 <div class="scrim" id="scrim" hidden></div>
+<div class="pal" id="pal" hidden role="dialog" aria-label="Search">
+  <div class="pal-box">
+    <div class="pal-in"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="8.5" cy="8.5" r="5.5"/><path d="m13 13 4 4" stroke-linecap="round"/></svg><input id="palq" type="search" placeholder="Artist, city, venue…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Search everything"><button class="close" type="button" data-palclose>Cancel</button></div>
+    <div class="pal-res" id="palres"></div>
+    <div class="pal-foot"><span>↑ ↓ to move</span><span>Enter to open</span><span>Esc to close</span></div>
+  </div>
+</div>
 <aside class="drawer" id="drawer" hidden aria-label="Details"></aside>
 <div class="toast" id="toast"></div>
 
@@ -739,7 +891,7 @@ async function load(){
     const cur = $(id).value;
     $(id).innerHTML = `<option value="">All states</option>` + states.map(x => `<option${x===cur?" selected":""}>${esc(x)}</option>`).join("");
   }
-  await Promise.all([loadFavArtists(), loadLibrary(), loadShowArtists()]);
+  await Promise.all([loadFavArtists(), loadLibrary(), loadShowArtists(), loadResale()]);
   renderHeader(); renderFavBar(); renderShows(); renderCalendar(); renderAlerts(); updateMineCount(); loadChartList();
   if(!$("#t-mine").hidden) renderMine();
   if(!load.done){ load.done = true; applyPreset(preset || "draws"); } else queryArtists(true);
@@ -770,7 +922,7 @@ async function renderHeader(){
     [newc, tourOnly() ? "chart newcomers with U.S. shows" : "chart newcomers under 15M (≤ 7 days)", () => { setTab("discover"); applyPreset("newcomers"); }],
     [week, "artists playing the U.S. this week", () => { setTab("discover"); applyPreset("week"); }],
   ];
-  $("#stats").innerHTML = cards.map(([n,l],i) => `<button class="stat" data-i="${i}"><b>${fullN(n)}</b><span>${l}</span></button>`).join("");
+  $("#stats").innerHTML = cards.map(([n,l],i) => !n ? "" : `<button class="stat" data-i="${i}"><b>${fullN(n)}</b><span>${l}</span></button>`).join("");
   $$("#stats .stat").forEach(b => b.onclick = () => cards[b.dataset.i][2]());
 }
 
@@ -862,7 +1014,7 @@ function paintSizes(){
 function tourOnly(){ try{ return localStorage.getItem("tf-tour") !== "0"; }catch(e){ return true; } }
 
 async function queryArtists(reset){
-  if(reset){ aPage = 0; aRows = []; $("#alist").innerHTML = `<div class="loading">Loading artists…</div>`; }
+  if(reset){ aPage = 0; aRows = []; $("#alist").innerHTML = `<div class="list" aria-label="Loading artists">${'<div class="skel"></div>'.repeat(5)}</div>`; }
   const token = ++aToken;
   const sort = $("#asort").value;
   renderPresets();
@@ -917,19 +1069,36 @@ function chartLine(a){
 }
 function artistBadges(a){
   const b = [];
-  if(a.breakout_score >= 60) b.push(`<span class="badge b-gem" title="Breakout score ${Math.round(a.breakout_score)}: low-key and blowing up">💎 Breakout</span>`);
   if(justCrossed(a)) b.push(`<span class="badge b-new" title="Crossed 500K monthly listeners on ${esc(shortDate(a.first_seen_list))}">🆕 Just crossed 500K</span>`);
-  if(a.at_peak && (a.listeners||0) < 15e6) b.push(`<span class="badge b-soon" title="Monthly listeners at an all-time high today">🏔 All-time high</span>`);
+  if(a.at_peak && (a.listeners||0) < 15e6) b.push(`<span class="badge b-soon" title="Monthly listeners at an all-time high today">▲ All-time high</span>`);
   if(a.is_rising) b.push(`<span class="badge b-now" title="2–9M monthly listeners and growing 8%+ a month">📈 Rising</span>`);
   if(isNewcomer(a)) b.push(`<span class="badge b-new" title="All their charting songs entered in the last 7 days">New on charts</span>`);
-  if(a.presale_now > 0) b.push(`<span class="badge b-now">${a.presale_now} presale${a.presale_now>1?"s":""} open</span>`);
   if(a.max_heat >= 75) b.push(`<span class="badge b-hot" title="At least one show with Heat 75+">🔥 Hot show</span>`);
   return b.join("");
 }
 function tourText(a){
-  if(a.on_tour) return `<b>${a.us_shows} U.S. show${a.us_shows>1?"s":""}</b><span class="small">Next: ${esc(shortDate(a.next_show_date))} · ${esc((a.next_show||"").replace(/^\d{4}-\d{2}-\d{2}\s*/,""))}</span>`;
+  if(a.on_tour) return `<span class="tcount">${a.us_shows} U.S. show${a.us_shows>1?"s":""}${a.presale_now > 0 ? ` <span class="badge b-now">${a.presale_now} presale${a.presale_now>1?"s":""} open</span>` : ""}</span>
+    <span class="tnext"><span class="when">Next ${esc(shortDate(a.next_show_date))}</span><span class="where">${esc((a.next_show||"").replace(/^\d{4}-\d{2}-\d{2}\s*/,""))}</span></span>`;
   if(a.tour_checked_at) return `<span class="small">No U.S. shows found</span>`;
   return `<span class="small" title="Each refresh checks tours for the ~850 highest-scoring and rising artists">Tour not checked (outside top ~850)</span>`;
+}
+// growth strip: Today · 7D · 30D · 60D · 90D, each cell shaded by how strong the growth is
+const GTIERS = { daily_pct:[.005,.01,.02,.04], pct_7d:[.03,.08,.15,.30], mult_30d:[1.15,1.4,1.8,2.5], mult_60d:[1.25,1.6,2.2,3], mult_90d:[1.3,1.8,2.5,4] };
+function growthStrip(a, hl, small){
+  const dp = dailyPct(a), multTxt = m => m >= 1.5 ? `${(+m).toFixed(1)}×` : pct(m - 1);
+  const cells = [
+    ["Today", "daily_pct", dp, v => pct(v), v => v < 0, "today"],
+    ["7d", "pct_7d", a.pct_7d != null ? +a.pct_7d : null, v => pct(v), v => v < 0, "over 7 days"],
+    ["30d", "mult_30d", a.mult_30d != null ? +a.mult_30d : null, multTxt, v => v < 1, "over 30 days"],
+    ["60d", "mult_60d", a.mult_60d != null ? +a.mult_60d : null, multTxt, v => v < 1, "over 60 days"],
+    ["90d", "mult_90d", a.mult_90d != null ? +a.mult_90d : null, multTxt, v => v < 1, "over 90 days"],
+  ];
+  return `<span class="gstrip${small ? " sm" : ""}">${cells.map(([lab, k, v, f, isNeg, words]) => {
+    let t = -1; if(v != null){ t = 0; for(const x of GTIERS[k]) if(v >= x) t++; }
+    const neg = v != null && isNeg(v);
+    const tip = v == null ? `Not enough history yet for ${words}` : `Monthly listeners ${words}: ${f(v)}`;
+    return `<span class="gc t${neg ? "0 neg" : t}${k === hl ? " on" : ""}" title="${esc(tip)}"><i>${lab}</i><b>${v == null ? "—" : f(v)}</b></span>`;
+  }).join("")}</span>`;
 }
 // "7d +8% · 30d +65% · 60d 2.9× · 90d 4.1×": big multiples shown as ×, small ones as %
 function riseBits(a, hl){
@@ -955,18 +1124,18 @@ function artistRow(a, i){
   const dp = dailyPct(a);
   return `<button class="arow" data-artist="${esc(a.key)}">
     <span class="idx">${i}</span>
-    <span>
-      <span class="aname">${favStar("artist", a.key)} ${isSpotifyId(a.key) ? `<span class="play" role="button" tabindex="0" data-play-artist="${esc(a.key)}" title="Play ${esc(a.name)} on Spotify">▶</span> ` : ""}${esc(a.name)} ${artistBadges(a)}</span>
+    <span class="c-a">
+      <span class="aname">${favStar("artist", a.key)}${isSpotifyId(a.key) ? `<span class="play" role="button" tabindex="0" data-play-artist="${esc(a.key)}" title="Play ${esc(a.name)} on Spotify">▶</span>` : ""}<span class="nm">${esc(a.name)}</span></span>
+      <span class="abadges">${artistBadges(a)}</span>
       <span class="asub">${esc(chartLine(a) || (a.top_song ? a.top_song : "Not on Spotify charts right now"))}</span>
     </span>
     <span class="c-l">
-      <span class="big num">${fmtN(a.listeners)}</span>
-      <span class="gl">${a.listeners_daily != null ? `<span class="${cls(a.listeners_daily)}${$("#asort").value === "daily_pct" ? " hl" : ""}">${signed(a.listeners_daily)} today${dp != null ? ` (${pct(dp)})` : ""}</span>` : ""}</span>
-      <span class="gl">${riseBits(a, $("#asort").value)}</span>
+      <span class="lhead"><span class="lnum">${fmtN(a.listeners)}</span>${a.listeners_daily != null ? `<span class="ltoday"><b>${signed(a.listeners_daily)}</b> today</span>` : ""}</span>
+      ${growthStrip(a, $("#asort").value)}
       ${journey(a)}
     </span>
     <span class="c-t tourline">${tourText(a)}</span>
-    <span class="rings">${scoreRing(a.breakout_score, "BREAKOUT", false, "Breakout 0–100: low-key artists growing fast (growth, small size, freshness, today's jump)").replace('class="ring', 'class="ring bo')}${scoreRing(a.draw_score, "DRAW", false, "Draw 0–100: how big a crowd they pull (audience, U.S. charts, reach)").replace('class="ring', 'class="ring dr')}</span>
+    <span class="rings">${scoreRing(a.breakout_score, "Breakout", false, "Breakout 0–100: low-key artists growing fast (growth, small size, freshness, today's jump)").replace('class="ring', 'class="ring bo')}${scoreRing(a.draw_score, "Draw", false, "Draw 0–100: how big a crowd they pull (audience, U.S. charts, reach)").replace('class="ring', 'class="ring dr')}</span>
   </button>`;
 }
 
@@ -976,7 +1145,7 @@ function openDrawer(html){ $("#scrim").hidden = false; $("#drawer").hidden = fal
 function closeDrawer(){ drawerKey = null; $("#scrim").hidden = true; $("#drawer").hidden = true; document.body.style.overflow = ""; }
 async function openArtist(key){
   drawerKey = key;
-  openDrawer(`<div class="loading">Loading…</div>`);
+  openDrawer(`<div class="skel" style="height:44px;margin:16px 0"></div><div class="skel" style="height:260px"></div>`);
   const [{ data: a }, { data: hist }] = await Promise.all([
     sb.from("artists").select("*").eq("key", key).maybeSingle(),
     sb.from("listener_history").select("day,listeners").eq("key", key).order("day", { ascending: true }).limit(800),
@@ -993,25 +1162,23 @@ async function openArtist(key){
       <div><h2>${favStar("artist", key)} ${esc(a.name)}</h2><div style="margin-top:6px">${artistBadges(a)}</div></div>
       <button class="close" data-close>Close ✕</button>
     </div>
-    <div class="dlinks"><a href="#" data-add-show data-artist-key="${esc(key)}" data-artist-name="${esc(a.name)}">＋ Add a show to my library</a>${isSpotifyId(key) ? `<a href="spotify:artist:${esc(key)}">Open in Spotify app</a><a href="${esc(a.spotify_url)}" target="_blank" rel="noopener">Open on Spotify web ↗</a>` : ""}</div>
-    <div class="sgrid">
-      <div class="sbox"><b>${fmtN(a.listeners)}</b><span>Spotify monthly listeners${a.listeners_rank?` · #${a.listeners_rank.toLocaleString()} worldwide`:""}</span></div>
-      <div class="sbox"><b class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)}</b><span>gained today ${dp != null ? `(${pct(dp)})` : ""}</span></div>
-      <div class="sbox"><b class="${cls(a.growth_7d)}">${a.growth_7d != null ? signed(a.growth_7d) : "…"}</b><span>${a.growth_7d != null ? `7 days (${pct(a.pct_7d)})` : "7-day change (needs a week of history)"}</span></div>
-      <div class="sbox"><b class="${cls(a.growth_30d)}">${a.growth_30d != null ? signed(a.growth_30d) : "…"}</b><span>${a.growth_30d != null ? `30 days (${pct(a.pct_30d)})` : "30-day change (needs a month)"}</span></div>
-      <div class="sbox"><b class="${cls(a.mult_60d ? a.mult_60d - 1 : null)}">${a.mult_60d ? (+a.mult_60d).toFixed(2)+"×" : "…"}</b><span>${a.mult_60d ? "60-day growth" : "60-day growth (needs history)"}</span></div>
-      <div class="sbox"><b class="${cls(a.mult_90d ? a.mult_90d - 1 : null)}">${a.mult_90d ? (+a.mult_90d).toFixed(2)+"×" : "…"}</b><span>${a.mult_90d ? "90-day growth" : "90-day growth (needs history)"}</span></div>
-      <div class="sbox"><b>${fmtN(a.listeners_peak)}</b><span>all-time peak${a.at_peak ? " · at peak now 🏔" : ""}</span></div>
-      <div class="sbox"><b class="up">${Math.round(a.breakout_score||0)}<span class="small"> / 100</span></b><span>breakout score</span></div>
-      <div class="sbox"><b>${Math.round(a.draw_score||0)}<span class="small"> / 100</span></b><span>draw score</span></div>
+    <div class="dlinks"><a href="#" data-add-show data-artist-key="${esc(key)}" data-artist-name="${esc(a.name)}">＋ Add a show to my library</a>${isSpotifyId(key) ? `<a class="spot" href="spotify:artist:${esc(key)}">▶ Open in Spotify</a><a href="${esc(a.spotify_url)}" target="_blank" rel="noopener">Open on Spotify web ↗</a>` : ""}</div>
+    <div class="hero">
+      <div class="hero-top">
+        <div><span class="hero-num">${fmtN(a.listeners)}</span><span class="hero-lab">monthly listeners on Spotify${a.listeners_rank ? ` · #${a.listeners_rank.toLocaleString()} worldwide` : ""}</span></div>
+        <div class="hero-side">${a.listeners_daily != null ? `<span class="hs"><b class="${cls(a.listeners_daily)}">${signed(a.listeners_daily)}</b> today</span>` : ""}<span class="hs">Peak <b>${fmtN(a.listeners_peak)}</b>${a.at_peak ? " (now)" : ""}</span></div>
+      </div>
+      ${growthStrip(a, null)}
+      ${journey(a)}
+      <div class="hero-chart">${historyChart(hist || [])}</div>
     </div>
-    ${journey(a) ? `<div class="card" style="padding:10px 14px"><h3 style="margin:0 0 4px">Since crossing 500K</h3>${journey(a)}</div>` : ""}
-    ${isSpotifyId(key) ? `<div class="card listen"><h3>Listen</h3><iframe title="${esc(a.name)} on Spotify" src="https://open.spotify.com/embed/artist/${esc(key)}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>` : ""}
-    <div class="card"><h3>Monthly listeners over time</h3>${historyChart(hist || [])}</div>
+    ${fanBaseCard(a, myShows)}
     <div class="card"><h3>U.S. shows (${myShows.length})</h3>
       ${myShows.length ? `<div class="list">${myShows.map(card).join("")}</div>` : `<p class="small">${a.tour_checked_at ? `No U.S. shows on Ticketmaster or SeatGeek (checked ${ago(a.tour_checked_at)}).` : "Tour not checked yet. Each refresh checks the ~850 highest-scoring and rising artists."}</p>`}
     </div>
-    <div class="card"><h3>Why this breakout score</h3>
+    ${isSpotifyId(key) ? `<div class="card listen"><h3>Listen</h3><iframe title="${esc(a.name)} on Spotify" src="https://open.spotify.com/embed/artist/${esc(key)}?utm_source=generator" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>` : ""}
+    <div class="two">
+    <div class="card"><div class="scorehead"><h3>Breakout</h3><b>${Math.round(a.breakout_score||0)}<small> / 100</small></b></div>
       <div class="parts">
         ${bpRow(a,"growth","Growth","Times bigger per month (3× = 100), using 30/60-day history when available, else today's pace")}
         ${bpRow(a,"lowkey","Low-key","Smaller is better: 500K = 100, 25M+ = 0")}
@@ -1020,7 +1187,7 @@ async function openArtist(key){
       </div>
       <p class="help">Weighted 45% growth · 20% low-key · 20% fresh · 15% today.</p>
     </div>
-    <div class="card"><h3>Why this draw score</h3>
+    <div class="card"><div class="scorehead"><h3>Draw</h3><b>${Math.round(a.draw_score||0)}<small> / 100</small></b></div>
       <div class="parts">
         ${partRow("size","Audience","Spotify monthly listeners, on a log scale (500K = 0, 80M+ = 100)")}
         ${partRow("growth","Growth","How fast listeners are growing")}
@@ -1029,11 +1196,23 @@ async function openArtist(key){
       </div>
       <p class="help">Weighted 40% audience · 20% growth · 25% U.S. charts · 15% reach. ${a.in_charts ? (a.chart_age_days != null ? `On the Spotify charts for ${a.chart_age_days} day${a.chart_age_days===1?"":"s"}.` : "") : "Not on any Spotify chart right now."}</p>
     </div>
+    </div>
     <div class="card"><h3>On Spotify charts right now</h3>${songs || `<p class="small">Not on any Spotify chart today.</p>`}</div>
     <div class="card"><h3>My notes</h3>
       <textarea data-anote="${esc(key)}" placeholder="Agent, past show results, venue sizes, who to call…">${esc(n.note)}</textarea>
       <span class="saved" id="asaved">${n.updated_at ? "Saved "+ago(n.updated_at) : "Saves automatically"}</span>
     </div>`;
+}
+function fanBaseCard(a, list){
+  let names = [];
+  try{ const dn = new Intl.DisplayNames(["en"], { type: "region" }); names = (a.chart_countries || []).map(c => dn.of(c.toUpperCase())); }catch(e){ names = (a.chart_countries || []).map(c => c.toUpperCase()); }
+  const ranked = list.filter(s => s.fit_score != null).sort((x,y) => y.fit_score - x.fit_score);
+  if(!a.genre && !names.length && !ranked.length) return "";
+  const rows = ranked.slice(0, 6).map(s => `<div class="mkt"><span class="fitb f-${fitLevel(s.fit_score).toLowerCase()}">${Math.round(s.fit_score)}</span><span><b>${esc(s.city)}${s.state ? ", " + esc(s.state) : ""}</b> <span class="small">${esc(shortDate(s.date))} · ${esc(s.venue)}</span><span class="small" style="display:block">${fitBits(s).join(" · ")}</span></span></div>`).join("");
+  return `<div class="card"><h3>Fan base & best markets</h3>
+    <p class="small" style="margin:0 0 8px">${a.genre ? `Genre: <b>${esc(a.genre)}</b>. ` : ""}${a.audience_tag ? `Matched to the <b>${TAG_WORDS[a.audience_tag]}</b> population around each venue (${esc(a.audience_why || "")}). ` : "No language-specific fan base detected, so fit uses market size and young adults. "}${names.length ? `On Spotify charts in ${esc(names.slice(0, 8).join(", "))}${names.length > 8 ? ` and ${names.length - 8} more` : ""}.` : ""}</p>
+    ${rows ? `<div class="mkts">${rows}</div>` : ""}
+  </div>`;
 }
 function bpRow(a, k, label, tip){
   const v = (a.breakout_parts || {})[k] || 0;
@@ -1087,7 +1266,16 @@ function openHelp(){
       <li><b>Resale price vs face value</b>: resale at 2.5× face or more is the strongest sellout signal</li>
       <li><b>SeatGeek demand score</b></li>
       <li><b>Verified Fan</b> sales or several presales (Ticketmaster uses these for in-demand tours)</li>
-      <li>Shows Ticketmaster has stopped selling after the on-sale get at least 80 (“may be sold out”).</li></ul></div>
+      <li>Shows Ticketmaster has stopped selling after the on-sale get at least 80 (“may be sold out”).</li>
+      <li><b>Audience fit</b> nudges Heat up or down by up to 5 points.</li></ul></div>
+    <div class="card"><h3>🎯 Audience fit (0–100, per show)</h3>
+      <p>Does the area around the venue match the artist's fan base? Each venue is matched to its metro area, with stats from the <b>U.S. Census Bureau</b> (American Community Survey, updated yearly).</p><ul>
+      <li><b>50% Fan-base match</b> (only for Latin and Asian-language acts): the area's Hispanic/Latino or Asian share compared with the U.S. average. Twice the U.S. share or more scores high. The artist's audience comes from the Ticketmaster/SeatGeek genre (e.g. Latin, Reggaeton, K-Pop) or from charting mostly in Spanish-speaking or Asian countries.</li>
+      <li><b>30% Market size</b>: people in the metro (100K = 0, 10M+ = 100)</li>
+      <li><b>20% Young adults</b>: share aged 18–34 compared with the U.S.</li></ul>
+      <p>Other artists get 60% market size and 40% young adults. Spotify doesn't publish listeners by state, so this is an estimate from who lives near the venue, not a count of fans.</p></div>
+    <div class="card"><h3>Vivid Seats & StubHub links</h3>
+      <p>Tap <b>🔎 Vivid Seats / StubHub</b> on any show. It searches the web for that exact show (artist, venue, city and date) and only keeps a Vivid Seats or StubHub <b>event page with the same date and artist</b> in its address, never a search page. Found links are saved and appear as ticket buttons from then on. Resale sites often list a show a few days after it's announced, so tap <b>↻</b> to check again later. Each search uses 2–4 of your 2,000 free Brave searches a month.</p></div>
     <div class="card"><h3>Your library</h3>
       <p>⭐ Library keeps everything you're watching: shows you star, <b>shows you add yourself</b> (any venue, AXS, DICE or presale link the app missed), and artists you follow. Past shows stay in the library under “Past”. Upcoming ones also appear as ticket buttons in the bar at the top.</p>
       <p><b>On your phone:</b> open the site in Safari (iPhone) or Chrome (Android) and choose <b>Add to Home Screen</b>. It opens full-screen like an app.</p></div>
@@ -1169,6 +1357,7 @@ function card(s){
     `<button class="favbtn${isFavShow(s.id) ? " on" : ""}" data-fav-show="${esc(s.id)}">${isFavShow(s.id) ? "★ Favorited" : "☆ Favorite"}</button>`,
     s.ticket_url ? `<a class="tm" href="${esc(s.ticket_url)}" target="_blank" rel="noopener" title="${esc(s.ticket_url)}">${esc(seller(s.ticket_url))}</a>` : "",
     s.seatgeek_url ? `<a class="sg" href="${esc(s.seatgeek_url)}" target="_blank" rel="noopener">SeatGeek</a>` : "",
+    resaleLinks(s.id),
     `<button class="${n && (n.status||n.note) ? "has" : ""}" data-edit="${esc(s.id)}">${n && n.status ? esc(n.status) : (n && n.note ? "Note ✎" : "+ Note")}</button>`,
   ].join("");
   const ed = openEditor === s.id ? `<div class="editor">
@@ -1190,10 +1379,10 @@ function card(s){
           ${isNew ? `<span class="badge b-new">Just announced</span>` : ""}
           ${n && n.status && n.status!=="Skip" ? `<span class="badge b-mine">${esc(n.status)}</span>` : ""}
         </div>
-        ${saleLine(s)}${priceLine(s)}
+        ${saleLine(s)}${priceLine(s)}${fitLine(s)}
         ${n && n.note && openEditor !== s.id ? `<div class="notepeek">${esc(n.note)}</div>` : ""}
       </div>
-      ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
+      ${scoreRing(s.heat_score, "Heat", true, "Heat 0–100: how likely this show is to sell out")}
       <div class="links">${links}</div>
     </div>${ed}
   </div>`;
@@ -1217,6 +1406,7 @@ function filteredShows(){
     : sort==="draw" ? (a,b) => (b.draw_score||0)-(a.draw_score||0) || byDate(a,b)
     : sort==="rise" ? (a,b) => (riseVal(b) ?? -Infinity) - (riseVal(a) ?? -Infinity) || byDate(a,b)
     : sort==="breakout" ? (a,b) => (showArtists[b.artist_key].breakout_score||0)-(showArtists[a.artist_key].breakout_score||0) || byDate(a,b)
+    : sort==="fit" ? (a,b) => (b.fit_score ?? -1) - (a.fit_score ?? -1) || byDate(a,b)
     : sort==="new" ? (a,b) => (b.first_seen||"").localeCompare(a.first_seen||"") || byDate(a,b)
     : sort==="sale" ? (a,b) => saleT(a)-saleT(b) || (b.heat_score||0)-(a.heat_score||0)
     : (a,b) => (b.heat_score||0)-(a.heat_score||0) || byDate(a,b));
@@ -1227,7 +1417,7 @@ function renderShows(){
   visibleLinks = rows.map(s => s.ticket_url || s.seatgeek_url).filter(Boolean);
   paintShowChips();
   const so = $("#sort").value, sOpt = $("#sort").selectedOptions[0];
-  const sRank = so === "rise" ? `artists rising fastest over ${RISE_WORDS[showRise]} first` : so === "heat" ? "most likely to sell out first" : "by " + (sOpt ? sOpt.textContent.replace(/^Sort: /, "").replace(/\s*\(.*\)$/, "").toLowerCase() : so);
+  const sRank = so === "fit" ? "best audience fit first" : so === "rise" ? `artists rising fastest over ${RISE_WORDS[showRise]} first` : so === "heat" ? "most likely to sell out first" : "by " + (sOpt ? sOpt.textContent.replace(/^Sort: /, "").replace(/\s*\(.*\)$/, "").toLowerCase() : so);
   const sz = showSize ? (() => { const [lo, hi] = showSize.split("-"); return sizeWords(+lo, hi ? +hi : NaN); })() : "";
   const stw = { now:"presale open now", soon:"sale coming up", onsale:"on sale", new:"just announced" }[filt] || "";
   $("#count").className = "count sum";
@@ -1238,6 +1428,69 @@ function renderShows(){
   const more = $("#more"); if(more) more.onclick = () => { limit += 150; renderShows(); };
 }
 function setFilt(v){ filt = v; limit = 150; $$("[data-st]").forEach(x => x.classList.toggle("on", x.dataset.st===v)); renderShows(); }
+
+/* exact Vivid Seats / StubHub event pages (found on demand by the resale-links function) */
+let resale = {};
+async function loadResale(){
+  try{
+    const rows = await fetchAll("resale_links", q => q);
+    resale = {};
+    rows.forEach(r => { const o = resale[r.show_id] = resale[r.show_id] || {}; o[r.site] = r.url; o.checked_at = r.checked_at; });
+  }catch(e){ resale = {}; }
+}
+function resaleLinks(id){
+  const r = resale[id], out = [];
+  if(r && r.vivid) out.push(`<a class="sg" href="${esc(r.vivid)}" target="_blank" rel="noopener" draggable="true" title="${esc(r.vivid)}">Vivid Seats</a>`);
+  if(r && r.stubhub) out.push(`<a class="sg" href="${esc(r.stubhub)}" target="_blank" rel="noopener" draggable="true" title="${esc(r.stubhub)}">StubHub</a>`);
+  if(!r) out.push(`<button class="rfind" data-resale="${esc(id)}" title="Find this exact show on Vivid Seats and StubHub">🔎 Vivid Seats / StubHub</button>`);
+  else if(!r.vivid || !r.stubhub){
+    const miss = !r.vivid && !r.stubhub ? "Vivid Seats & StubHub" : !r.vivid ? "Vivid Seats" : "StubHub";
+    out.push(`<button class="rfind sm" data-resale="${esc(id)}" title="Checked ${esc(ago(r.checked_at))}: not listed on ${miss} yet (resale sites often list a show a few days after it's announced). Tap to search again.">↻ Not on ${miss} yet</button>`);
+  }
+  return out.join("");
+}
+async function findResale(id, btn){
+  const s = id.startsWith("my:") ? myShows.find(x => "my:" + x.id === id) : (shows.find(x => x.id === id) || favExtra.find(x => x.id === id));
+  if(!s) return;
+  const label = btn.textContent; btn.disabled = true; btn.textContent = "Searching…";
+  const { data, error } = await sb.functions.invoke("resale-links", { body: { show_id: id, artist: s.artist, venue: s.venue, city: s.city, state: s.state, date: s.date } });
+  let msg = data && data.error;
+  if(error && !msg){ try{ msg = (await error.context.json()).error; }catch(e){ msg = null; } }
+  if(error || msg){
+    btn.disabled = false; btn.textContent = label;
+    toast(msg || "The Vivid Seats / StubHub search isn't set up yet (Supabase Edge Function “resale-links”).");
+    return;
+  }
+  resale[id] = { vivid: data.vivid || null, stubhub: data.stubhub || null, checked_at: new Date().toISOString() };
+  const found = ["vivid","stubhub"].filter(k => data[k]).map(k => k === "vivid" ? "Vivid Seats" : "StubHub");
+  toast(found.length ? `Found on ${found.join(" and ")}` : "Not listed on Vivid Seats or StubHub yet");
+  if(!$("#t-shows").hidden) renderShows();
+  if(!$("#t-mine").hidden) renderMine();
+  $$(`#drawer [data-card="${CSS.escape(id)}"]`).forEach(el => { if(shows.find(x => x.id === id)) el.outerHTML = card(shows.find(x => x.id === id)); });
+}
+
+/* audience fit: venue-area demographics vs the artist's fan base */
+const TAG_WORDS = { latin: "Hispanic/Latino", asian: "Asian" };
+const pctInt = v => v == null ? "–" : Math.round(v * 100) + "%";
+const fitLevel = f => f >= 75 ? "Strong" : f >= 55 ? "Good" : f >= 35 ? "Average" : "Weak";
+function areaShort(n){ n = n || ""; return n.split(/[-,]/)[0].trim() + (/ area$/.test(n) ? " area" : " metro"); }
+function fitBits(s){
+  const p = s.fit_parts || {}, bits = [];
+  if(s.audience_tag){
+    const share = s.audience_tag === "latin" ? s.area_hisp : s.area_asian, us = s.audience_tag === "latin" ? p.us_hisp : p.us_asian;
+    bits.push(`<b>${pctInt(share)}</b> ${TAG_WORDS[s.audience_tag]} <span class="q">(U.S. ${pctInt(us)})</span>`);
+  }
+  bits.push(`${pctInt(s.area_young)} aged 18–34`);
+  bits.push(`${fmtN(s.area_pop)} people`);
+  if(s.area_income) bits.push(`$${Math.round(s.area_income/1000)}K median income`);
+  return bits;
+}
+function fitLine(s){
+  if(s.fit_score == null) return "";
+  const f = Math.round(s.fit_score), lvl = fitLevel(f), p = s.fit_parts || {};
+  const tip = `Audience fit ${f}/100. ${p.why ? p.why + ", matched against the area's " + TAG_WORDS[s.audience_tag] + " share. " : ""}Market size ${p.size ?? "–"}/100, young adults ${p.young ?? "–"}/100${p.culture != null ? `, fan-base match ${p.culture}/100` : ""}. Source: U.S. Census ${p.year || ""} 5-year estimates for the ${s.area_name}.`;
+  return `<div class="fitline" title="${esc(tip)}"><span class="fitb f-${lvl.toLowerCase()}">🎯 Audience fit ${f} · ${lvl}</span><span>${esc(areaShort(s.area_name))}: ${fitBits(s).join(" · ")}</span></div>`;
+}
 
 /* growth numbers for every touring artist, so shows can be sorted by how fast the artist is rising */
 let showArtists = {};
@@ -1267,10 +1520,8 @@ function paintShowChips(){
 }
 function showRiseLine(s){
   const a = showArtists[s.artist_key]; if(!a) return "";
-  const dp = dailyPct(a), hl = $("#sort").value === "rise" ? showRise : null;
-  const today = dp != null && Math.abs(dp) >= 0.001 ? `<span class="${cls(dp)}${hl === "daily_pct" ? " hl" : ""}">${pct(dp)} today</span>` : "";
-  const bits = today + riseBits(a, hl);
-  return bits ? `<div class="srise gl">${bits}</div>` : "";
+  const hl = $("#sort").value === "rise" ? showRise : null;
+  return growthStrip(a, hl, true);
 }
 
 /* ---------- sale calendar ---------- */
@@ -1313,7 +1564,7 @@ function renderCalendar(){
         <span class="small" style="display:block">${i.kind==="onsale" ? "🎫 Public on-sale" : "🔑 "+esc(i.name)}${s.verified_fan && !/verified/i.test(i.name) ? " · Verified Fan tour" : ""}</span></span>
       <span class="cal-show" style="min-width:0"><span style="display:block;font-size:14px">${esc(shortDate(s.date))} · ${esc(s.city)}${s.state?", "+esc(s.state):""}</span>
         <span class="small" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(s.venue)}${s.listeners ? ` · ${fmtN(s.listeners)} listeners` : ""}</span></span>
-      ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
+      ${scoreRing(s.heat_score, "Heat", true, "Heat 0–100: how likely this show is to sell out")}
       ${url ? `<a class="tix" href="${esc(url)}" target="_blank" rel="noopener" draggable="true" title="${esc(url)}">${esc(seller(url))}</a>` : `<span></span>`}
     </div>`;
   };
@@ -1355,7 +1606,7 @@ function renderAlerts(){
         <span class="small" style="display:block">${esc(a.detail)}</span></span>
       <span class="cal-show" style="min-width:0"><span style="display:block;font-size:14px">${esc(shortDate(a.show_date))} · ${esc(a.city || "")}${a.state ? ", "+esc(a.state) : ""}</span>
         <span class="small" style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(a.venue || "")}</span></span>
-      ${scoreRing(a.heat, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
+      ${scoreRing(a.heat, "Heat", true, "Heat 0–100: how likely this show is to sell out")}
       ${a.url ? `<a class="tix" href="${esc(a.url)}" target="_blank" rel="noopener" draggable="true" title="${esc(a.url)}">${esc(seller(a.url))}</a>` : `<span></span>`}
     </div>`);
   }
@@ -1487,10 +1738,11 @@ function favRow(s){
       ${sale ? `<div class="line2">${sale}</div>` : ""}
       ${(notes["show:"+s.id]||{}).note ? `<div class="notepeek">${esc(notes["show:"+s.id].note)}</div>` : ""}
     </div>
-    ${scoreRing(s.heat_score, "HEAT", true, "Heat 0–100: how likely this show is to sell out")}
+    ${scoreRing(s.heat_score, "Heat", true, "Heat 0–100: how likely this show is to sell out")}
     <div class="tix2">
       ${s.ticket_url ? `<a href="${esc(s.ticket_url)}" target="_blank" rel="noopener" draggable="true" title="${esc(s.ticket_url)}">🎟 ${esc(seller(s.ticket_url))}</a>` : ""}
       ${s.seatgeek_url ? `<a class="sg" href="${esc(s.seatgeek_url)}" target="_blank" rel="noopener" draggable="true">SeatGeek</a>` : ""}
+      ${resaleLinks(s.id)}
     </div>
   </div>`;
 }
@@ -1509,6 +1761,7 @@ function myRow(m){
     <div class="tix2">
       ${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener" draggable="true" title="${esc(m.url)}">🎟 ${esc(seller(m.url))}</a>` : ""}
       ${m.url2 ? `<a class="sg" href="${esc(m.url2)}" target="_blank" rel="noopener" draggable="true" title="${esc(m.url2)}">${esc(seller(m.url2))}</a>` : ""}
+      ${m.date && m.artist && !isPast(m.date) ? resaleLinks("my:" + m.id) : ""}
     </div>
   </div>`;
 }
@@ -1738,7 +1991,8 @@ document.addEventListener("click", async e => {
   const em = e.target.closest("[data-edit-mine]"); if(em){ const m = myShows.find(x => x.id === em.dataset.editMine); if(m) openShowForm(m); return; }
   const dm = e.target.closest("[data-del-mine]"); if(dm){ deleteMine(dm.dataset.delMine); return; }
   const lb = e.target.closest("[data-lib]"); if(lb){ libView = lb.dataset.lib; renderMine(); return; }
-  const ft = e.target.closest("[data-ft]"); if(ft){ const box = document.getElementById(ft.dataset.ft); box.classList.toggle("open"); const o = box.classList.contains("open"); ft.classList.toggle("on", o); if(ft.classList.contains("advbtn")) ft.textContent = o ? "Fewer filters ▴" : "More filters ▾"; return; }
+  const rf = e.target.closest("[data-resale]"); if(rf){ e.preventDefault(); findResale(rf.dataset.resale, rf); return; }
+  const ft = e.target.closest("[data-ft]"); if(ft){ const box = document.getElementById(ft.dataset.ft); box.classList.toggle("open"); const o = box.classList.contains("open"); ft.classList.toggle("on", o); if(ft.classList.contains("advbtn")){ ft.textContent = o ? "Fewer filters ▴" : "More filters ▾"; const fd = ft.closest(".finder"); if(fd) fd.classList.toggle("open", o); } return; }
   if(e.target.closest("[data-goto-fav]")){ setTab("mine"); window.scrollTo({ top: 0, behavior: "smooth" }); return; }
   const favLinks = () => libraryItems(libView, ($("#libq").value || "").trim()).flatMap(i => itemLinks(i).slice(0, 1));
   if(e.target.closest("[data-fav-copy]")){
@@ -1799,6 +2053,7 @@ $("#csort").addEventListener("change", renderChart);
 $("#chartSel").addEventListener("change", loadChart);
 $("#reload").onclick = load;
 $("#helpBtn").onclick = openHelp;
+document.querySelector("[data-help]").onclick = openHelp;
 $("#copy").onclick = async () => {
   const txt = visibleLinks.join("\n");
   try{ await navigator.clipboard.writeText(txt); }
@@ -1820,6 +2075,81 @@ setInterval(() => {
   if(!$("#t-shows").hidden) renderShows();
   if(!$("#t-calendar").hidden) renderCalendar();
 }, 60000);
+
+/* ---------- search everything (Ctrl K) ---------- */
+let palItems = [], palIdx = 0, palTok = 0, palDeb;
+const PAL_ACTIONS = [
+  { ic:"💎", t:"Breakouts", sub:"Low-key artists blowing up", go: () => { setTab("discover"); setMode("gems"); } },
+  { ic:"🚀", t:"Rising fastest, last 30 days", sub:"Biggest monthly-listener growth", go: () => { setTab("discover"); lastRise = "mult_30d"; $("#asort").value = "mult_30d"; setMode("rise"); } },
+  { ic:"🎟", t:"Presales open right now", sub:"Shows you can buy in a presale today", go: () => { setTab("shows"); setFilt("now"); } },
+  { ic:"📅", t:"Sale calendar", sub:"Every presale and on-sale coming up", go: () => setTab("calendar") },
+  { ic:"🔔", t:"Selling-fast alerts", sub:"Sold out, resale jumps, new dates", go: () => setTab("alerts") },
+  { ic:"＋", t:"Add a show to my library", sub:"Save a show or link the app missed", go: () => openShowForm() },
+];
+function openPal(){
+  $("#pal").hidden = false; document.body.style.overflow = "hidden";
+  $("#palq").value = ""; palShow(""); setTimeout(() => $("#palq").focus(), 30);
+}
+function closePal(){ $("#pal").hidden = true; if($("#drawer").hidden) document.body.style.overflow = ""; }
+function palRender(groups){
+  palItems = []; let html = "";
+  for(const [title, items] of groups){
+    if(!items.length) continue;
+    html += `<div class="pal-h">${esc(title)}</div>`;
+    for(const it of items){
+      const i = palItems.push(it) - 1;
+      html += `<button class="pal-it${i === palIdx ? " on" : ""}" type="button" data-pi="${i}"><span class="pal-ic">${it.ic}</span><span class="pal-main"><b>${esc(it.t)}</b><small>${esc(it.sub || "")}</small></span>${it.side ? `<span class="pal-side">${it.side}</span>` : ""}</button>`;
+    }
+  }
+  $("#palres").innerHTML = html || `<div class="pal-empty">No artists, shows or saved shows match. Check the spelling, or try a city or venue name.</div>`;
+}
+function palMove(d){
+  if(!palItems.length) return;
+  palIdx = (palIdx + d + palItems.length) % palItems.length;
+  $$("#palres .pal-it").forEach(b => b.classList.toggle("on", +b.dataset.pi === palIdx));
+  const on = $("#palres .pal-it.on"); if(on) on.scrollIntoView({ block: "nearest" });
+}
+function palGo(i){ const it = palItems[i]; if(!it) return; closePal(); it.go(); }
+async function palShow(q){
+  const tok = ++palTok; q = q.trim(); palIdx = 0;
+  if(!q){ palRender([["Jump to", PAL_ACTIONS]]); return; }
+  const ql = q.toLowerCase();
+  const showItems = shows.filter(s => [s.artist, s.city, s.venue, s.state, s.event].join(" ").toLowerCase().includes(ql))
+    .sort((a,b) => (a.date||"9999").localeCompare(b.date||"9999")).slice(0, 8)
+    .map(s => ({ ic:"🎟", t:`${s.artist}`, sub:`${shortDate(s.date)} · ${s.venue || ""}${s.city ? ", " + s.city : ""}${s.state ? ", " + s.state : ""}`, side: esc(st(s._st)[3]), go: () => openArtist(s.artist_key) }));
+  const libItems = myShows.filter(m => [m.artist, m.city, m.venue, m.state, m.event, m.notes].join(" ").toLowerCase().includes(ql)).slice(0, 5)
+    .map(m => ({ ic:"⭐", t:m.artist || m.event || "Saved show", sub:`${m.date ? shortDate(m.date) + " · " : ""}${m.venue || ""}${m.city ? ", " + m.city : ""}`, side:"Saved", go: () => { setTab("mine"); } }));
+  palRender([["Shows", showItems], ["My library", libItems], ["Artists", [{ ic:"…", t:"Searching artists…", sub:"", go: () => {} }]]]);
+  clearTimeout(palDeb);
+  palDeb = setTimeout(async () => {
+    const { data } = await sb.from("artists").select("key,name,listeners,listeners_daily,daily_pct,pct_7d,mult_30d,on_tour,us_shows,next_show_date")
+      .ilike("name", `%${q.replace(/[%,()*]/g, " ")}%`).order("listeners", { ascending: false, nullsFirst: false }).limit(8);
+    if(tok !== palTok) return;
+    const artistItems = (data || []).map(a => {
+      const g = a.mult_30d != null ? (a.mult_30d >= 1.5 ? `${(+a.mult_30d).toFixed(1)}×` : pct(a.mult_30d - 1)) : null;
+      return { ic:"🎤", t:a.name, sub:`${fmtN(a.listeners)} monthly listeners · ${a.on_tour ? `${a.us_shows} U.S. show${a.us_shows > 1 ? "s" : ""}, next ${shortDate(a.next_show_date)}` : "no U.S. shows found"}`,
+        side: g ? `<span class="${cls(a.mult_30d - 1)}">${g}</span><br>30 days` : "", go: () => openArtist(a.key) };
+    });
+    palRender([["Artists", artistItems], ["Shows", showItems], ["My library", libItems]]);
+  }, 180);
+}
+$("#searchBtn").onclick = openPal;
+$("#palq").addEventListener("input", e => palShow(e.target.value));
+$("#palq").addEventListener("keydown", e => {
+  if(e.key === "ArrowDown"){ e.preventDefault(); palMove(1); }
+  else if(e.key === "ArrowUp"){ e.preventDefault(); palMove(-1); }
+  else if(e.key === "Enter"){ e.preventDefault(); palGo(palIdx); }
+  else if(e.key === "Escape"){ e.preventDefault(); e.stopPropagation(); closePal(); }
+});
+$("#pal").addEventListener("click", e => {
+  const it = e.target.closest("[data-pi]"); if(it){ palGo(+it.dataset.pi); return; }
+  if(e.target.closest("[data-palclose]") || e.target === $("#pal")) closePal();
+});
+document.addEventListener("keydown", e => {
+  if($("#v-app").hidden) return;
+  const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement && document.activeElement.tagName);
+  if((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing && $("#pal").hidden)){ e.preventDefault(); $("#pal").hidden ? openPal() : closePal(); }
+});
 
 /* ---------- light / dark ---------- */
 function currentTheme(){
