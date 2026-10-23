@@ -309,6 +309,7 @@ body.playing .toast{bottom:110px}
 .form .row-btns{grid-column:1/-1;display:flex;gap:8px;justify-content:flex-end;margin-top:4px}
 .form .hint{grid-column:1/-1;font-size:12.5px;color:var(--muted);margin:-4px 0 0}
 .tab .ti{margin-right:6px}
+.csep{width:1px;align-self:stretch;background:var(--line);margin:2px 4px;flex:none}
 .alsob{border:0;background:none;padding:0;color:var(--ink);font:inherit;font-weight:600;cursor:pointer;text-decoration:underline;text-decoration-color:var(--line)}
 .rfind{border:1px dashed var(--line)!important;background:transparent!important;color:var(--muted)!important;font-weight:600;font-size:12.5px!important;cursor:pointer;border-radius:8px;padding:7px 10px}
 .rfind:hover{border-color:var(--ink)!important;color:var(--ink)!important}
@@ -595,11 +596,16 @@ body.playing .toast{bottom:110px}
           <button class="chip" data-mode="gems" title="Low-key artists blowing up: small audience, fast growth, new to the charts">💎 Breakouts</button>
           <button class="chip" data-mode="rise" title="Biggest growth in monthly listeners over the window you pick below">🚀 Rising fastest</button>
           <button class="chip" data-mode="newc" title="Charted on Spotify for the first time in the last 2 weeks">🎵 New on charts</button>
-          <button class="chip" data-mode="crossed" title="Passed 500K monthly listeners in the last 45 days">🆕 Just crossed 500K</button>
+          <button class="chip" data-mode="crossed" id="crossChip" title="Just passed a monthly-listener milestone (pick it below)">🆕 Just crossed 1M</button>
           <button class="chip" data-mode="draws" title="Biggest crowd pullers right now">🔥 Biggest draws</button>
           <button class="chip" data-mode="top">👑 Most listeners</button>
         </div></div>
         <div class="frow"><span class="flab">Rising over</span><div class="fchips"><button class="chip" data-rise="daily_pct">Today</button><button class="chip" data-rise="pct_7d">7 days</button><button class="chip" data-rise="mult_30d">30 days</button><button class="chip" data-rise="mult_60d">60 days</button><button class="chip" data-rise="mult_90d">90 days</button></div></div>
+        <div class="frow" id="crossRow" hidden><span class="flab">Crossed</span><div class="fchips">
+          <button class="chip" data-cross="500000">500K</button><button class="chip" data-cross="1000000">1M</button><button class="chip" data-cross="2000000">2M</button><button class="chip" data-cross="5000000">5M</button><button class="chip" data-cross="10000000">10M</button>
+          <span class="csep"></span>
+          <button class="chip" data-cwin="7">in 7 days</button><button class="chip" data-cwin="30">in 30 days</button><button class="chip" data-cwin="90">in 90 days</button>
+        </div></div>
         <div class="frow mopt"><span class="flab">Size</span><div class="fchips"><button class="chip" data-size="">Any size</button><button class="chip" data-size="0-1">Under 1M</button><button class="chip" data-size="1-3">1–3M</button><button class="chip" data-size="3-10">3–10M</button><button class="chip" data-size="10-">10M+</button></div></div>
         <div class="frow mopt"><span class="flab">Shows</span><div class="fchips">
           <button class="chip" data-tourf="tour">📍 Has U.S. shows</button>
@@ -915,7 +921,7 @@ async function renderHeader(){
   const T = q => tourOnly() ? q.eq("on_tour", true) : q;
   const [gems, crossed, newc, week] = await Promise.all([
     headCount(q => T(q.gte("breakout_score", 60))),
-    headCount(q => T(q.gte("first_seen_list", isoDay(new Date(Date.now() - 45*DAY))))),
+    headCount(q => T(q.gte("listeners", 1e6).lt("l30_ago", 1e6))),
     headCount(q => T(q.eq("in_charts", true).lte("chart_age_days", 7).lte("listeners", 15e6))),
     headCount(q => q.eq("on_tour", true).gte("next_show_date", TODAY()).lte("next_show_date", plusDays(7))),
   ]);
@@ -924,7 +930,7 @@ async function renderHeader(){
     [recentSell, "selling-fast alerts (3 days)", () => setTab("alerts")],
     [shows.filter(x => x._st==="PRESALE NOW").length, "presales open right now", () => { setTab("shows"); setFilt("now"); }],
     [gems, tourOnly() ? "💎 breakout artists with U.S. shows" : "💎 breakout artists (score 60+)", () => { setTab("discover"); applyPreset("gems"); }],
-    [crossed, tourOnly() ? "just crossed 500K, with U.S. shows" : "just crossed 500K listeners (45 days)", () => { setTab("discover"); applyPreset("crossed"); }],
+    [crossed, tourOnly() ? "just crossed 1M, with U.S. shows" : "just crossed 1M listeners (30 days)", () => { setTab("discover"); crossT = 1e6; crossWin = 30; applyPreset("crossed"); }],
     [newc, tourOnly() ? "chart newcomers with U.S. shows" : "chart newcomers under 15M (≤ 7 days)", () => { setTab("discover"); applyPreset("newcomers"); }],
     [week, "artists playing the U.S. this week", () => { setTab("discover"); applyPreset("week"); }],
   ];
@@ -936,7 +942,7 @@ async function renderHeader(){
 const PRESETS = {
   gems:     { label:"💎 Breakouts", hint:"Low-key & blowing up", f:{}, sort:"breakout_score" },
   radar:    { label:"🌱 Under the radar", hint:"Under 3M, growing fastest", f:{ lmax:3 }, sort:"breakout_score" },
-  crossed:  { label:"🆕 Just crossed 500K", hint:"New to the 500K+ club", f:{ newList:true }, sort:"breakout_score" },
+  crossed:  { label:"🆕 Just crossed 1M", hint:"Passed a listener milestone", f:{ newList:true }, sort:"breakout_score" },
   rise:     { label:"🚀 Fastest rise", hint:"Pick: today · 7 · 30 · 60 · 90 days", f:{ lmax:15 }, sort:"mult_30d" },
   newcomers:{ label:"🎵 Chart newcomers", hint:"On Spotify charts ≤ 2 weeks", f:{ newDays:"14", lmax:15 }, sort:"breakout_score" },
   rising:   { label:"📈 Rising 2–9M", hint:"Mid-size, growing fast", f:{ lmin:2, lmax:9 }, sort:"growth_signal" },
@@ -950,6 +956,17 @@ const PAGE = 50;
 const RISE = ["daily_pct","pct_7d","mult_30d","mult_60d","mult_90d"];
 const RISE_WORDS = { daily_pct:"today", pct_7d:"the last 7 days", mult_30d:"the last 30 days", mult_60d:"the last 60 days", mult_90d:"the last 90 days" };
 let lastRise = "mult_30d";
+// "Just crossed": milestone + time window, remembered per device (default 1M in the last 30 days)
+let crossT = 1e6, crossWin = 30;
+try{ const c = JSON.parse(localStorage.getItem("tf-cross") || "null"); if(c){ crossT = +c.t || 1e6; crossWin = +c.w || 30; } }catch(e){}
+const crossLabel = v => v >= 1e6 ? (v / 1e6) + "M" : Math.round(v / 1e3) + "K";
+function crossedBadge(a){
+  for(const T of [1e7, 5e6, 2e6, 1e6]){
+    if(a.listeners >= T && a.l30_ago != null && a.l30_ago < T)
+      return `<span class="badge b-new" title="Passed ${crossLabel(T)} monthly listeners in the last 30 days (${fmtN(a.l30_ago)} → ${fmtN(a.listeners)})">🆕 Just crossed ${crossLabel(T)}</span>`;
+  }
+  return justCrossed(a) ? `<span class="badge b-new" title="Crossed 500K monthly listeners on ${esc(shortDate(a.first_seen_list))}">🆕 Just crossed 500K</span>` : "";
+}
 function currentMode(){
   if($("#fNew").value) return "newc";
   if($("#fNewList").checked) return "crossed";
@@ -968,6 +985,10 @@ function renderPresets(){
   $$("[data-mode]").forEach(b => b.classList.toggle("on", b.dataset.mode === m));
   $$("[data-rise]").forEach(b => b.classList.toggle("on", b.dataset.rise === s));
   $$("[data-tourf]").forEach(b => b.classList.toggle("on", b.dataset.tourf === t));
+  $("#crossRow").hidden = m !== "crossed";
+  $("#crossChip").textContent = `🆕 Just crossed ${crossLabel(crossT)}`;
+  $$("[data-cross]").forEach(b => b.classList.toggle("on", +b.dataset.cross === crossT));
+  $$("[data-cwin]").forEach(b => b.classList.toggle("on", +b.dataset.cwin === crossWin));
 }
 function setMode(m){
   const s = $("#asort").value;
@@ -994,7 +1015,7 @@ function sizeWords(lmin, lmax){
 }
 function artistSummary(n){
   const m = currentMode(), s = $("#asort").value, t = currentShowsF();
-  const noun = { gems:"breakout artists", newc:"artists new on the charts", crossed:"artists who just crossed 500K" }[m] || "artists";
+  const noun = { gems:"breakout artists", newc:"artists new on the charts", crossed:`artists who crossed ${crossLabel(crossT)} in the last ${crossWin} days` }[m] || "artists";
   const bits = [sizeWords(parseFloat($("#lmin").value), parseFloat($("#lmax").value)),
     { tour:"with U.S. shows", presale:"with a presale open now", "7":"playing the U.S. this week", "30":"playing the U.S. in the next 30 days" }[t] || ($("#fWhen").value ? `next U.S. show within ${$("#fWhen").value} days` : ""),
     $("#fCharts").checked ? "on a Spotify chart now" : "", $("#aq").value.trim() ? `matching “${esc($("#aq").value.trim())}”` : ""].filter(Boolean);
@@ -1038,7 +1059,10 @@ async function queryArtists(reset){
   if(w) q = q.gte("next_show_date", TODAY()).lte("next_show_date", plusDays(+w));
   const nd = $("#fNew").value;
   if(nd) q = q.eq("in_charts", true).lte("chart_age_days", +nd);
-  if($("#fNewList").checked) q = q.gte("first_seen_list", isoDay(new Date(Date.now() - 45*DAY)));
+  if($("#fNewList").checked){
+    if(crossT <= 5e5) q = q.gte("first_seen_list", isoDay(new Date(Date.now() - crossWin*DAY)));   // joined the 500K+ list
+    else q = q.gte("listeners", crossT).lt(`l${crossWin}_ago`, crossT);                            // was below the milestone N days ago
+  }
   if(sort === "first_seen_list") q = q.gt("first_seen_list", "2001-01-01");
   if(sort === "next_show_date") q = q.gte("next_show_date", TODAY());
   if(sort === "us_daily_best") q = q.not("us_daily_best", "is", null);
@@ -1075,7 +1099,7 @@ function chartLine(a){
 }
 function artistBadges(a){
   const b = [];
-  if(justCrossed(a)) b.push(`<span class="badge b-new" title="Crossed 500K monthly listeners on ${esc(shortDate(a.first_seen_list))}">🆕 Just crossed 500K</span>`);
+  const cb = crossedBadge(a); if(cb) b.push(cb);
   if(a.at_peak && (a.listeners||0) < 15e6) b.push(`<span class="badge b-soon" title="Monthly listeners at an all-time high today">▲ All-time high</span>`);
   if(a.is_rising) b.push(`<span class="badge b-now" title="2–9M monthly listeners and growing 8%+ a month">📈 Rising</span>`);
   if(isNewcomer(a)) b.push(`<span class="badge b-new" title="All their charting songs entered in the last 7 days">New on charts</span>`);
@@ -1265,7 +1289,7 @@ function openHelp(){
       <li><b>20% Low-key</b>: smaller audience scores higher (500K = 100, 25M+ = 0)</li>
       <li><b>20% Fresh</b>: brand new to the Spotify charts, just crossed 500K listeners, or at an all-time high</li>
       <li><b>15% Today</b>: today's jump in listeners (+3% in one day = 100)</li></ul>
-      <p><span class="badge b-gem">💎 Breakout</span> = score 60+. <span class="badge b-new">🆕 Just crossed 500K</span> = joined the 500K+ list in the last 45 days, with the “640K → 2.1M in 12 days” journey shown under their listeners.</p></div>
+      <p><span class="badge b-gem">💎 Breakout</span> = score 60+. <span class="badge b-new">🆕 Just crossed 1M</span> = passed 1M (or 2M, 5M, 10M) monthly listeners in the last 30 days; “Just crossed 500K” = joined the 500K+ list in the last 45 days, with the “640K → 2.1M in 12 days” journey shown under their listeners.</p></div>
     <div class="card"><h3>Draw score (0–100, per artist)</h3>
       <p>How big a draw the artist is right now.</p><ul>
       <li><b>40% Audience</b>: monthly listeners (log scale: 500K = 0, 80M+ = 100)</li>
@@ -1941,7 +1965,7 @@ function renderChart(){
       <td>${moveCell(r)}</td>
       <td class="song">${trackId(r.track_url) ? `<span class="play" role="button" tabindex="0" data-play-track="${esc(trackId(r.track_url))}" title="Play “${esc(r.title)}”">▶</span> ` : ""}${r.track_url ? `<a href="${esc(r.track_url)}" target="_blank" rel="noopener" title="Open in Spotify">${esc(r.title)}</a>` : esc(r.title)}</td>
       <td><button class="alink" data-artist="${esc(r.artist_key)}">${esc(r.artist)}</button>${r.featured ? `<span class="small"> w/ ${esc(r.featured)}</span>` : ""}
-        <div class="minibadges">${a.breakout_score >= 60 ? `<span class="badge b-gem">💎 Breakout</span>` : ""}${justCrossed(a) ? `<span class="badge b-new">🆕 Just crossed 500K</span>` : ""}${a.is_rising ? `<span class="badge b-now">📈 Rising</span>` : ""}${isNewcomer(a) && (a.listeners||0) < 15e6 ? `<span class="badge b-new">New on charts</span>` : ""}</div></td>
+        <div class="minibadges">${a.breakout_score >= 60 ? `<span class="badge b-gem">💎 Breakout</span>` : ""}${crossedBadge(a)}${a.is_rising ? `<span class="badge b-now">📈 Rising</span>` : ""}${isNewcomer(a) && (a.listeners||0) < 15e6 ? `<span class="badge b-new">New on charts</span>` : ""}</div></td>
       <td class="num hide-sm">${a.listeners ? `<b>${fmtN(a.listeners)}</b>${a.listeners_daily != null ? `<div class="small ${cls(a.listeners_daily)}">${signed(a.listeners_daily)} today</div>` : ""}` : `<span class="small">–</span>`}</td>
       <td class="hide-sm">${tour}</td>
       <td class="num">${r.streams != null ? fullN(r.streams) : ""}${r.streams_change != null ? `<div class="small ${cls(r.streams_change)}">${signed(r.streams_change)}</div>` : ""}</td>
@@ -2043,6 +2067,9 @@ $("#aq").addEventListener("input", () => { clearTimeout(aDeb); aDeb = setTimeout
 ["#asort","#fCharts","#fRising","#fPresale","#fWhen","#fNew","#fNewList"].forEach(id => $(id).addEventListener("change", customized));
 $$("[data-rise]").forEach(b => b.onclick = () => { lastRise = b.dataset.rise; $("#asort").value = b.dataset.rise; customized(); });
 $$("[data-mode]").forEach(b => b.onclick = () => setMode(b.dataset.mode));
+const saveCross = () => { try{ localStorage.setItem("tf-cross", JSON.stringify({ t: crossT, w: crossWin })); }catch(e){} };
+$$("[data-cross]").forEach(b => b.onclick = () => { crossT = +b.dataset.cross; saveCross(); customized(); });
+$$("[data-cwin]").forEach(b => b.onclick = () => { crossWin = +b.dataset.cwin; saveCross(); customized(); });
 $$("[data-tourf]").forEach(b => b.onclick = () => setShowsF(b.dataset.tourf));
 $("#aReset").onclick = () => { setShowsF("tour"); applyPreset("gems"); $("#lmin").value = ""; $("#lmax").value = ""; };
 $$("[data-size]").forEach(b => b.onclick = () => {
