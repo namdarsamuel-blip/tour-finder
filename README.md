@@ -18,9 +18,22 @@ U.S. shows are likely to sell out, built from Spotify data and ticketing sites.
 - **Heat (0–100, per show):** artist draw score, plus resale price vs face value,
   SeatGeek demand score, and Verified Fan / multiple presales. "Off sale" pushes it to 90+.
 - **Rising:** 2M–9M monthly listeners and growing ≥8% a month.
+- **Audience fit (0–100, per show)** — `audience.py`: each venue is matched to its metro area
+  (U.S. Census geocoder, cached in `venue_geo`) and compared using U.S. Census ACS 5-year data.
+  Latin and Asian-language acts (from Ticketmaster/SeatGeek genre or the countries they chart in)
+  are scored 50% on the area's Hispanic/Latino or Asian share vs the U.S., 30% market size,
+  20% share aged 18–34. Other acts: 60% market size, 40% young adults. Nudges Heat by up to ±5.
+
+## Vivid Seats / StubHub links
+Neither site has a public API, so the **resale-links** Supabase Edge Function
+(`supabase/functions/resale-links/index.ts`) runs a Brave Search for the exact show and only keeps an
+event page whose address has the same date and artist. Links are cached in `resale_links`.
+Setup: Supabase → Edge Functions → Deploy a new function → Via Editor → name `resale-links`,
+paste the file, turn off JWT verification (the function checks `allowed_users` itself), and add the
+secret `BRAVE_API_KEY` (free key at brave.com/search/api, 2,000 searches a month).
 
 ## How it runs
-- `sync.py` runs twice a day on GitHub Actions (`.github/workflows/refresh.yml`)
+- `sync.py` runs three times a day on GitHub Actions (`.github/workflows/refresh.yml`)
   and writes to Supabase. To run it now: Actions → *Refresh tour data* → *Run workflow*.
 - Tours are checked for the top 400 artists by draw score, plus up to 80 rising artists.
 - The web app in `docs/` is served by GitHub Pages and reads Supabase directly.
@@ -34,6 +47,7 @@ U.S. shows are likely to sell out, built from Spotify data and ticketing sites.
 | `SUPABASE_SERVICE_KEY` | Supabase → Project Settings → API Keys → secret key (or legacy `service_role`) |
 | `TICKETMASTER_KEY` | developer.ticketmaster.com → My Apps → Consumer Key |
 | `SEATGEEK_KEY` | seatgeek.com/account/develop → Client ID |
+| `CENSUS_KEY` (optional) | api.census.gov/data/key_signup.html — only needed if Census requests get rate-limited |
 
 Optional variables (same page → Variables): `ARTISTS_TO_CHECK` (default 500), `BREAKOUTS_TO_CHECK` (default 350),
 `SONGS_PER_CHART` (default 200), `HISTORY_MIN` (default 0 — smallest artist
