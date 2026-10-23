@@ -386,6 +386,7 @@ def run():
             "pct_60d": round((lis - l60[k]) / l60[k], 4) if lis and l60.get(k) else None,
             "mult_7d": mult(lis, l7.get(k)), "mult_30d": mult(lis, l30.get(k)),
             "mult_60d": mult(lis, l60.get(k)), "mult_90d": mult(lis, l90.get(k)),
+            "l7_ago": l7.get(k), "l30_ago": l30.get(k), "l60_ago": l60.get(k), "l90_ago": l90.get(k),
             "at_peak": bool(lis and (L or {}).get("peak") and lis >= 0.995 * L["peak"]),
             "in_charts": bool(ch), "n_charts": len(ch["codes"]) if ch else 0,
             "us_daily_best": ch and ch["us_daily_best"], "us_weekly_best": ch and ch["us_weekly_best"],
