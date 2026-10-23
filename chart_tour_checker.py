@@ -468,6 +468,8 @@ def parse_sg_event(e, artist):
         "SeatGeek Link": e.get("url", ""),
         "Source": "SeatGeek",
         "_sg_score": e.get("score"),
+        "_lat": (v.get("location") or {}).get("lat"), "_lng": (v.get("location") or {}).get("lon"),
+        "_genres": [g.get("name", "") for p in (e.get("performers") or [])[:1] for g in (p.get("genres") or [])],
         "_sg_listings": st.get("visible_listing_count") or st.get("listing_count"),
         "_sg_low": st.get("lowest_price"),
         "_sg_median": st.get("median_price"),
@@ -530,6 +532,10 @@ def parse_event(e, artist, now):
     else:
         sale = "On sale now" if status == "onsale" else "Unknown"
 
+    loc = venue.get("location") or {}
+    cls = (e.get("classifications") or [{}])[0]
+    genres = [x for x in ((cls.get("genre") or {}).get("name"), (cls.get("subGenre") or {}).get("name"))
+              if x and x.lower() not in ("undefined", "other")]
     prices = e.get("priceRanges") or []
     pmin = min((p.get("min") for p in prices if p.get("min") is not None), default=None)
     pmax = max((p.get("max") for p in prices if p.get("max") is not None), default=None)
@@ -556,6 +562,7 @@ def parse_event(e, artist, now):
         "_verified_fan": any("verified" in (p.get("name") or "").lower() for p in sales.get("presales", []) or []),
         "_presale_count": len(sales.get("presales", []) or []),
         "_sg_score": None, "_sg_listings": None, "_sg_low": None, "_sg_median": None,
+        "_lat": loc.get("latitude"), "_lng": loc.get("longitude"), "_genres": genres,
     }
 
 
@@ -598,6 +605,9 @@ def check_tours(artists_df, key, max_artists, sg_key=None):
                     match["Source"] = "Ticketmaster + SeatGeek"
                     for k in ("_sg_score", "_sg_listings", "_sg_low", "_sg_median"):
                         match[k] = r[k]
+                    if not match.get("_lat") and r.get("_lat"):
+                        match["_lat"], match["_lng"] = r["_lat"], r["_lng"]
+                    match["_genres"] = (match.get("_genres") or []) + (r.get("_genres") or [])
                     if match["Price Min"] is None:
                         match["Price Min"], match["Price Max"] = r["Price Min"], r["Price Max"]
                 else:
