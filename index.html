@@ -288,8 +288,9 @@ tr.touring td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
 /* spotify player */
 .player{position:fixed;left:0;right:0;bottom:0;z-index:35;background:var(--navy);border-top:1px solid rgba(255,255,255,.12);padding:8px 12px}
 .player .in{max-width:1200px;margin:0 auto;display:flex;gap:10px;align-items:center}
-.player iframe{flex:1;height:80px;border:0;border-radius:12px;background:#121212}
-.player .appbtn{background:var(--brand);color:#04210f;text-decoration:none;font-weight:700;font-size:13px;padding:9px 12px;border-radius:999px;white-space:nowrap}
+.phost{flex:1;min-width:0}
+.player iframe{display:block;width:100%;height:80px;border:0;border-radius:12px;background:#121212}
+.player .appbtn{background:var(--spotify);color:#04210f;text-decoration:none;font-weight:700;font-size:13px;padding:9px 12px;border-radius:999px;white-space:nowrap}
 .player button{background:transparent;color:var(--navy-ink);border:1px solid rgba(255,255,255,.25);border-radius:8px;padding:6px 10px;cursor:pointer}
 body.playing main.wrap{padding-bottom:130px}
 body.playing .toast{bottom:110px}
@@ -785,7 +786,7 @@ body.playing .toast{bottom:110px}
 </main>
 
 <div class="player" id="player" hidden><div class="in">
-  <iframe id="playerFrame" title="Spotify player" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+  <div class="phost"><div id="playerHost"></div></div>
   <a id="playerApp" class="appbtn" href="#">Open in Spotify app</a>
   <button type="button" id="playerClose" aria-label="Close player">✕</button>
 </div></div>
@@ -1671,12 +1672,39 @@ function seller(url){
 /* ---------- spotify player ---------- */
 const isSpotifyId = k => /^[A-Za-z0-9]{22}$/.test(k || "");
 const trackId = u => { const m = /open\.spotify\.com\/track\/([A-Za-z0-9]{22})/.exec(u || ""); return m ? m[1] : null; };
-function play(type, id){
-  $("#playerFrame").src = `https://open.spotify.com/embed/${type}/${id}?utm_source=generator&autoplay=1`;
-  $("#playerApp").href = `spotify:${type}:${id}`;
-  $("#player").hidden = false; document.body.classList.add("playing");
+// Spotify's official iFrame API lets the page tell the player to start, so one tap on ▶ plays.
+let spCtl = null, spWant = null, spWaiting = [];
+window.onSpotifyIframeApiReady = api => { window.__spApi = api; spWaiting.splice(0).forEach(f => f(api)); };
+function withSpotify(f){
+  if(window.__spApi) return f(window.__spApi);
+  spWaiting.push(f);
+  if(!document.getElementById("spApi")){
+    const sc = document.createElement("script"); sc.id = "spApi"; sc.async = true;
+    sc.src = "https://open.spotify.com/embed/iframe-api/v1"; document.head.appendChild(sc);
+  }
 }
-function closePlayer(){ $("#playerFrame").src = "about:blank"; $("#player").hidden = true; document.body.classList.remove("playing"); }
+function play(type, id){
+  const uri = `spotify:${type}:${id}`;
+  $("#playerApp").href = uri;
+  $("#player").hidden = false; document.body.classList.add("playing");
+  spWant = uri;
+  withSpotify(api => {
+    if(spCtl){                                        // "ready" fires again and starts it;
+      spCtl.loadUri(uri);                             // backup in case it doesn't
+      setTimeout(() => { if(spCtl && spWant === uri){ spCtl.play(); spWant = null; } }, 1500);
+      return;
+    }
+    api.createController($("#playerHost"), { uri, width: "100%", height: 80 }, ctl => {
+      spCtl = ctl;
+      ctl.addListener("ready", () => { if(spWant){ ctl.play(); spWant = null; } });
+    });
+  });
+}
+function closePlayer(){
+  if(spCtl){ try{ spCtl.destroy(); }catch(e){} spCtl = null; }
+  $(".phost").innerHTML = `<div id="playerHost"></div>`;
+  $("#player").hidden = true; document.body.classList.remove("playing");
+}
 
 /* ---------- favorites ---------- */
 // favorite shows: notes key "fav:show:<id>"; favorite artists: notes key "artist:<key>" with status "Watching"
