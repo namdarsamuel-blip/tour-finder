@@ -133,7 +133,7 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .ring.hot{background:conic-gradient(var(--hot) calc(var(--v)*1%), var(--line) 0)}
 
 /* ---------- artist rows ---------- */
-.ahead,.arow{display:grid;grid-template-columns:28px minmax(0,1.5fr) minmax(250px,300px) minmax(0,1fr) 128px;gap:18px;align-items:center}
+.ahead,.arow{display:grid;grid-template-columns:28px minmax(0,1.4fr) minmax(300px,340px) minmax(0,1fr) 128px;gap:18px;align-items:center}
 .rings{display:flex;flex-wrap:nowrap;gap:6px;justify-content:flex-end}
 .rings .score{min-width:64px}
 .rings .score small{font-size:9.5px}
@@ -165,7 +165,11 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .gstrip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:3px;margin-top:6px}
 .gc{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4px 2px 5px;border-radius:7px;background:var(--soft);line-height:1.2;min-width:0}
 .gc i{font-style:normal;font-size:10.5px;font-weight:600;color:var(--muted)}
-.gc b{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.gc b{font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap}
+.gc em{font-style:normal;font-size:10.5px;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.gc.t3 em{color:var(--ink);opacity:.75}
+.gc.t4 em{color:var(--panel);opacity:.9}
+.gc.neg em{color:var(--down)}
 .gc.t-1 b{color:var(--muted);font-weight:500;opacity:.6}
 .gc.t1{background:color-mix(in srgb,var(--up) 13%,var(--panel))}
 .gc.t2{background:color-mix(in srgb,var(--up) 26%,var(--panel))}
@@ -180,6 +184,7 @@ main.wrap{padding-top:18px;padding-bottom:80px}
 .gstrip.sm .gc{padding:2px 2px 3px}
 .gstrip.sm .gc b{font-size:12px}
 .gstrip.sm .gc i{font-size:9px}
+.gstrip.sm .gc em{font-size:9.5px}
 .glegend{font-size:11px;color:var(--muted);margin:-4px 2px 8px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .glegend .sw{display:inline-flex;gap:2px}
 .glegend .sw span{width:14px;height:10px;border-radius:3px;display:inline-block;padding:0}
@@ -641,7 +646,7 @@ body.playing .toast{bottom:110px}
         </div></div>
       </div>
       <div class="count" id="acount"></div>
-      <div class="glegend">Listener growth <span class="sw"><span class="gc t1"></span><span class="gc t2"></span><span class="gc t3"></span><span class="gc t4"></span></span> darker = faster · outlined = your sort · — = no history yet</div>
+      <div class="glegend">Monthly listeners gained in each period, with the % change below. Darker <span class="sw"><span class="gc t1"></span><span class="gc t2"></span><span class="gc t3"></span><span class="gc t4"></span></span> = faster growth · outlined = what you're sorting by · — = still collecting history</div>
       <div class="ahead"><span></span><span>Artist</span><span>Monthly listeners · growth</span><span>U.S. tour</span><span style="text-align:right">Breakout · Draw</span></div>
       <div class="list" id="alist"></div>
     </div>
@@ -1085,19 +1090,25 @@ function tourText(a){
 // growth strip: Today · 7D · 30D · 60D · 90D, each cell shaded by how strong the growth is
 const GTIERS = { daily_pct:[.005,.01,.02,.04], pct_7d:[.03,.08,.15,.30], mult_30d:[1.15,1.4,1.8,2.5], mult_60d:[1.25,1.6,2.2,3], mult_90d:[1.3,1.8,2.5,4] };
 function growthStrip(a, hl, small){
-  const dp = dailyPct(a), multTxt = m => m >= 1.5 ? `${(+m).toFixed(1)}×` : pct(m - 1);
+  // main number = listeners gained in that window; small line = % change (or "N× bigger" for huge jumps)
+  const L = a.listeners != null ? +a.listeners : null;
+  const fromMult = m => (L != null && m) ? Math.round(L - L / m) : null;
+  const rel = m => m == null ? "" : (m >= 3 ? `${(+m).toFixed(1)}× bigger` : pct(m - 1));
+  const dp = dailyPct(a), m7 = a.pct_7d != null ? 1 + +a.pct_7d : null;
   const cells = [
-    ["Today", "daily_pct", dp, v => pct(v), v => v < 0, "today"],
-    ["7d", "pct_7d", a.pct_7d != null ? +a.pct_7d : null, v => pct(v), v => v < 0, "over 7 days"],
-    ["30d", "mult_30d", a.mult_30d != null ? +a.mult_30d : null, multTxt, v => v < 1, "over 30 days"],
-    ["60d", "mult_60d", a.mult_60d != null ? +a.mult_60d : null, multTxt, v => v < 1, "over 60 days"],
-    ["90d", "mult_90d", a.mult_90d != null ? +a.mult_90d : null, multTxt, v => v < 1, "over 90 days"],
+    ["Today", "daily_pct", dp, a.listeners_daily, dp != null ? 1 + dp : null, "today"],
+    ["7 days", "pct_7d", a.pct_7d != null ? +a.pct_7d : null, a.growth_7d ?? fromMult(m7), m7, "in the last 7 days"],
+    ["30 days", "mult_30d", a.mult_30d != null ? +a.mult_30d : null, a.growth_30d ?? fromMult(a.mult_30d), a.mult_30d, "in the last 30 days"],
+    ["60 days", "mult_60d", a.mult_60d != null ? +a.mult_60d : null, a.growth_60d ?? fromMult(a.mult_60d), a.mult_60d, "in the last 60 days"],
+    ["90 days", "mult_90d", a.mult_90d != null ? +a.mult_90d : null, fromMult(a.mult_90d), a.mult_90d, "in the last 90 days"],
   ];
-  return `<span class="gstrip${small ? " sm" : ""}">${cells.map(([lab, k, v, f, isNeg, words]) => {
+  return `<span class="gstrip${small ? " sm" : ""}">${cells.map(([lab, k, v, gain, m, words]) => {
     let t = -1; if(v != null){ t = 0; for(const x of GTIERS[k]) if(v >= x) t++; }
-    const neg = v != null && isNeg(v);
-    const tip = v == null ? `Not enough history yet for ${words}` : `Monthly listeners ${words}: ${f(v)}`;
-    return `<span class="gc t${neg ? "0 neg" : t}${k === hl ? " on" : ""}" title="${esc(tip)}"><i>${lab}</i><b>${v == null ? "—" : f(v)}</b></span>`;
+    const neg = gain != null ? gain < 0 : (m != null && m < 1);
+    const before = (L != null && gain != null) ? L - gain : null;
+    const tip = gain == null ? `Still collecting history for ${words.replace("in the last ", "")}. It fills in automatically as daily tracking continues.`
+      : `${gain >= 0 ? "Gained" : "Lost"} ${fmtN(Math.abs(gain))} monthly listeners ${words}${m != null ? ` (${pct(m - 1)})` : ""}${before ? `: ${fmtN(before)} → ${fmtN(L)}` : ""}`;
+    return `<span class="gc t${neg ? "0 neg" : t}${k === hl ? " on" : ""}" title="${esc(tip)}"><i>${lab}</i><b>${gain == null ? "—" : signed(gain)}</b><em>${gain == null ? "&nbsp;" : rel(m)}</em></span>`;
   }).join("")}</span>`;
 }
 // "7d +8% · 30d +65% · 60d 2.9× · 90d 4.1×": big multiples shown as ×, small ones as %
@@ -1130,7 +1141,7 @@ function artistRow(a, i){
       <span class="asub">${esc(chartLine(a) || (a.top_song ? a.top_song : "Not on Spotify charts right now"))}</span>
     </span>
     <span class="c-l">
-      <span class="lhead"><span class="lnum">${fmtN(a.listeners)}</span>${a.listeners_daily != null ? `<span class="ltoday"><b>${signed(a.listeners_daily)}</b> today</span>` : ""}</span>
+      <span class="lhead"><span class="lnum">${fmtN(a.listeners)}</span><span class="ltoday">monthly listeners</span></span>
       ${growthStrip(a, $("#asort").value)}
       ${journey(a)}
     </span>
@@ -1498,7 +1509,7 @@ async function loadShowArtists(){
   const out = {};
   for(let from = 0; from < 5000; from += 1000){
     const { data, error } = await sb.from("artists")
-      .select("key,listeners,listeners_daily,daily_pct,pct_7d,mult_30d,mult_60d,mult_90d,breakout_score,first_seen_list,first_seen_listeners")
+      .select("key,listeners,listeners_daily,daily_pct,pct_7d,growth_7d,growth_30d,growth_60d,mult_30d,mult_60d,mult_90d,breakout_score,first_seen_list,first_seen_listeners")
       .eq("on_tour", true).range(from, from + 999);
     if(error || !data) break;
     data.forEach(a => out[a.key] = a);
